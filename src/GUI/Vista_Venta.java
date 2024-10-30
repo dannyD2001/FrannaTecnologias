@@ -42,8 +42,7 @@ public class Vista_Venta extends javax.swing.JFrame {
         nombre_usuario.setText(usuarioActual.getNombre());
         apellido_paterno.setText(usuarioActual.getApellidoP());
         numero_telefonico.setText(usuarioActual.getTelefono());
-        }
-        
+        }        
         //Agregar ActionListener a peso_tara1
         peso_tara.addActionListener(e -> calcularPesoNeto());
         // Agregar ActionListener a peso_bruto
