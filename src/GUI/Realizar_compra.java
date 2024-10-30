@@ -31,6 +31,7 @@ import modelo.Material;
 import modelo.Provedor;
 import modelo.usuario;
 public class Realizar_compra extends javax.swing.JFrame {
+    ///para iconosf
     Icon error;
     Icon correcto;    
     Icon adve;
