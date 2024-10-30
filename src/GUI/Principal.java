@@ -205,7 +205,7 @@ public class Principal extends javax.swing.JFrame {
         labelInventario.setForeground(new java.awt.Color(0, 0, 0));
         labelInventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inventario1.png"))); // NOI18N
-        labelInventario.setText("Inventario");
+        labelInventario.setText("Registro Pacas");
         labelInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelInventario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         labelInventario.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

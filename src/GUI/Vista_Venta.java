@@ -7,7 +7,6 @@ import controlador.ctrl_material;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -95,6 +94,7 @@ public class Vista_Venta extends javax.swing.JFrame {
                 combox_chofer.disable();
                 nombre_chofer.disable();
                 telefono_chofer.disable();
+                combox_precio.disable();
                 placa_unidad.disable();
                 costo_adicional.disable();
             // Si no es nulo y es una instancia de Material, llenar los campos
@@ -120,6 +120,7 @@ public class Vista_Venta extends javax.swing.JFrame {
                 combox_servicio.enable();
                 combox_tipo.enable();
                 combox_chofer.enable();
+                combox_precio.enable();
                 // Ahora agregamos la lógica del flete
                 combox_servicio.addActionListener(fleteEvent ->{
                     String fleteSeleccionado = combox_servicio.getSelectedItem().toString();
@@ -397,6 +398,12 @@ public class Vista_Venta extends javax.swing.JFrame {
         label_costo.setText("Costo Adicional");
 
         costo_adicional.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        costo_adicional.setText("0.00");
+        costo_adicional.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                costo_adicionalMousePressed(evt);
+            }
+        });
 
         label_servicio.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         label_servicio.setText("Tipo Chofer");
@@ -924,6 +931,18 @@ public class Vista_Venta extends javax.swing.JFrame {
         panel_eliminar.setBackground(new Color(0x6A9AB0));
         label_eliminar.setForeground(Color.BLACK); 
     }//GEN-LAST:event_label_eliminarMouseExited
+    private boolean limpiado = false;
+    private void costo_adicionalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_costo_adicionalMousePressed
+        // TODO add your handling code here:
+        // Verificar si el campo ha sido limpiado antes
+       if(!limpiado){
+           //limpiar el texto
+           if(!costo_adicional.getText().equals("")){
+               costo_adicional.setText("");
+           }
+           limpiado = true;
+       }                       
+    }//GEN-LAST:event_costo_adicionalMousePressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -951,6 +970,7 @@ public class Vista_Venta extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Vista_Venta venta = new Vista_Venta();
                 venta.setVisible(true);
