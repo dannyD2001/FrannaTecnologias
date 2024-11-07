@@ -112,10 +112,9 @@ public class ctrl_compra {
                 compra.setNombre_provedor(rs.getString("nombre")); // Correctamente obtenemos el nombre del proveedor
                 compra.setMetodo_pago(rs.getString("compra.metodo_pago"));
                 compra.setStatus(rs.getString("compra.status"));
-                //añadir la compra a la lsita
+                //añadir la compra a la lista
                 listcompras.add(compra);
-            }
-            
+            }            
         } catch (SQLException e) {
         }finally {
         // Cerramos los recursos en el bloque finally

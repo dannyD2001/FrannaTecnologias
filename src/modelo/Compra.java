@@ -115,9 +115,6 @@ public class Compra {
 
     public void setReferencia(String referencia) {
         this.referencia = referencia;
-    }
-
-    
-    
+    }    
 }
 

@@ -2,38 +2,40 @@
 package modelo;
 
 public class Chofer {
-    private String telefono;
+    private String telefono_chofer;
     private String nombre;
     private String apellido_p;
     private String tipo_chofer;
     private String placa;
 
-    public Chofer(String telefono, String nombre, String apellido_p, String tipo_chofer, String placa) {
-        this.telefono = telefono;
+    public Chofer(String telefono_chofer, String nombre, String apellido_p, String tipo_chofer, String placa) {
+        this.telefono_chofer = telefono_chofer;
         this.nombre = nombre;
         this.apellido_p = apellido_p;
         this.tipo_chofer = tipo_chofer;
         this.placa = placa;
     }
+
+    public Chofer(String telefono_chofer) {
+        this.telefono_chofer = telefono_chofer;
+    }
+    
+    
+
      public Chofer() {
-        this.telefono = "";
+        this.telefono_chofer = "";
         this.nombre = "";
         this.apellido_p = "";
         this.tipo_chofer = "";
         this.placa = "";
     }
 
-    public Chofer(String placa) {
-        this.placa = placa;
-    }
-    
-
-    public String getTelefono() {
-        return telefono;
+    public String getTelefono_chofer() {
+        return telefono_chofer;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setTelefono_chofer(String telefono_chofer) {
+        this.telefono_chofer = telefono_chofer;
     }
 
     public String getNombre() {
@@ -67,11 +69,9 @@ public class Chofer {
     public void setPlaca(String placa) {
         this.placa = placa;
     }
-    
-    @Override
-    public String toString(){
-        return String.valueOf(this.nombre);    
-    }
-    
-    
+        @Override
+    public String toString() {
+        return String.valueOf(this.nombre); // Esto asegura que se muestre el nombre chofer
+        
+    }  
 }

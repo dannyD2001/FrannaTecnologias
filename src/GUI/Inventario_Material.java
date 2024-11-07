@@ -169,7 +169,6 @@ public class Inventario_Material extends javax.swing.JFrame {
         setMaximumSize(new java.awt.Dimension(1200, 600));
         setMinimumSize(new java.awt.Dimension(1200, 600));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1200, 600));
 
         panel_principal.setBackground(new java.awt.Color(92, 189, 110));
         panel_principal.setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -334,7 +333,13 @@ public class Inventario_Material extends javax.swing.JFrame {
         nombre_usuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         texto_busqueda.setForeground(new java.awt.Color(0, 0, 0));
+        texto_busqueda.setText("Ingrese el Nombre del Material");
         texto_busqueda.setBorder(null);
+        texto_busqueda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                texto_busquedaMousePressed(evt);
+            }
+        });
         texto_busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 texto_busquedaKeyPressed(evt);
@@ -434,21 +439,18 @@ public class Inventario_Material extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void atrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseClicked
-        // TODO add your handling code here:
-        // instnaciar el usuario
-        //usuario usuarioActual =new usuario();
-        //insatncia a principal y pasa el modelo usuario para saber quien es y se sepa quien regresa a principal
-        //Principal principal = new Principal(usuarioActual);
-         Menu_Vista_Compra compra = new Menu_Vista_Compra();
-        //es un metodo que esta en princiapal que se encarga de verficar que usuario es por eso se le pasa atualizar a principal
-        //sabiendo que principal ya sabe quie es el usuario principal
-        //compra.actualizarPermisos();
-        //es para mostar el menu princiapal
-        compra.setVisible(true);
-        //para poner el jframe centrado en la pantalla
-        compra.setLocationRelativeTo(null);
-        //cerrar procesos que quedaron anteriormente
-        this.dispose();
+        if ("compra".equals(ventanaOrigen)) { // Verifica si se vino de compras
+            
+            Menu_Vista_Compra compra = new Menu_Vista_Compra();
+            compra.setVisible(true);
+            compra.setLocationRelativeTo(null); // Opcional: centra la ventana en pantalla
+        } 
+        else if ("venta".equals(ventanaOrigen)) { // Verifica si se vino de ventas
+            Menu_Vista_Venta venta = new Menu_Vista_Venta();
+            venta.setVisible(true);
+            venta.setLocationRelativeTo(null); // Opcional: centra la ventana en pantalla
+        }
+    this.dispose(); // Cierra la ventana actual de inventario
     }//GEN-LAST:event_atrasMouseClicked
 
     private void atrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseEntered
@@ -495,6 +497,18 @@ public class Inventario_Material extends javax.swing.JFrame {
         // Llama al método para buscar el material
         BuscarMateria(nombreBuscado); 
     }//GEN-LAST:event_texto_busquedaKeyReleased
+    private boolean limpiado = false;
+    private void texto_busquedaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_texto_busquedaMousePressed
+        // TODO add your handling code here:
+        if(!limpiado){
+           //limpiar el texto
+           if(!texto_busqueda.getText().equals("")){
+               texto_busqueda.setText("");
+           }
+           limpiado = true;
+       }  
+        
+    }//GEN-LAST:event_texto_busquedaMousePressed
 
     /**
      * @param args the command line arguments
@@ -601,5 +615,12 @@ public class Inventario_Material extends javax.swing.JFrame {
     // Elimina los caracteres diacríticos (acentos, tildes, etc.)
     texto = texto.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     return texto;
-}
+    }
+    //extra para las ventanas
+    private String ventanaOrigen; // Agrega esta línea
+    public void setVentanaOrigen(String origen) {
+    this.ventanaOrigen = origen;
+    }
+
+
 }

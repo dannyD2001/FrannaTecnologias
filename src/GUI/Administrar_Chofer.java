@@ -342,7 +342,7 @@ public class Administrar_Chofer extends javax.swing.JFrame {
         if(!ctrlChofer.existeTelefono(telefono.getText().trim())){
             chofer.setNombre(capitalize(nombre_chofer.getText()));
             chofer.setApellido_p(capitalize(apellido_p.getText()));
-            chofer.setTelefono(telefono.getText());            
+            chofer.setTelefono_chofer(telefono.getText());            
             //obtener la tipo de chofer selecionado
             String tipoSeleccion = (String) combox_tipo.getSelectedItem();
             chofer.setTipo_chofer(tipoSeleccion);

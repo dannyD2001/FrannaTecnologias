@@ -1,5 +1,4 @@
 package controlador;
-
 import conexion.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +8,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Chofer;
 import modelo.Vehiculo;
-
 public class ctrl_chofer {
-    //para consultar
+    //CONSULTA DEL PENDIENTE
     public void ConsultarVehiculo(JComboBox placaComboBox) {
     Connection con = null;
     PreparedStatement ps = null;
@@ -46,22 +44,22 @@ public class ctrl_chofer {
         }
     }
     }
-    
+    //PARA VERIFICAR SI EXISTE EL CHOFER
+    //FUE UTILIZADO EN ADMINISTRAR_CHOFER
     public boolean existeTelefono(String telefono){
         boolean respuesta = false;
-        String sql = "SELECT telefono FROM chofer WHERE telefono = ?";
+        String sql = "SELECT telefono_chofer FROM chofer WHERE telefono_chofer = ?";
         PreparedStatement ps = null;
         ResultSet rs = null;
         Connection con = null;
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);
-            ps.setString(1, telefono);  // Asignar el valor de nombre al marcador de parámetro "?"
+            ps.setString(1, telefono);  
             rs = ps.executeQuery();
             if (rs.next()) {
-            respuesta = true;  // Si hay un resultado, significa que existe el material
-        }
-            
+            respuesta = true; 
+        }   
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al consultar en Chofer")
                     ;
@@ -76,16 +74,15 @@ public class ctrl_chofer {
         }
         return respuesta;   
     }
-    
+    //PARA REGISTAR EL CHOFER UTILIZADO EN ADMINISTAR CHOFER Y EN VENTA
     public boolean RegistrarChofer(Chofer chofer){
         Connection con = null;
-        //consultas-actualizacion,eliminacion,modificacion
         PreparedStatement ps = null;
-        String slq = "INSERT INTO chofer(telefono, nombre, apellido_p, tipo_chofer, placa) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO chofer(telefono_chofer, nombre, apellido_p, tipo_chofer, placa) VALUES(?,?,?,?,?)";
         try {
             con = conexion.conectar();
-            ps = con.prepareStatement(slq);
-            ps.setString(1, chofer.getTelefono());
+            ps = con.prepareStatement(sql);
+            ps.setString(1, chofer.getTelefono_chofer());
             ps.setString(2, chofer.getNombre());
             ps.setString(3, chofer.getApellido_p());
             ps.setString(4, chofer.getTipo_chofer());
@@ -110,16 +107,17 @@ public class ctrl_chofer {
             try {
                 if(con != null)con.close();
             } catch (SQLException e) {
+                 JOptionPane.showMessageDialog(null, e.getMessage());
             }
         }        
     }
     
-    //para buscar el chofer en venta
+    //PARA LA BUSQUEDA DEL CHOFER EN VENTA-INTERNO, EN EL PANEL VISTA
     public void bucarChofer(JComboBox chofer){
         Connection con = null;
         ResultSet rs = null;
         PreparedStatement ps = null;
-        String sql ="SELECT * FROM chofer";
+        String sql ="SELECT * FROM chofer where tipo_chofer = 'Interno'";
         try {
             chofer.removeAllItems(); // Limpiar el JComboBox*/
             chofer.addItem("--Seleccionar--"); // Agregar opción "vacía" o inicial*/
@@ -127,7 +125,7 @@ public class ctrl_chofer {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
-                String telefono = rs.getString("telefono");
+                String telefono = rs.getString("telefono_chofer");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido_p");
                 String tipo = rs.getString("tipo_chofer");
@@ -154,5 +152,208 @@ public class ctrl_chofer {
                 System.err.println("Error closing resources: " + ex.getMessage());
             }
         }
+    }
+    
+    // esto esta en venta hacia abajo el de arriba es para el combox
+    // Verificar si la placa del vehículo ya existe en la base de datos
+    //PENDIENTE ..
+    /*public boolean verificarPlacaExistente(String placa) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            con = conexion.conectar();
+            String sql = "SELECT * FROM VEHICULO WHERE placa = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, placa);
+            rs = ps.executeQuery();
+            return rs.next(); // Devuelve true si la placa existe
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "La placa del vehículo no existe.");
+            return false;
+
+        } finally {
+            try { 
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) 
+            { 
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            }
+        }
+    }*/
+
+    // Verificar si el chofer externo ya está registrado en la base de datos
+    // Verificar si el chofer externo ya está registrado en la base de datos
+public Chofer buscarChoferExternoPorTelefono(String telefono) {
+    Chofer chofer = null;
+    if (telefono == null || telefono.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Error: El número de teléfono no puede ser nulo o vacío.");
+        return null; // Retornar null si el teléfono es inválido
+    }
+
+    Connection con = null; // Declarar la conexión aquí
+    PreparedStatement ps = null; // Declarar el PreparedStatement aquí
+    ResultSet rs = null; // Declarar el ResultSet aquí
+    String sql = "SELECT * FROM CHOFER WHERE telefono_chofer = ? AND tipo_chofer = 'Externo'";
+
+    try {
+        con = conexion.conectar(); // Obtener la conexión a la base de datos
+        ps = con.prepareStatement(sql); // Inicializar el PreparedStatement
+        ps.setString(1, telefono);
+        
+        rs = ps.executeQuery(); // Ejecutar la consulta
+        
+        if (rs.next()) {
+            chofer = new Chofer(
+                rs.getString("telefono_chofer"), 
+                rs.getString("nombre"), 
+                rs.getString("apellido_p"), 
+                "Externo", 
+                rs.getString("placa")
+            );
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar chofer: " + e.getMessage());
+    } finally {
+        // Asegurarse de cerrar los recursos
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cerrar los recursos: " + e.getMessage());
+        }
+    }
+
+    return chofer; // Retornar el chofer encontrado o null si no existe
+    }
+
+    // Registrar el chofer externo y su vehículo si no existen en la base de datos
+    //PENDINETE ..
+    /*public boolean registrarChoferExternoConVehiculo(Chofer chofer) {
+    boolean registrado = false;
+    Connection con = null;  // Declarar conexión aquí
+    String sqlVehiculo = "INSERT INTO VEHICULO (placa) VALUES (?)";
+    String sqlChofer = "INSERT INTO CHOFER (telefono_chofer, nombre, apellido_p, tipo_chofer, placa) VALUES (?, ?, ?, 'Externo', ?)";
+
+    try {
+        con = conexion.conectar(); // Obtener la conexión a la base de datos
+        con.setAutoCommit(false); // Iniciar transacción
+
+        // 1. Verificar si el vehículo existe
+        if (!verificarPlacaExistente(chofer.getPlaca())) {
+            try (PreparedStatement psVehiculo = con.prepareStatement(sqlVehiculo)) {
+                psVehiculo.setString(1, chofer.getPlaca());
+                psVehiculo.executeUpdate();
+            }
+        }
+
+        // 2. Verificar si el chofer ya está registrado
+        if (buscarChoferExternoPorTelefono(chofer.getTelefono_chofer()) == null) {
+            try (PreparedStatement psChofer = con.prepareStatement(sqlChofer)) {
+                psChofer.setString(1, chofer.getTelefono_chofer());
+                psChofer.setString(2, chofer.getNombre());
+                psChofer.setString(3, chofer.getApellido_p());
+                psChofer.setString(4, chofer.getPlaca());
+                psChofer.executeUpdate();
+                registrado = true; // Chofer registrado exitosamente
+            }
+        }
+
+        con.commit(); // Confirmar transacción
+    } catch (SQLException e) {
+        try {
+            if (con != null) {
+                con.rollback(); // Deshacer si falla
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al hacer rollback: " + ex.getMessage());
+        }
+        JOptionPane.showMessageDialog(null, "Error al registrar chofer: " + e.getMessage());
+    } finally {
+        // Asegurarse de cerrar la conexión
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+    }
+
+    return registrado;
+    }*/
+    
+    //otracosnuslta 
+    // Obtener teléfono del chofer interno
+    public String obtenerTelefonoChoferInternoPorNombre(String nombre) {
+        String telefono = null;
+        Connection con = conexion.conectar();
+        try {
+            String sql = "SELECT telefono_chofer FROM CHOFER WHERE nombre = ? AND tipo_chofer = 'Interno'";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                telefono = rs.getString("telefono_chofer");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+        } finally {
+            try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+        }
+        return telefono;
+    }
+    //nos sirrve para actualizar
+    
+    public boolean actualizarChofer(Chofer choferExistente) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    try {
+        // Obtener conexión a la base de datos
+        con = conexion.conectar(); // Método para obtener la conexión
+        
+        // Crear la consulta SQL para actualizar el chofer
+        String sql = "UPDATE chofer SET nombre = ?, apellido_p = ?, tipo_chofer = ?, placa = ? WHERE telefono_chofer = ?";
+        ps = con.prepareStatement(sql); // Cambiado a 'con'
+
+        // Establecer los parámetros de la consulta
+        ps.setString(1, choferExistente.getNombre());
+        ps.setString(2, choferExistente.getApellido_p());
+        ps.setString(3, choferExistente.getTipo_chofer()); // "Interno" o "Externo"
+        ps.setString(4, choferExistente.getPlaca());
+        ps.setString(5, choferExistente.getTelefono_chofer()); // Usar teléfono como identificador
+
+        // Ejecutar la actualización
+        int filasAfectadas = ps.executeUpdate(); // Cambiado a 'ps'
+
+        // Retornar true si se actualizó al menos una fila
+        return filasAfectadas > 0;
+
+    } catch (SQLException e) { // Manejo de excepciones
+        // Manejo de excepciones
+        return false;
+    } finally {
+        // Cerrar recursos
+        try {
+            if (ps != null) ps.close(); // Cambiado a 'ps'
+            if (con != null) con.close(); // Cambiado a 'con'
+        } catch (SQLException e) {
+        }
+    }
     }
 }

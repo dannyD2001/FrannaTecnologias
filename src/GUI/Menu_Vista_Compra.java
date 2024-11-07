@@ -763,7 +763,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
 
     private void atrasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseEntered
         // TODO add your handling code here: 999999
-        panel_atras.setBackground(new Color(0x52aa63));
+        panel_atras.setBackground(new Color(0x5CBD6E));
         atras.setForeground(Color.WHITE);
     }//GEN-LAST:event_atrasMouseEntered
 
@@ -823,6 +823,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private void btn_stockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_stockMouseClicked
         // TODO add your handling code here:
         Inventario_Material inventario = new Inventario_Material();
+        inventario.setVentanaOrigen("compra");
         inventario.setVisible(true);
         inventario.setLocationRelativeTo(null);
         this.dispose();

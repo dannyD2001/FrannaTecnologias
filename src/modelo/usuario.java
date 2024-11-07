@@ -77,9 +77,10 @@ public class usuario {
     public void setTipo_usuario(String tipo_usuario) {
         this.tipo_usuario = tipo_usuario;
     }
-
-   
-    
-
+    @Override
+    public String toString() {
+        return String.valueOf(this.nombre); // Esto asegura que se muestre el nombre del usuario
+        
+    }  
    
 }

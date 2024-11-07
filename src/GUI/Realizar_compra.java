@@ -1055,7 +1055,6 @@ public class Realizar_compra extends javax.swing.JFrame {
             // Agregar la fila al modelo de la tabla
             modelo.insertRow(0, fila);
             tabla_compra.setModel(modelo);
-
             // Vaciar los campos de texto luego de agregar a la tabla
             limpiar();
             total_pagar();
@@ -1310,7 +1309,7 @@ public class Realizar_compra extends javax.swing.JFrame {
     private void limpiar(){
         name_material.setSelectedIndex(0);                
         id_material.setText("");
-        precio_kg1.setText("");
+        //precio_kg1.setText("");
         peso.setText("");
         peso_bruto.setText("");
         peso_tara1.setText("");

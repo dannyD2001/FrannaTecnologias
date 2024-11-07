@@ -4,25 +4,42 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import controlador.ctrl_chofer;
 import controlador.ctrl_cliente;
 import controlador.ctrl_material;
+import controlador.ctrl_usuario;
+import controlador.ctrl_vehiculo;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
+import modelo.Chofer;
 import modelo.Cliente;
+import modelo.DetalleVenta;
 import modelo.Material;
+import modelo.Venta;
 import modelo.usuario;
-public class Vista_Venta extends javax.swing.JFrame {
+import controlador.ctrl_venta;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import modelo.Vehiculo;
+    public class Vista_Venta extends javax.swing.JFrame {
+        //iconos
+        Icon error;
+        Icon correcto;   
         //instanciando las clase
         ctrl_material Ctrl_mat = new ctrl_material();
         usuario usuario  = new usuario();
         usuario usuarioActual = AppContext.getUsuarioActual();
         Cliente cliente = new Cliente();
         ctrl_cliente Ctrl_cliente = new ctrl_cliente();
-        
+        ctrl_venta ctrlVenta = new ctrl_venta();
         ctrl_chofer chofer = new ctrl_chofer();
-        
+        double TotalPagar = 0.00;
+        ctrl_vehiculo ctrlVehiculo = new ctrl_vehiculo();
+        Vehiculo auto = new Vehiculo();
     public Vista_Venta() {
         // Aplica el tema oscuro de FlatLaf
         try {
@@ -34,6 +51,7 @@ public class Vista_Venta extends javax.swing.JFrame {
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
         this.setIconImage(icono);
         this.setLocationRelativeTo(null);
+        correcto = new  ImageIcon("src/imagenes/correcto.png");
         //para los botones de los jtextfield
         nombre_usuario.setBackground(new java.awt.Color(0,0,0,1));
         apellido_paterno.setBackground(new java.awt.Color(0,0,0,1));
@@ -61,13 +79,40 @@ public class Vista_Venta extends javax.swing.JFrame {
                 combox_TipoPago.disable();
                 status.disable();
                 observaciones.disable();
-                combox_servicio.disable();
-                combox_tipo.disable();
-                combox_chofer.disable();
-                nombre_chofer.disable();
-                telefono_chofer.disable();
-                placa_unidad.disable();
-                costo_adicional.disable();
+                //combox_servicio.disable();
+                //combox_tipo.disable();
+                //combox_chofer.disable();
+                //nombre_chofer.disable();
+                //telefono_chofer.disable();
+                //placa_unidad.disable();
+                //costo_adicional.disable();
+                //aca igual poner logico del habilitar y desabilitar
+                combox_servicio.addActionListener(fleteEvent ->{
+                    String fleteSeleccionado = combox_servicio.getSelectedItem().toString();
+                    if (fleteSeleccionado.equals("Si")) {
+                        combox_tipo.setSelectedItem("Interno");
+                        // Habilitar campos de chofer interno
+                        combox_chofer.enable();
+                        costo_adicional.enable();
+                        // Deshabilitar campos para chofer externo
+                        nombre_chofer.disable();
+                        telefono_chofer.disable();
+                        placa_unidad.disable();
+                        combox_tipo.disable();
+                    }else{
+                        combox_tipo.setSelectedItem("Externo");
+                        // Deshabilitar selección de chofer interno y costo adicional
+                        combox_chofer.disable();
+                        costo_adicional.disable();
+                        // Habilitar campos para chofer externo
+                        nombre_chofer.enable();
+                        telefono_chofer.enable();
+                        placa_unidad.enable();
+                        combox_tipo.disable();
+                        costo_adicional.setText("0.00");
+                    }
+                
+                });  
         ///segun el action listener del material
         name_material.addActionListener(e ->{
             Object selectedItem = name_material.getSelectedItem();
@@ -88,7 +133,7 @@ public class Vista_Venta extends javax.swing.JFrame {
                 combox_TipoPago.disable();
                 status.disable();
                 observaciones.disable();
-                combox_servicio.disable();
+               // combox_servicio.disable();
                 combox_tipo.disable();
                 combox_chofer.disable();
                 nombre_chofer.disable();
@@ -112,13 +157,13 @@ public class Vista_Venta extends javax.swing.JFrame {
                 combox_TipoPago.enable();
                 status.enable();
                 observaciones.enable();
-                nombre_chofer.enable();
-                telefono_chofer.enable();
-                placa_unidad.enable();
-                costo_adicional.enable();
+               // nombre_chofer.enable();
+               // telefono_chofer.enable();
+                //placa_unidad.enable();
+                //costo_adicional.enable();
                 combox_servicio.enable();
-                combox_tipo.enable();
-                combox_chofer.enable();
+                //combox_tipo.enable();
+                //combox_chofer.enable();                
                 combox_precio.enable();
                 // Ahora agregamos la lógica del flete
                 combox_servicio.addActionListener(fleteEvent ->{
@@ -148,15 +193,13 @@ public class Vista_Venta extends javax.swing.JFrame {
                 });
                 peso_tara.requestFocusInWindow();//sirve para colocarte en ese textfield  
             }
-        });
-        
-        
+        });               
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_principal = new javax.swing.JPanel();
+        panel_secundario = new javax.swing.JPanel();
         panel_barra = new javax.swing.JPanel();
         Txt_modulo = new javax.swing.JLabel();
         panel_atras = new swing.PanelRound();
@@ -210,7 +253,6 @@ public class Vista_Venta extends javax.swing.JFrame {
         tabla_venta = new javax.swing.JTable();
         panel_importe = new javax.swing.JPanel();
         label_total_pagar = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         label_total = new javax.swing.JLabel();
         panel_revisado_por = new javax.swing.JPanel();
         nombre_usuario = new javax.swing.JTextField();
@@ -220,6 +262,8 @@ public class Vista_Venta extends javax.swing.JFrame {
         panel_cliente = new javax.swing.JPanel();
         combox_cliente = new javax.swing.JComboBox<>();
         icon_cliente = new javax.swing.JLabel();
+        apellido_chofer = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1350, 650));
@@ -227,11 +271,11 @@ public class Vista_Venta extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        panel_principal.setBackground(new java.awt.Color(48, 56, 65));
-        panel_principal.setMaximumSize(new java.awt.Dimension(1350, 650));
-        panel_principal.setMinimumSize(new java.awt.Dimension(1350, 650));
-        panel_principal.setPreferredSize(new java.awt.Dimension(1350, 650));
-        panel_principal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel_secundario.setBackground(new java.awt.Color(48, 56, 65));
+        panel_secundario.setMaximumSize(new java.awt.Dimension(1350, 650));
+        panel_secundario.setMinimumSize(new java.awt.Dimension(1350, 650));
+        panel_secundario.setPreferredSize(new java.awt.Dimension(1350, 650));
+        panel_secundario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_barra.setBackground(new java.awt.Color(44, 62, 80));
 
@@ -290,7 +334,7 @@ public class Vista_Venta extends javax.swing.JFrame {
             .addComponent(Txt_modulo, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        panel_principal.add(panel_barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1350, 40));
+        panel_secundario.add(panel_barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1350, 40));
 
         panel_detalles.setBackground(new java.awt.Color(48, 56, 65));
         panel_detalles.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Detalle", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -403,6 +447,11 @@ public class Vista_Venta extends javax.swing.JFrame {
                 costo_adicionalMousePressed(evt);
             }
         });
+        costo_adicional.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costo_adicionalKeyReleased(evt);
+            }
+        });
 
         label_servicio.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         label_servicio.setText("Tipo Chofer");
@@ -413,6 +462,11 @@ public class Vista_Venta extends javax.swing.JFrame {
         observaciones.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
 
         descuento.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        descuento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                descuentoKeyPressed(evt);
+            }
+        });
 
         label_descuento.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_descuento.setText("Descuento (%)");
@@ -660,7 +714,7 @@ public class Vista_Venta extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        panel_principal.add(panel_detalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1210, 160));
+        panel_secundario.add(panel_detalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1210, 160));
 
         panel_eliminar_filas.setBackground(new java.awt.Color(48, 56, 65));
         panel_eliminar_filas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eliminar Fila", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -682,6 +736,9 @@ public class Vista_Venta extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 label_eliminarMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label_eliminarMousePressed(evt);
             }
         });
 
@@ -713,18 +770,18 @@ public class Vista_Venta extends javax.swing.JFrame {
                 .addContainerGap(49, Short.MAX_VALUE))
         );
 
-        panel_principal.add(panel_eliminar_filas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 60, 100, 150));
+        panel_secundario.add(panel_eliminar_filas, new org.netbeans.lib.awtextra.AbsoluteConstraints(1230, 60, 100, 150));
 
         tabla_venta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id Material", "Material", "Peso Tara(Kg)", "Peso Bruto(Kg)", "Peso Neto(Kg)", "Descuento(Kg)", "Descuento(%)", "PesoNetoDescuento", "Precio(Kg)", "Observaciones", "Flete", "Costo Flete", "Subtotal"
+                "Id Material", "Material", "Peso Tara(Kg)", "Peso Bruto(Kg)", "Peso Neto(Kg)", "Descuento(Kg)", "Descuento(%)", "PesoNetoDescuento", "Precio(Kg)", "Observaciones", "Subtotal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, true, true, true, true, true, true, true
+                false, false, false, false, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -739,16 +796,13 @@ public class Vista_Venta extends javax.swing.JFrame {
             tabla_venta.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        panel_principal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1310, 260));
+        panel_secundario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1310, 260));
 
         panel_importe.setBackground(new java.awt.Color(48, 56, 65));
         panel_importe.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Importe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
 
         label_total_pagar.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_pagar.setText("Total a Pagar");
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel5.setText("IVA");
 
         label_total.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -760,26 +814,22 @@ public class Vista_Venta extends javax.swing.JFrame {
             panel_importeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_importeLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(panel_importeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label_total_pagar, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
+                .addComponent(label_total_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(label_total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panel_importeLayout.setVerticalGroup(
             panel_importeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_importeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(panel_importeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(label_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(label_total_pagar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_importe, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 510, 220, 130));
+        panel_secundario.add(panel_importe, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 550, 220, 90));
 
         panel_revisado_por.setBackground(new java.awt.Color(48, 56, 65));
         panel_revisado_por.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Revisado Por", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -824,7 +874,7 @@ public class Vista_Venta extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_revisado_por, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 270, 60));
+        panel_secundario.add(panel_revisado_por, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 270, 60));
 
         panel_cliente.setBackground(new java.awt.Color(48, 56, 65));
         panel_cliente.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -856,7 +906,18 @@ public class Vista_Venta extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, 250, 60));
+        panel_secundario.add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, 250, 60));
+
+        apellido_chofer.setText("jTextField1");
+        panel_secundario.add(apellido_chofer, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 570, 80, -1));
+
+        jButton1.setText("VENTA");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        panel_secundario.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, 120, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -864,13 +925,13 @@ public class Vista_Venta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(panel_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel_secundario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(panel_principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panel_secundario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -943,6 +1004,119 @@ public class Vista_Venta extends javax.swing.JFrame {
        }                       
     }//GEN-LAST:event_costo_adicionalMousePressed
 
+    private void descuentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descuentoKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        DefaultTableModel modelo = (DefaultTableModel) tabla_venta.getModel();
+        
+        // Verificar que todos los campos necesarios no estén vacíos
+        if (!codigo_material.getText().trim().isEmpty() &&
+            combox_precio.getSelectedItem() != null &&
+            !peso_bruto.getText().trim().isEmpty() &&
+            !peso_tara.getText().trim().isEmpty() &&
+            !peso_neto.getText().trim().isEmpty() &&
+            !descuento.getText().trim().isEmpty()) {
+            try {
+                String observacioness = observaciones.getText().trim();
+                
+                if (name_material.getSelectedItem() == null) {                        
+                    JOptionPane.showMessageDialog(null, "Por favor!! Seleccione un material");
+                    return;
+                }
+                
+                // Inicializador después del enter
+                peso_tara.requestFocus(); 
+                
+                // Obtener datos del material
+                Material selectedMaterial = (Material) name_material.getSelectedItem();
+                int idMaterial = selectedMaterial.getId_material(); 
+                String nombreMaterial = selectedMaterial.getNombre_material();
+                
+                // Obtener valores de los campos
+                double pesoBruto = Double.parseDouble(peso_bruto.getText().trim());
+                double pesoTara = Double.parseDouble(peso_tara.getText().trim());
+                double pesoNeto = pesoBruto - pesoTara;
+                double precio = Double.parseDouble(combox_precio.getSelectedItem().toString().trim());
+                double descuentoPorcentaje = Double.parseDouble(descuento.getText().trim());
+                
+                // Calcular el peso descontado y el peso con descuento
+                double pesoDescontado = pesoNeto * (descuentoPorcentaje / 100.0);
+                pesoDescontado = Math.round(pesoDescontado * 100.0) / 100.0;
+                double pesoConDescuento = pesoNeto - pesoDescontado;
+                
+                // Calcular el subtotal
+                double subtotal = pesoConDescuento * precio;
+                double subtotalConDosDecimales = Math.round(subtotal * 100.0) / 100.0;
+
+                // Obtener el stock disponible del campo correspondiente
+                double stockDisponible = Double.parseDouble(stock.getText().trim());
+                
+                // Validación: verificar si el peso neto supera el stock disponible
+                if (pesoNeto > stockDisponible) {
+                    JOptionPane.showMessageDialog(null, "Stock insuficiente. No se puede agregar a la tabla.", "Stock insuficiente", JOptionPane.WARNING_MESSAGE);
+                    return; // No agregar la fila y salir de la función
+                }
+                
+                // Crear un array con los valores de la fila
+                Object[] fila = new Object[11];
+                fila[0] = idMaterial;
+                fila[1] = nombreMaterial;
+                fila[2] = pesoBruto;
+                fila[3] = pesoTara;
+                fila[4] = pesoNeto;
+                fila[5] = pesoDescontado;
+                fila[6] = descuentoPorcentaje;
+                fila[7] = pesoConDescuento;
+                fila[8] = precio;
+                fila[9] = observacioness;
+                fila[10] = subtotalConDosDecimales;
+                
+                // Agregar la fila al modelo de la tabla
+                modelo.insertRow(0, fila);
+                tabla_venta.setModel(modelo);
+                
+                // Limpiar los campos luego de agregar a la tabla
+                limpiar();
+                total_pagar();
+            } catch (HeadlessException | NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese valores válidos en los campos numéricos.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+        }
+    } 
+        
+    }//GEN-LAST:event_descuentoKeyPressed
+
+    private void label_eliminarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_eliminarMousePressed
+        // TODO add your handling code here:
+            // TODO add your handling code here:
+        try {
+        DefaultTableModel modelo = (DefaultTableModel) tabla_venta.getModel();
+        int selectedRow = tabla_venta.getSelectedRow(); // Verificar la fila seleccionada        
+        if (selectedRow != -1) { // Si hay una fila seleccionada (el valor sería diferente de -1)
+            modelo.removeRow(selectedRow);  // Eliminar la fila seleccionada
+            total_pagar();  // Recalcular el total
+        } else {
+            // Si no hay una fila seleccionada, mostramos un mensaje al usuario
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona una fila para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al eliminar la fila: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_label_eliminarMousePressed
+
+    private void costo_adicionalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costo_adicionalKeyReleased
+        // TODO add your handling code here:
+        total_pagar();
+    }//GEN-LAST:event_costo_adicionalKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        RegistrarVenta();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -980,6 +1154,7 @@ public class Vista_Venta extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Txt_modulo;
+    private javax.swing.JTextField apellido_chofer;
     private javax.swing.JTextField apellido_paterno;
     private javax.swing.JLabel atras;
     private javax.swing.JTextField codigo_material;
@@ -993,11 +1168,11 @@ public class Vista_Venta extends javax.swing.JFrame {
     private javax.swing.JTextField descuento;
     private javax.swing.JLabel icon_cliente;
     private javax.swing.JLabel icon_usuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1033,8 +1208,8 @@ public class Vista_Venta extends javax.swing.JFrame {
     private javax.swing.JPanel panel_importe;
     private javax.swing.JPanel panel_observaciones_descuento;
     private javax.swing.JPanel panel_pago;
-    private javax.swing.JPanel panel_principal;
     private javax.swing.JPanel panel_revisado_por;
+    private javax.swing.JPanel panel_secundario;
     private javax.swing.JTextField peso_bruto;
     private javax.swing.JTextField peso_neto;
     private javax.swing.JTextField peso_tara;
@@ -1065,5 +1240,240 @@ public class Vista_Venta extends javax.swing.JFrame {
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Por favor, Complete todos los campos", "Error de entrada", JOptionPane.ERROR_MESSAGE);
     }
+    }
+    
+    private void limpiar(){
+        name_material.setSelectedIndex(0);                
+        codigo_material.setText("");
+        //combox_precio.setSelectedIndex(0); 
+        peso_neto.setText("");
+        peso_bruto.setText("");
+        peso_tara.setText("");
+        descuento.setText("");
+        observaciones.setText("");
+    }
+    // total aplicado el flete
+    private void total_pagar() {
+    TotalPagar = 0.00;
+    int numfila = tabla_venta.getRowCount();
+
+    // Sumar los valores de la columna "Precio Total" de la tabla
+    for (int i = 0; i < numfila; i++) {
+        try {
+            Object valor = tabla_venta.getModel().getValueAt(i, 10);
+            if (valor != null && !valor.toString().isEmpty()) {
+                double calcular = Double.parseDouble(valor.toString());
+                TotalPagar += calcular;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error al convertir el valor a double: " + e.getMessage());
+        }
+    }
+
+    // Agregar el Costo Adicional al TotalPagar solo si no está vacío y es un número válido
+    String costoAdicionalText = costo_adicional.getText(); // Asegúrate de que "costo_adicional" es el nombre correcto del campo de texto
+    if (costoAdicionalText != null && !costoAdicionalText.isEmpty() && !costoAdicionalText.equals(".")) {
+        try {
+            // Verificar si el valor es un número decimal válido
+            if (costoAdicionalText.matches("^[0-9]+(\\.[0-9]+)?$")) {
+                double costoAdicional = Double.parseDouble(costoAdicionalText);
+                TotalPagar += costoAdicional;
+            } else {
+                // Mostrar un mensaje de advertencia al usuario si el formato no es válido
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido para el costo adicional.", "Valor inválido", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error al convertir el costo adicional a número: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Asegurarse de que el total no sea negativo
+    if (TotalPagar < 0) {
+        TotalPagar = 0.00;
+    }
+
+    // Actualizar el JLabel con el total formateado
+    label_total.setText(String.format("%,.2f", TotalPagar));
+    }
+    ///en prueba
+    private void RegistrarVenta() {
+    try {
+        // Verificar que haya productos en la tabla de ventas
+        if (tabla_venta.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay productos para registrar la venta. Asegúrese de agregar productos a la tabla.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Confirmar si se desea realizar la venta
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea realizar la venta?", "Confirmar Venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Venta cancelada.", "Cancelar", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        // Obtener el nombre de usuario
+        String nombreUsuario = nombre_usuario.getText();
+        ctrl_usuario ctrlUsu = new ctrl_usuario();
+        String telefonoUsuario = ctrlUsu.obtenerusuarioPorNombre(nombreUsuario);
+        if (telefonoUsuario == null) {
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
+            return; 
+            }
+
+        // Obtener nombre del cliente desde el ComboBox 
+        String nombreCliente = combox_cliente.getSelectedItem().toString();
+        ctrl_cliente ctrlCliente = new ctrl_cliente();
+        int idCliente = ctrlCliente.obtenerIdClientePorNombre(nombreCliente);
+        
+        if (idCliente == -1) {
+            JOptionPane.showMessageDialog(null, "Cliente no encontrado.");
+            return;
+            }
+        // Obtener datos del chofer
+        String tipoChofer = combox_tipo.getSelectedItem().toString();
+        String telefonoChofer = null;
+        String placaVehiculo = null;
+        ctrl_chofer ctrlChofer = new ctrl_chofer();
+        ctrl_vehiculo ctrlVehiculo = new ctrl_vehiculo();
+
+        if (tipoChofer.equals("Interno")) {
+            // Manejo de chofer interno
+            String nombreChofer = combox_chofer.getSelectedItem().toString();
+            telefonoChofer = ctrlChofer.obtenerTelefonoChoferInternoPorNombre(nombreChofer);
+            if (telefonoChofer == null) {
+                JOptionPane.showMessageDialog(null, "Chofer interno no encontrado.");
+                return;
+            }
+        } else {
+            // Manejo de chofer externo
+            String nombreChofer = capitalize(nombre_chofer.getText().trim()); //aca 
+            String apellidoChofer = capitalize(apellido_chofer.getText().trim());
+            telefonoChofer = telefono_chofer.getText().trim();
+            placaVehiculo = toUpperCaseString(placa_unidad.getText().trim());
+
+            // Verificar si la placa del vehículo existe
+            Long idVehiculo = ctrlVehiculo.obtenerIdPorPlaca(placaVehiculo);
+            if (idVehiculo == null) {
+                Vehiculo nuevoVehiculo = new Vehiculo(placaVehiculo);
+                //nuevoVehiculo.setPlaca(toUpperCaseString(placa_unidad.getText()));
+                
+                if (!ctrlVehiculo.registrarVehiculo(nuevoVehiculo)) {
+                    JOptionPane.showMessageDialog(null, "Error al registrar el vehículo.");
+                    return;
+                }
+                JOptionPane.showMessageDialog(null, "Vehículo registrado exitosamente.");
+            }
+
+            // Verificar si el chofer externo ya existe
+            Chofer choferExistente = ctrlChofer.buscarChoferExternoPorTelefono(telefonoChofer);
+            if (choferExistente == null) {
+                // Registrar el chofer si no existe
+                Chofer choferExterno = new Chofer(telefonoChofer, nombreChofer, apellidoChofer, "Externo", placaVehiculo);
+                if (!ctrlChofer.RegistrarChofer(choferExterno)) {
+                    JOptionPane.showMessageDialog(null, "Error al registrar el chofer externo.");
+                    return;
+                }
+            } else {
+                // Si el chofer ya existe, verificar si la placa es diferente
+                if (!choferExistente.getPlaca().equals(placaVehiculo)) {
+                    // Preguntar si se desea actualizar la placa
+                    int opcion = JOptionPane.showConfirmDialog(null, "El chofer ya existe. ¿Desea actualizar la placa a " + placaVehiculo + "?",
+                            "Actualizar Placa", JOptionPane.YES_NO_OPTION);
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        // Actualizar la placa del chofer existente
+                        choferExistente.setPlaca(placaVehiculo);
+                        if (!ctrlChofer.actualizarChofer(choferExistente)) {
+                            JOptionPane.showMessageDialog(null, "Error al actualizar la placa del chofer.");
+                            return;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se registrará el chofer con la nueva placa.");
+                        return;
+                    }
+                }
+            }
+        }
+
+        // Obtener otros datos de la venta
+        double totalVenta = Double.parseDouble(label_total.getText().replace(",", ""));
+        String metodoPago = combox_TipoPago.getSelectedItem().toString();
+        String estatus = status.getSelectedItem().toString();
+        String flete = combox_servicio.getSelectedItem().toString();
+        double costo = Double.parseDouble(costo_adicional.getText().replace(",", ""));
+        
+        // Crear objeto Venta y configurar sus valores
+        Venta venta = new Venta();
+        venta.setTotal_venta(totalVenta);
+        venta.setId_cliente(idCliente);
+        venta.setTelefono(telefonoUsuario); // Teléfono del usuario
+        venta.setMetodo_pago(metodoPago);
+        venta.setStatus(estatus);
+        venta.setFlete(flete);
+        venta.setCosto_flete(costo);
+        venta.setTelefono_chofer(telefonoChofer); // Teléfono del chofer
+
+        // Registrar la venta en la base de datos
+        int folio_venta = ctrlVenta.registrarVenta(venta);
+        if (folio_venta == -1) {
+            JOptionPane.showMessageDialog(null, "Error al registrar la venta.");
+            return;
+        }
+
+        // Registrar los detalles de la venta
+        for (int i = 0; i < tabla_venta.getRowCount(); i++) {
+            int id_material = Integer.parseInt(tabla_venta.getValueAt(i, 0).toString());
+            double peso_bruto = Double.parseDouble(tabla_venta.getValueAt(i, 2).toString());
+            double peso_tara = Double.parseDouble(tabla_venta.getValueAt(i, 3).toString());
+            double peso_neto = Double.parseDouble(tabla_venta.getValueAt(i, 4).toString());
+            double descuento = Double.parseDouble(tabla_venta.getValueAt(i, 6).toString());
+            String observacion = capitalize(tabla_venta.getValueAt(i, 9).toString().trim());
+            double subtotal = Double.parseDouble(tabla_venta.getValueAt(i, 10).toString());
+            double precio_seleccionado = Double.parseDouble(tabla_venta.getValueAt(i, 8).toString());
+
+            // Crear el objeto DetalleVenta
+            DetalleVenta detalleventa = new DetalleVenta(folio_venta, id_material, peso_bruto, peso_tara, peso_neto, descuento, observacion, subtotal, precio_seleccionado);
+
+            // Registrar el detalle de la venta
+            ctrl_venta ctrlDetalle = new ctrl_venta();
+            int filasAfectadas = ctrlDetalle.registrarDetalle(detalleventa); // Captura el número de filas afectadas
+
+            // Verificar si el registro fue exitoso
+            if (filasAfectadas <= 0) {
+                JOptionPane.showMessageDialog(null, "Error al registrar el detalle de la venta para el material ID: " + id_material);
+                return; // Salir del método si hubo un error
+            }
+        }
+
+        // Limpiar la tabla de venta y restablecer otros componentes
+        DefaultTableModel modelo = (DefaultTableModel) tabla_venta.getModel();
+        modelo.setRowCount(0); // Limpiar todas las filas de la tabla de venta
+        combox_cliente.setSelectedIndex(0); // Restablecer el JComboBox de cliente
+        label_total.setText("$ 00.00"); // Restablecer el total a pagar
+        costo_adicional.setText("0.00"); // Restablecer costo adicional
+        combox_servicio.setSelectedItem("No"); // Restablecer servicio
+        nombre_chofer.setText(""); // Limpiar campos de chofer
+        telefono_chofer.setText("");
+        placa_unidad.setText("");
+        apellido_chofer.setText("");
+        combox_chofer.setSelectedIndex(0); // Restablecer selección de chofer
+
+        JOptionPane.showMessageDialog(this, "Venta Registrada Exitosamente", "Venta Realizada", JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+    }
+    }
+
+    private String capitalize(String str) {
+    if (str == null || str.isEmpty()) {
+            return str; // Retorna la cadena original si está vacía o es null
+        }
+    //UpperCase Mayuscula vs lowerCase minuscula
+    return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+        //esto me sirve para la placa convertir todo a mayuscula 
+    private String toUpperCaseString(String str){
+        if(str == null || str.isEmpty()){
+            return str;//retronar cadena vacia
+        }
+        return str.toUpperCase();
     }
 }

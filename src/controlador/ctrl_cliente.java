@@ -112,5 +112,33 @@ public class ctrl_cliente {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
+    //para buscar
+    public int obtenerIdClientePorNombre(String nombreCliente) {
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        int idCliente = -1; // Inicializamos el id del proveedor        
+        try {
+            con = conexion.conectar(); // Conexión a la base de datos
+            // Consulta SQL para obtener el ID del proveedor
+            ps = con.prepareStatement("SELECT id_cliente FROM CLIENTE WHERE nombre_cliente = ?");
+            ps.setString(1, nombreCliente);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                idCliente = rs.getInt("id_cliente"); // Obtenemos el ID
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
+        }
+        return idCliente; // Retornar el ID del proveedor o -1 si no lo encontró
+    }
     
 }

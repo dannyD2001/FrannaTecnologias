@@ -750,8 +750,7 @@ public class Compra_realizadas extends javax.swing.JFrame {
             object[3] = compra.getTotal_compra();
             object[4]= compra.getMetodo_pago();
             object[5] = compra.getStatus();
-            modelo.addRow(object);
-            
+            modelo.addRow(object);            
             }
         }
         tabla_compras.setModel(modelo);
