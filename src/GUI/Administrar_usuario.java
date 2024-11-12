@@ -166,7 +166,7 @@ public class Administrar_usuario extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Tipo de usuario");
 
-        tipo_usuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empleado", "Administrador" }));
+        tipo_usuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Empleado", "Administrador", "Consultor", "Programador" }));
         tipo_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipo_usuarioActionPerformed(evt);

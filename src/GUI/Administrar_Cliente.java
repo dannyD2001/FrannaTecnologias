@@ -42,6 +42,9 @@ public class Administrar_Cliente extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        cuenta_clave = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 500));
@@ -188,14 +191,22 @@ public class Administrar_Cliente extends javax.swing.JFrame {
         apellido_p.setForeground(new java.awt.Color(0, 0, 0));
         apellido_p.setBorder(null);
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Cuenta Clave");
+
+        cuenta_clave.setForeground(new java.awt.Color(0, 0, 0));
+        cuenta_clave.setBorder(null);
+        cuenta_clave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cuenta_claveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout subpanelLayout = new javax.swing.GroupLayout(subpanel);
         subpanel.setLayout(subpanelLayout);
         subpanelLayout.setHorizontalGroup(
             subpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(subpanelLayout.createSequentialGroup()
-                .addGap(278, 278, 278)
-                .addComponent(panel_boton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(subpanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(subpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -220,6 +231,20 @@ public class Administrar_Cliente extends javax.swing.JFrame {
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(jSeparator4))
                 .addGap(180, 180, 180))
+            .addGroup(subpanelLayout.createSequentialGroup()
+                .addGroup(subpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(subpanelLayout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(panel_boton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(subpanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel6))
+                    .addGroup(subpanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(subpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cuenta_clave, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         subpanelLayout.setVerticalGroup(
             subpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,9 +269,15 @@ public class Administrar_Cliente extends javax.swing.JFrame {
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel6)
+                .addGap(20, 20, 20)
+                .addComponent(cuenta_clave, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(panel_boton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(101, 101, 101))
+                .addGap(50, 50, 50))
         );
 
         javax.swing.GroupLayout panel_Layout = new javax.swing.GroupLayout(panel_);
@@ -282,7 +313,7 @@ public class Administrar_Cliente extends javax.swing.JFrame {
                 .addComponent(panel_barra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(panel_, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -330,7 +361,7 @@ public class Administrar_Cliente extends javax.swing.JFrame {
         ctrl_cliente contrCliente = new ctrl_cliente();
 
         // Verificar que todos los campos estén llenos
-        if (nombre_cliente.getText().isEmpty() || telefono_cliente.getText().isEmpty() || ciudad_cliente.getText().isEmpty() || apellido_p.getText().isEmpty()) {
+        if (nombre_cliente.getText().isEmpty() || telefono_cliente.getText().isEmpty() || ciudad_cliente.getText().isEmpty() || apellido_p.getText().isEmpty() || cuenta_clave.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos");
             return;
         }
@@ -350,6 +381,10 @@ public class Administrar_Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El teléfono debe contener 10 dígitos numéricos");
             return;
         }
+        if(!cuenta_clave.getText().matches("\\d{18}")){            
+            JOptionPane.showMessageDialog(null, "La referencia debe contener 18 Digitos y solo debe contener números");
+            return;
+        }
 
         // Verificar si el cliente ya está registrado
         if (!contrCliente.existeCliente(telefono_cliente.getText().trim())) {
@@ -358,6 +393,7 @@ public class Administrar_Cliente extends javax.swing.JFrame {
             cliente.setApellido_p(capitalize(apellido_p.getText()));
             cliente.setTelefono(telefono_cliente.getText().trim());  // El teléfono no requiere capitalización
             cliente.setCiudad(capitalize(ciudad_cliente.getText()));
+            cliente.setCuenta_clave(cuenta_clave.getText());
 
             // Registrar el cliente en la base de datos
             if (contrCliente.registrarCliente(cliente)) {
@@ -383,6 +419,10 @@ public class Administrar_Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
         panel_boton.setBackground(new Color(0x5CBD6E));
     }//GEN-LAST:event_icon_btnMouseExited
+
+    private void cuenta_claveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cuenta_claveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cuenta_claveActionPerformed
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -419,16 +459,19 @@ public class Administrar_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField apellido_p;
     private javax.swing.JLabel atras;
     private javax.swing.JTextField ciudad_cliente;
+    private javax.swing.JTextField cuenta_clave;
     private javax.swing.JLabel icon_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTextField nombre_cliente;
     private swing.PanelRound panel_;
     private swing.PanelRound panel_atras;
@@ -465,12 +508,14 @@ public class Administrar_Cliente extends javax.swing.JFrame {
         apellido_p.setText("");
         telefono_cliente.setText("");
         ciudad_cliente.setText("");
+        cuenta_clave.setText("");
    
     }
     public void EliminarBorde(){
         nombre_cliente.setBackground(new java.awt.Color(0,0,0,1));
         apellido_p.setBackground(new java.awt.Color(0,0,0,1));
         telefono_cliente.setBackground(new java.awt.Color(0,0,0,1));
-        ciudad_cliente.setBackground(new java.awt.Color(0,0,0,1));    
+        ciudad_cliente.setBackground(new java.awt.Color(0,0,0,1));
+        cuenta_clave.setBackground(new java.awt.Color(0,0,0,1));
     }
 }

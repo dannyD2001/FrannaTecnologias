@@ -1,68 +1,33 @@
 package GUI;
+import com.formdev.flatlaf.FlatDarkLaf;
 import controlador.ctrl_compra;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import modelo.Compra;
 public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
     public Vista_Pagos_Pendientes_Compra_Granel() {
+        // Aplica el tema oscuro de FlatLaf
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+        }
         initComponents();
         //llamar el metodo de pagos pendientes
         cargarPagosPendientesEnTabla();
-        //Personalizamos la tablas 
-        tabla_pagos_pendientes.setBackground(Color.WHITE);  // Fondo de las celdas
-        tabla_pagos_pendientes.setForeground(new Color(000,000,000));  // Color del texto de las celdas
-        tabla_pagos_pendientes.setGridColor(new Color(255, 255, 255));  // Líneas de celda más suaves
-        tabla_pagos_pendientes.setRowHeight(25);  // Ajustar la altura de las filas
-        tabla_pagos_pendientes.setFont(new Font("sansserif", Font.PLAIN, 12));//ME PARECE, ES FUENTE DEL CONTENIDO DE LA TABLA
-        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                // Establecer los colores para celdas seleccionadas y no seleccionadas
-                if (isSelected) {
-                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
-                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
-                } else {
-                    label.setBackground(Color.WHITE);  // Fondo cuando no está seleccionada (blanco)
-                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
-                }
-                // Si deseas cambiar el alineamiento del texto
-                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
-
-                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
-                return label;
-            }
-        };
-        // Aplicar el renderizador personalizado a todas las columnas de la tabla
-        for (int i = 0; i < tabla_pagos_pendientes.getColumnCount(); i++) {
-            tabla_pagos_pendientes.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
-        }
-        //para encabezado de Tabla
-        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setBackground(new Color(120,171,168));  // Fondo verde del encabezado                
-                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
-                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
-                label.setFont((new Font("sansserif", Font.BOLD, 12))); //LA FUENTE DE LA TABLA  TITULO                 
-                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
-                return label;
-            }
-        };
-         // Aplicar el renderizador a cada columna del encabezado
-        for (int i = 0; i < tabla_pagos_pendientes.getColumnModel().getColumnCount(); i++) {
-            tabla_pagos_pendientes.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }      
+        personalizar_tabla();
+        
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -73,12 +38,13 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panel_atras = new swing.PanelRound();
         atras = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tabla_pagos_pendientes = new javax.swing.JTable();
         btn_pagos_realizados = new swing.PanelRound();
         jLabel3 = new javax.swing.JLabel();
         btn_pago = new swing.PanelRound();
         jLabel2 = new javax.swing.JLabel();
+        panel_para_scroll = new swing.PanelRound();
+        scroll_panel = new javax.swing.JScrollPane();
+        tabla_pagos_pendientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -89,6 +55,7 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         panel_principal.setBackground(new java.awt.Color(92, 189, 110));
         panel_principal.setMaximumSize(new java.awt.Dimension(1200, 600));
         panel_principal.setMinimumSize(new java.awt.Dimension(1200, 600));
+        panel_principal.setPreferredSize(new java.awt.Dimension(1200, 600));
         panel_principal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         barra_principal.setBackground(new java.awt.Color(92, 189, 110));
@@ -150,29 +117,6 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         );
 
         panel_principal.add(barra_principal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 40));
-
-        tabla_pagos_pendientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Folio Compra", "Fecha Compra", "Proveedor", "Total Compra", "Método Pago", "Estatus", "Teléfono del Proveedor", "Cuenta Clave"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tabla_pagos_pendientes);
-        if (tabla_pagos_pendientes.getColumnModel().getColumnCount() > 0) {
-            tabla_pagos_pendientes.getColumnModel().getColumn(0).setPreferredWidth(10);
-        }
-
-        panel_principal.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 1140, 420));
 
         btn_pagos_realizados.setBackground(new java.awt.Color(106, 154, 176));
         btn_pagos_realizados.setRoundBottomLeft(20);
@@ -248,6 +192,52 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         );
 
         panel_principal.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 520, 110, 50));
+
+        panel_para_scroll.setBackground(new java.awt.Color(51, 50, 55));
+        panel_para_scroll.setRoundBottomLeft(30);
+        panel_para_scroll.setRoundBottomRight(30);
+        panel_para_scroll.setRoundTopLeft(30);
+        panel_para_scroll.setRoundTopRight(30);
+
+        tabla_pagos_pendientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Folio Compra", "Fecha Compra", "Proveedor", "Total Compra", "Método Pago", "Estatus", "Teléfono del Proveedor", "Cuenta Clave"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scroll_panel.setViewportView(tabla_pagos_pendientes);
+        if (tabla_pagos_pendientes.getColumnModel().getColumnCount() > 0) {
+            tabla_pagos_pendientes.getColumnModel().getColumn(0).setPreferredWidth(10);
+        }
+
+        javax.swing.GroupLayout panel_para_scrollLayout = new javax.swing.GroupLayout(panel_para_scroll);
+        panel_para_scroll.setLayout(panel_para_scrollLayout);
+        panel_para_scrollLayout.setHorizontalGroup(
+            panel_para_scrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_para_scrollLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 1116, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panel_para_scrollLayout.setVerticalGroup(
+            panel_para_scrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_para_scrollLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panel_principal.add(panel_para_scroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 1140, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -408,9 +398,10 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private swing.PanelRound panel_atras;
+    private swing.PanelRound panel_para_scroll;
     private javax.swing.JPanel panel_principal;
+    private javax.swing.JScrollPane scroll_panel;
     private javax.swing.JTable tabla_pagos_pendientes;
     // End of variables declaration//GEN-END:variables
     ctrl_compra ctrlcompra = new ctrl_compra();
@@ -432,5 +423,58 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         
         modelo.addRow(fila);
     }
+    }
+    //personalizar tabla
+    public void personalizar_tabla(){
+        //Personalizamos la tablas 
+        tabla_pagos_pendientes.setBackground(new Color(0x333337));  // Fondo de las celdas
+        tabla_pagos_pendientes.setForeground(new Color(000,000,000));  // Color del texto de las celdas
+        tabla_pagos_pendientes.setGridColor(new Color(0x333337));  // Líneas de celda más suaves
+        tabla_pagos_pendientes.setRowHeight(25);  // Ajustar la altura de las filas
+        tabla_pagos_pendientes.setFont(new Font("sansserif", Font.PLAIN, 12));//ME PARECE, ES FUENTE DEL CONTENIDO DE LA TABLA
+        // Configurar el JScrollPane sin borde
+        scroll_panel.setBorder(BorderFactory.createEmptyBorder());
+        scroll_panel.setBackground(new Color(0x333337));
+        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Establecer los colores para celdas seleccionadas y no seleccionadas
+                if (isSelected) {
+                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
+                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
+                } else {
+                    //este es el que aplica para el fondo del tabla
+                    label.setBackground(new Color(0x333337));  // Fondo cuando no está seleccionada (blanco)
+                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
+                }
+                // Si deseas cambiar el alineamiento del texto
+                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
+
+                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
+                return label;
+            }
+        };
+        // Aplicar el renderizador personalizado a todas las columnas de la tabla
+        for (int i = 0; i < tabla_pagos_pendientes.getColumnCount(); i++) {
+            tabla_pagos_pendientes.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        //para encabezado de Tabla
+        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(120,171,168));  // Fondo verde del encabezado                
+                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
+                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
+                label.setFont((new Font("sansserif", Font.BOLD, 12))); //LA FUENTE DE LA TABLA  TITULO                 
+                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
+                return label;
+            }
+        };
+         // Aplicar el renderizador a cada columna del encabezado
+        for (int i = 0; i < tabla_pagos_pendientes.getColumnModel().getColumnCount(); i++) {
+            tabla_pagos_pendientes.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
     }
 }

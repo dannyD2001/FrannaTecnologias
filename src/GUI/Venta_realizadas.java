@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,7 +35,7 @@ public class Venta_realizadas extends javax.swing.JFrame {
     ctrl_venta ventas = new ctrl_venta();
     //Declarando una Variable modelo a una clase parte de un biblioteca DefaultTableModel Que permite gestionar datos de una tabla
     DefaultTableModel modelo; //Clase parte de una biblioteca
-    
+    Icon senal;
     public Venta_realizadas() {
         // Aplica el tema oscuro de FlatLaf
         try {
@@ -326,7 +328,7 @@ public class Venta_realizadas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio", "Fecha", "Cliente", "Total Venta", "Metodo Pago", "Estatus", "Flete", "Costo del Flete", "Chofer", "Atendido Por"
+                "Folio", "Fecha y Hora", "Cliente", "Total Venta", "Metodo Pago", "Estatus", "Flete", "Costo del Flete", "Chofer", "Atendido Por"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -363,12 +365,15 @@ public class Venta_realizadas extends javax.swing.JFrame {
         label_detalle.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         label_detalle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bolsa_venta.png"))); // NOI18N
-        label_detalle.setText("DETALLE\nVENTA");
+        label_detalle.setText("VER DETALLE");
         label_detalle.setToolTipText("");
         label_detalle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         label_detalle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label_detalle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         label_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_detalleMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label_detalleMouseEntered(evt);
             }
@@ -543,9 +548,24 @@ public class Venta_realizadas extends javax.swing.JFrame {
         label_anular.setForeground(Color.WHITE);
     }//GEN-LAST:event_label_anularMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
+    private void label_detalleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_detalleMouseClicked
+        // TODO add your handling code here:
+        //aca
+        int FilaSeleccionada = table_ventas_realizadas.getSelectedRow();
+        if(FilaSeleccionada == -1){
+            JOptionPane.showMessageDialog(null, "Por Favor, Selecciona una Venta.","Alerta",JOptionPane.WARNING_MESSAGE,senal);
+            return;
+        
+        }
+        //Obtener el folio seleccionado
+        int folioVenta = (int) table_ventas_realizadas.getValueAt(FilaSeleccionada, 0);
+        Detalle_venta_realizadas detalle_venta = new Detalle_venta_realizadas();
+        detalle_venta.ListarDetallesVenta(folioVenta);
+        detalle_venta.setVisible(true);
+        detalle_venta.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_detalleMouseClicked
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -615,6 +635,8 @@ public class Venta_realizadas extends javax.swing.JFrame {
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
         this.setIconImage(icono);
         this.setLocationRelativeTo(null);
+        //Esto es para un icono de un salida de pantalla
+        senal  = new ImageIcon("src/imagenes/senal_alerta(1).png");
     }
     //personalizacion del calendario
     private void personalizarCalendario(JDateChooser dateChooser) {

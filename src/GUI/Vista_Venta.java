@@ -47,15 +47,8 @@ import modelo.Vehiculo;
         } catch (UnsupportedLookAndFeelException e) {
         }
         initComponents();
-        this.setTitle("VENTA");
-        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
-        this.setIconImage(icono);
-        this.setLocationRelativeTo(null);
-        correcto = new  ImageIcon("src/imagenes/correcto.png");
-        //para los botones de los jtextfield
-        nombre_usuario.setBackground(new java.awt.Color(0,0,0,1));
-        apellido_paterno.setBackground(new java.awt.Color(0,0,0,1));
-        numero_telefonico.setBackground(new java.awt.Color(0,0,0,1));
+        borrar_bordes();
+        utilidades();
         if(usuarioActual != null){
         nombre_usuario.setText(usuarioActual.getNombre());
         apellido_paterno.setText(usuarioActual.getApellidoP());
@@ -67,52 +60,47 @@ import modelo.Vehiculo;
         peso_bruto.addActionListener(e -> calcularPesoNeto());
         //cargar material al jcombox
         Ctrl_mat.bucarMaterial(name_material);
-        Ctrl_cliente.bucarCliente(combox_cliente);
-        
+        Ctrl_cliente.bucarCliente(combox_cliente);        
         //cargar el chofer
         chofer.bucarChofer(combox_chofer);
         //aca por defecto desabilamos casi todo 
         //como esta en seleccionar que se desabilite
-                peso_bruto.disable();
-                peso_tara.disable();
-                descuento.disable();
-                combox_TipoPago.disable();
-                status.disable();
-                observaciones.disable();
-                //combox_servicio.disable();
-                //combox_tipo.disable();
-                //combox_chofer.disable();
-                //nombre_chofer.disable();
-                //telefono_chofer.disable();
-                //placa_unidad.disable();
-                //costo_adicional.disable();
-                //aca igual poner logico del habilitar y desabilitar
-                combox_servicio.addActionListener(fleteEvent ->{
-                    String fleteSeleccionado = combox_servicio.getSelectedItem().toString();
-                    if (fleteSeleccionado.equals("Si")) {
-                        combox_tipo.setSelectedItem("Interno");
-                        // Habilitar campos de chofer interno
-                        combox_chofer.enable();
-                        costo_adicional.enable();
-                        // Deshabilitar campos para chofer externo
-                        nombre_chofer.disable();
-                        telefono_chofer.disable();
-                        placa_unidad.disable();
-                        combox_tipo.disable();
-                    }else{
-                        combox_tipo.setSelectedItem("Externo");
-                        // Deshabilitar selección de chofer interno y costo adicional
-                        combox_chofer.disable();
-                        costo_adicional.disable();
-                        // Habilitar campos para chofer externo
-                        nombre_chofer.enable();
-                        telefono_chofer.enable();
-                        placa_unidad.enable();
-                        combox_tipo.disable();
-                        costo_adicional.setText("0.00");
-                    }
-                
-                });  
+        peso_bruto.disable();
+        peso_tara.disable();
+        descuento.disable();
+        combox_TipoPago.disable();
+        status.disable();
+        observaciones.disable();
+        combox_tipo.disable();
+        // Ahora La lógica del flete
+        combox_servicio.addActionListener(fleteEvent ->{
+            String fleteSeleccionado = combox_servicio.getSelectedItem().toString();
+            if (fleteSeleccionado.equals("Si")) {
+                combox_tipo.setSelectedItem("Interno");
+                // Habilitar campos de chofer interno
+                combox_chofer.enable();
+                costo_adicional.enable();
+                // Deshabilitar campos para chofer externo
+                nombre_chofer.disable();
+                apellido_chofer.disable();
+                telefono_chofer.disable();
+                placa_unidad.disable();
+                combox_tipo.disable();
+            }else{
+                combox_tipo.setSelectedItem("Externo");
+                // Deshabilitar selección de chofer interno y costo adicional
+                combox_chofer.disable();
+                costo_adicional.disable();
+                // Habilitar campos para chofer externo
+                nombre_chofer.enable();
+                apellido_chofer.enable();
+                telefono_chofer.enable();
+                placa_unidad.enable();
+                combox_tipo.disable();
+                costo_adicional.setText("0.00");
+            }
+
+        });  
         ///segun el action listener del material
         name_material.addActionListener(e ->{
             Object selectedItem = name_material.getSelectedItem();
@@ -135,12 +123,6 @@ import modelo.Vehiculo;
                 observaciones.disable();
                // combox_servicio.disable();
                 combox_tipo.disable();
-                combox_chofer.disable();
-                nombre_chofer.disable();
-                telefono_chofer.disable();
-                combox_precio.disable();
-                placa_unidad.disable();
-                costo_adicional.disable();
             // Si no es nulo y es una instancia de Material, llenar los campos
             }else if(selectedItem instanceof Material){
                 Material selectedMaterial = (Material) selectedItem;
@@ -157,40 +139,8 @@ import modelo.Vehiculo;
                 combox_TipoPago.enable();
                 status.enable();
                 observaciones.enable();
-               // nombre_chofer.enable();
-               // telefono_chofer.enable();
-                //placa_unidad.enable();
-                //costo_adicional.enable();
-                combox_servicio.enable();
-                //combox_tipo.enable();
-                //combox_chofer.enable();                
-                combox_precio.enable();
-                // Ahora agregamos la lógica del flete
-                combox_servicio.addActionListener(fleteEvent ->{
-                    String fleteSeleccionado = combox_servicio.getSelectedItem().toString();
-                    if (fleteSeleccionado.equals("Si")) {
-                        combox_tipo.setSelectedItem("Interno");
-                        // Habilitar campos de chofer interno
-                        combox_chofer.enable();
-                        costo_adicional.enable();
-                        // Deshabilitar campos para chofer externo
-                        nombre_chofer.disable();
-                        telefono_chofer.disable();
-                        placa_unidad.disable();
-                        combox_tipo.disable();
-                    }else{
-                        combox_tipo.setSelectedItem("Externo");
-                        // Deshabilitar selección de chofer interno y costo adicional
-                        combox_chofer.disable();
-                        costo_adicional.disable();
-                        // Habilitar campos para chofer externo
-                        nombre_chofer.enable();
-                        telefono_chofer.enable();
-                        placa_unidad.enable();
-                        combox_tipo.disable();
-                    }
-                
-                });
+                combox_servicio.enable();              
+                combox_precio.enable();                
                 peso_tara.requestFocusInWindow();//sirve para colocarte en ese textfield  
             }
         });               
@@ -235,6 +185,8 @@ import modelo.Vehiculo;
         observaciones = new javax.swing.JTextField();
         descuento = new javax.swing.JTextField();
         label_descuento = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jSeparator9 = new javax.swing.JSeparator();
         panel_pago = new javax.swing.JPanel();
         label_metodo_pago = new javax.swing.JLabel();
         combox_TipoPago = new javax.swing.JComboBox<>();
@@ -246,6 +198,15 @@ import modelo.Vehiculo;
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        apellido_chofer = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator6 = new javax.swing.JSeparator();
+        jSeparator7 = new javax.swing.JSeparator();
         panel_eliminar_filas = new javax.swing.JPanel();
         panel_eliminar = new swing.PanelRound();
         label_eliminar = new javax.swing.JLabel();
@@ -262,7 +223,6 @@ import modelo.Vehiculo;
         panel_cliente = new javax.swing.JPanel();
         combox_cliente = new javax.swing.JComboBox<>();
         icon_cliente = new javax.swing.JLabel();
-        apellido_chofer = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -383,11 +343,14 @@ import modelo.Vehiculo;
         label_pesoNeto.setText("Peso Neto");
 
         peso_tara.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_tara.setBorder(null);
 
         peso_bruto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_bruto.setBorder(null);
 
         peso_neto.setEditable(false);
         peso_neto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_neto.setBorder(null);
 
         label_precio.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         label_precio.setText("Precio");
@@ -414,10 +377,13 @@ import modelo.Vehiculo;
         combox_chofer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         nombre_chofer.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        nombre_chofer.setBorder(null);
 
         telefono_chofer.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        telefono_chofer.setBorder(null);
 
         placa_unidad.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        placa_unidad.setBorder(null);
         placa_unidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 placa_unidadActionPerformed(evt);
@@ -442,9 +408,15 @@ import modelo.Vehiculo;
 
         costo_adicional.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         costo_adicional.setText("0.00");
+        costo_adicional.setBorder(null);
         costo_adicional.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 costo_adicionalMousePressed(evt);
+            }
+        });
+        costo_adicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                costo_adicionalActionPerformed(evt);
             }
         });
         costo_adicional.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -460,8 +432,10 @@ import modelo.Vehiculo;
         panel_observaciones_descuento.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observaciones y Descuento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
 
         observaciones.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        observaciones.setBorder(null);
 
         descuento.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        descuento.setBorder(null);
         descuento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 descuentoKeyPressed(evt);
@@ -477,12 +451,16 @@ import modelo.Vehiculo;
             panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_observaciones_descuentoLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator9)
+                    .addComponent(observaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addComponent(label_descuento)
                 .addGap(5, 5, 5)
-                .addComponent(descuento, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator8)
+                    .addComponent(descuento, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panel_observaciones_descuentoLayout.setVerticalGroup(
             panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,7 +470,10 @@ import modelo.Vehiculo;
                     .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_descuento))
-                .addGap(5, 5, 5))
+                .addGap(0, 0, 0)
+                .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator9, javax.swing.GroupLayout.DEFAULT_SIZE, 10, Short.MAX_VALUE)
+                    .addComponent(jSeparator8)))
         );
 
         panel_pago.setBackground(new java.awt.Color(48, 56, 65));
@@ -551,7 +532,7 @@ import modelo.Vehiculo;
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-weight-kg-24.png"))); // NOI18N
 
-        combox_servicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No", "Si" }));
+        combox_servicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "No", "Si" }));
         combox_servicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel4.setText("Servicio Flete");
@@ -565,14 +546,19 @@ import modelo.Vehiculo;
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-weight-kg-24.png"))); // NOI18N
 
+        apellido_chofer.setBorder(null);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        jLabel5.setText("Apellido Chofer");
+
         javax.swing.GroupLayout panel_detallesLayout = new javax.swing.GroupLayout(panel_detalles);
         panel_detalles.setLayout(panel_detallesLayout);
         panel_detallesLayout.setHorizontalGroup(
             panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_detallesLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panel_detallesLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(name_material, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_material))
@@ -587,18 +573,23 @@ import modelo.Vehiculo;
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_pesoTara, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addComponent(peso_tara, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(peso_tara, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                                 .addGap(4, 4, 4)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_pesoBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addComponent(peso_bruto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jSeparator7, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(peso_bruto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
                                 .addGap(4, 4, 4)
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panel_detallesLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(panel_observaciones_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -620,74 +611,84 @@ import modelo.Vehiculo;
                             .addComponent(label_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panel_detallesLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
                                 .addComponent(label_seleccion_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(label_nombre_chofer))
+                                .addGap(15, 15, 15)
+                                .addComponent(label_nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE))
                             .addGroup(panel_detallesLayout.createSequentialGroup()
                                 .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(15, 15, 15)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSeparator1)
+                                    .addComponent(nombre_chofer, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))))
                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_detallesLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(telefono_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_telefono))
-                        .addGap(35, 35, 35)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_placa)
-                            .addComponent(placa_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_costo)
-                            .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panel_detallesLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1)
-                        .addComponent(panel_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(5, 5, 5))
+                        .addComponent(panel_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_detallesLayout.createSequentialGroup()
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(apellido_chofer, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2))
+                        .addGap(12, 12, 12)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(label_telefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(telefono_chofer)
+                            .addComponent(jSeparator3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(label_placa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(placa_unidad)
+                            .addComponent(jSeparator4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(costo_adicional)
+                            .addComponent(label_costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator5))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_detallesLayout.setVerticalGroup(
             panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_detallesLayout.createSequentialGroup()
-                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panel_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panel_detallesLayout.createSequentialGroup()
-                            .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(label_material)
-                                .addComponent(label_codigo_material)
-                                .addComponent(label_pesoTara)
-                                .addComponent(label_pesoBruto)
-                                .addComponent(label_pesoNeto)
-                                .addComponent(label_precio)
-                                .addComponent(label_stock))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_detallesLayout.createSequentialGroup()
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panel_detallesLayout.createSequentialGroup()
                                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(peso_tara, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(name_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(codigo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(peso_bruto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(label_material)
+                                    .addComponent(label_codigo_material)
+                                    .addComponent(label_pesoTara)
+                                    .addComponent(label_pesoBruto)
+                                    .addComponent(label_pesoNeto)
+                                    .addComponent(label_precio)
+                                    .addComponent(label_stock))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(peso_tara, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(name_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(codigo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(peso_bruto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator6)
+                            .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_detallesLayout.createSequentialGroup()
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label_placa)
-                                    .addComponent(label_costo)))
                             .addGroup(panel_detallesLayout.createSequentialGroup()
                                 .addGap(4, 4, 4)
                                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -695,18 +696,33 @@ import modelo.Vehiculo;
                                     .addComponent(label_nombre_chofer)
                                     .addComponent(label_seleccion_chofer)
                                     .addComponent(label_servicio)
-                                    .addComponent(jLabel4))))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)))
+                            .addGroup(panel_detallesLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(label_costo))
+                            .addGroup(panel_detallesLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(label_placa)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(telefono_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(placa_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(apellido_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, 0)
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_detallesLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -907,9 +923,6 @@ import modelo.Vehiculo;
         );
 
         panel_secundario.add(panel_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, 250, 60));
-
-        apellido_chofer.setText("jTextField1");
-        panel_secundario.add(apellido_chofer, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 570, 80, -1));
 
         jButton1.setText("VENTA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1114,8 +1127,14 @@ import modelo.Vehiculo;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        ctrl_material material = new ctrl_material();
         RegistrarVenta();
+        material.bucarMaterial(name_material);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void costo_adicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_costo_adicionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costo_adicionalActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1173,9 +1192,19 @@ import modelo.Vehiculo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JLabel label_codigo_material;
     private javax.swing.JLabel label_costo;
     private javax.swing.JLabel label_descuento;
@@ -1302,6 +1331,45 @@ import modelo.Vehiculo;
         if (tabla_venta.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "No hay productos para registrar la venta. Asegúrese de agregar productos a la tabla.", "Mensaje", JOptionPane.WARNING_MESSAGE);
             return;
+        }
+        // Verificar que el servicio de flete esté seleccionado correctamente
+        String servicioFlete = combox_servicio.getSelectedItem().toString();
+        if (!servicioFlete.equals("Si") && !servicioFlete.equals("No")) {
+            JOptionPane.showMessageDialog(null, "Seleccione una opción válida para el servicio de flete (Sí o No).", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Validaciones adicionales según el valor de "Servicio Flete"
+        if (servicioFlete.equals("Si")) {
+            // Verificar que se haya seleccionado un chofer
+            if (combox_chofer.getSelectedItem() == null || combox_chofer.getSelectedItem().toString().equals("--Seleccionar--")) {
+                JOptionPane.showMessageDialog(null, "Seleccione un chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            // Verificar que el campo de "Costo Adicional" tenga un valor válido
+            String costoAdicionalStr = costo_adicional.getText().trim();
+            if (costoAdicionalStr.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese un costo adicional válido", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+        } else if (servicioFlete.equals("No")) {
+            // Verificar que los campos de "Nombre del Chofer", "Teléfono del Chofer", y "Placa de la Unidad" estén llenos
+            if (nombre_chofer.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el nombre del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (telefono_chofer.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese el teléfono del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (placa_unidad.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Ingrese la placa de la unidad.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if(apellido_chofer.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Ingrese el apellido del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
         }
         // Confirmar si se desea realizar la venta
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea realizar la venta?", "Confirmar Venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -1475,5 +1543,28 @@ import modelo.Vehiculo;
             return str;//retronar cadena vacia
         }
         return str.toUpperCase();
+    }
+    public void borrar_bordes(){
+        //para los botones de los jtextfield del usuario
+        nombre_usuario.setBackground(new java.awt.Color(0,0,0,1));
+        apellido_paterno.setBackground(new java.awt.Color(0,0,0,1));
+        numero_telefonico.setBackground(new java.awt.Color(0,0,0,1));
+        //para los botonoes del menu barra
+        peso_tara.setBackground(new java.awt.Color(0,0,0,1));
+        peso_bruto.setBackground(new java.awt.Color(0,0,0,1));
+        nombre_chofer.setBackground(new java.awt.Color(0,0,0,1));
+        apellido_chofer.setBackground(new java.awt.Color(0,0,0,1));
+        telefono_chofer.setBackground(new java.awt.Color(0,0,0,1));
+        placa_unidad.setBackground(new java.awt.Color(0,0,0,1));
+        costo_adicional.setBackground(new java.awt.Color(0,0,0,1));
+        observaciones.setBackground(new java.awt.Color(0,0,0,1));
+        descuento.setBackground(new java.awt.Color(0,0,0,1));
+    }
+    public void utilidades(){
+        this.setTitle("VENTA");
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
+        this.setIconImage(icono);
+        this.setLocationRelativeTo(null);
+        correcto = new  ImageIcon("src/imagenes/correcto.png");
     }
 }

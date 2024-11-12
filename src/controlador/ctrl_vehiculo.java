@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import modelo.Vehiculo;
 public class ctrl_vehiculo {
     //Registro del vehiculo
-    //excencial para interno y externo
     public boolean registrarVehiculo(Vehiculo auto){
         Connection con = null;
         //consultas-actualizacion,eliminacion,modificacion
@@ -120,8 +119,7 @@ public class ctrl_vehiculo {
              JOptionPane.showMessageDialog(null,e.getMessage());
             
         }
-    }
-    
+    }    
     return idChofer; // Retornar el ID encontrado o -1 si no se encontró
     }
 }

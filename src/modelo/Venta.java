@@ -13,8 +13,9 @@ public class Venta {
     private double costo_flete;
     private String nombre_chofer;  //cambiamos el telefono_chofer por nombre_chofer
     private String telefono_chofer;
+    private String referencia;        
     //constructor normal
-    public Venta(int folio_venta, String fecha_venta, double total_venta, int id_cliente, String nombre_cliente, String telefono, String nombre_usuario, String metodo_pago, String status, String flete, double costo_flete, String nombre_chofer, String telefono_chofer) {
+    public Venta(int folio_venta, String fecha_venta, double total_venta, int id_cliente, String nombre_cliente, String telefono, String nombre_usuario, String metodo_pago, String status, String flete, double costo_flete, String nombre_chofer, String telefono_chofer, String referencia) {
         this.folio_venta = folio_venta;
         this.fecha_venta = fecha_venta;
         this.total_venta = total_venta;
@@ -28,8 +29,9 @@ public class Venta {
         this.costo_flete = costo_flete;
         this.nombre_chofer = nombre_chofer;
         this.telefono_chofer = telefono_chofer;
+        this.referencia = referencia;
     }
-     
+
     //constructor vacio
     public Venta() {
         this.folio_venta = 0;
@@ -41,6 +43,7 @@ public class Venta {
         this.flete = "";
         this.costo_flete = 0;
         this.telefono_chofer = "";
+        this.referencia = "";
     }
 
     public int getFolio_venta() {
@@ -146,5 +149,13 @@ public class Venta {
     public void setTelefono_chofer(String telefono_chofer) {
         this.telefono_chofer = telefono_chofer;
     }
-    
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+ 
 }

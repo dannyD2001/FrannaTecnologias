@@ -153,44 +153,6 @@ public class ctrl_chofer {
             }
         }
     }
-    
-    // esto esta en venta hacia abajo el de arriba es para el combox
-    // Verificar si la placa del vehículo ya existe en la base de datos
-    //PENDIENTE ..
-    /*public boolean verificarPlacaExistente(String placa) {
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            con = conexion.conectar();
-            String sql = "SELECT * FROM VEHICULO WHERE placa = ?";
-            ps = con.prepareStatement(sql);
-            ps.setString(1, placa);
-            rs = ps.executeQuery();
-            return rs.next(); // Devuelve true si la placa existe
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "La placa del vehículo no existe.");
-            return false;
-
-        } finally {
-            try { 
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) 
-            { 
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
-            }
-        }
-    }*/
-
-    // Verificar si el chofer externo ya está registrado en la base de datos
     // Verificar si el chofer externo ya está registrado en la base de datos
 public Chofer buscarChoferExternoPorTelefono(String telefono) {
     Chofer chofer = null;
@@ -241,63 +203,6 @@ public Chofer buscarChoferExternoPorTelefono(String telefono) {
 
     return chofer; // Retornar el chofer encontrado o null si no existe
     }
-
-    // Registrar el chofer externo y su vehículo si no existen en la base de datos
-    //PENDINETE ..
-    /*public boolean registrarChoferExternoConVehiculo(Chofer chofer) {
-    boolean registrado = false;
-    Connection con = null;  // Declarar conexión aquí
-    String sqlVehiculo = "INSERT INTO VEHICULO (placa) VALUES (?)";
-    String sqlChofer = "INSERT INTO CHOFER (telefono_chofer, nombre, apellido_p, tipo_chofer, placa) VALUES (?, ?, ?, 'Externo', ?)";
-
-    try {
-        con = conexion.conectar(); // Obtener la conexión a la base de datos
-        con.setAutoCommit(false); // Iniciar transacción
-
-        // 1. Verificar si el vehículo existe
-        if (!verificarPlacaExistente(chofer.getPlaca())) {
-            try (PreparedStatement psVehiculo = con.prepareStatement(sqlVehiculo)) {
-                psVehiculo.setString(1, chofer.getPlaca());
-                psVehiculo.executeUpdate();
-            }
-        }
-
-        // 2. Verificar si el chofer ya está registrado
-        if (buscarChoferExternoPorTelefono(chofer.getTelefono_chofer()) == null) {
-            try (PreparedStatement psChofer = con.prepareStatement(sqlChofer)) {
-                psChofer.setString(1, chofer.getTelefono_chofer());
-                psChofer.setString(2, chofer.getNombre());
-                psChofer.setString(3, chofer.getApellido_p());
-                psChofer.setString(4, chofer.getPlaca());
-                psChofer.executeUpdate();
-                registrado = true; // Chofer registrado exitosamente
-            }
-        }
-
-        con.commit(); // Confirmar transacción
-    } catch (SQLException e) {
-        try {
-            if (con != null) {
-                con.rollback(); // Deshacer si falla
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al hacer rollback: " + ex.getMessage());
-        }
-        JOptionPane.showMessageDialog(null, "Error al registrar chofer: " + e.getMessage());
-    } finally {
-        // Asegurarse de cerrar la conexión
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage());
-            }
-        }
-    }
-
-    return registrado;
-    }*/
-    
     //otracosnuslta 
     // Obtener teléfono del chofer interno
     public String obtenerTelefonoChoferInternoPorNombre(String nombre) {
@@ -318,8 +223,7 @@ public Chofer buscarChoferExternoPorTelefono(String telefono) {
         }
         return telefono;
     }
-    //nos sirrve para actualizar
-    
+    //nos sirrve para actualizar   
     public boolean actualizarChofer(Chofer choferExistente) {
     Connection con = null;
     PreparedStatement ps = null;

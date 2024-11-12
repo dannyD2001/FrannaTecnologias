@@ -7,19 +7,18 @@ import controlador.ctrl_provedor;
 import controlador.ctrl_usuario;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -52,45 +51,44 @@ public class Realizar_compra extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException e) {
         }        
         initComponents();
-        //ICONO DE LA VENTANA JAVA
-        this.setTitle("COMPRA");
-        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
-        this.setIconImage(icono);
-        this.setLocationRelativeTo(null);        
-        //para el icono JOPtion
-        error =new ImageIcon("src/imagenes/error.png");
-        correcto = new  ImageIcon("src/imagenes/correcto.png");
-        adve = new ImageIcon("src/imagenes/advertencia.png");
-        //fondo trasnparente botones para quitar lo blanco
-        nombre_usuario.setBackground(new java.awt.Color(0,0,0,1));
-        id_usuario.setBackground(new java.awt.Color(0,0,0,1));
-        stock.setBackground(new java.awt.Color(0,0,0,1));
-        id_material.setBackground(new java.awt.Color(0,0,0,1));
-        precio_kg1.setBackground(new java.awt.Color(0,0,0,1));
-        peso.setBackground(new java.awt.Color(0,0,0,1));
-        peso_bruto.setBackground(new java.awt.Color(0,0,0,1));
-        peso_tara1.setBackground(new java.awt.Color(0,0,0,1));
-        apellido_paterno.setBackground(new java.awt.Color(0,0,0,1));
-        descuento.setBackground(new java.awt.Color(0,0,0,1));
-
+        personalizar_tabla();
+        personalizacion_extra();
         // Agregar ActionListener a peso_bruto
         peso_bruto.addActionListener(e -> calcularPesoNeto());
-
         // Agregar ActionListener a peso_tara1
-        peso_tara1.addActionListener(e -> calcularPesoNeto());
-       
+        peso_tara1.addActionListener(e -> calcularPesoNeto());       
         //Cargar materiales en el JComboBox de material y provedor
         Ctrl_mat.bucarMaterial(name_material);
         Ctrl_pro.bucarProvedor(id_provedor);
         // Configurar el ActionListener para el JComboBox
-        //peso.disable(); configurar que esten desabilitados los jtextfield
         peso_bruto.disable();
         peso_tara1.disable();
         descuento.disable();
         metodo_pago.disable();
         status.disable();
-        observaciones.disable();
-        
+        observaciones.disable();   
+        //
+        // Agregar ItemListener para combox_flete (JComboBox de flete)
+        combox_flete.addItemListener(new ItemListener() {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            String servicioFlete = combox_flete.getSelectedItem().toString();
+            if (!servicioFlete.equals("Si") && !servicioFlete.equals("No")) {
+                costo_adicional.setText("");
+            }
+            // Si selecciona "Sí", habilitar costo_adicional            
+            if (servicioFlete.equals("Si")) {
+                costo_adicional.setEnabled(true); // Habilitar el campo de costo adicional
+                costo_adicional.setText(""); // Limpiar el campo
+            } 
+            // Si selecciona "No", deshabilitar costo_adicional y asignar 0.00
+            else if (servicioFlete.equals("No")) {
+                costo_adicional.setEnabled(false); // Deshabilitar el campo de costo adicional
+                costo_adicional.setText("0.00"); // Asignar 0.00 como valor predeterminado
+            }
+        }
+    });
+        //
         name_material.addActionListener(e -> {
             // Obtener el ítem seleccionado
             Object selectedItem = name_material.getSelectedItem();
@@ -99,7 +97,6 @@ public class Realizar_compra extends javax.swing.JFrame {
                 // Vaciar los campos de texto
                 id_material.setText("");
                 precioss.removeAllItems(); // Limpiar precios en el JComboBox
-                //precio_kg1.setText("");
                 stock.setText("");
                 peso.setText("");
                 peso_bruto.setText("");
@@ -112,8 +109,7 @@ public class Realizar_compra extends javax.swing.JFrame {
                 metodo_pago.disable();
                 status.disable();
                 observaciones.disable();   
-            }           
-           
+            }                      
             // Si no es nulo y es una instancia de Material, llenar los campos
             else if (selectedItem instanceof Material) {
                 Material selectedMaterial = (Material) selectedItem;
@@ -132,6 +128,7 @@ public class Realizar_compra extends javax.swing.JFrame {
                 status.enable();
                 observaciones.enable();
                 peso_bruto.requestFocusInWindow();//sirve para colocarte en ese textfield
+                //costo_adicional.setText("0.00");
             }
         });
         if (usuarioActual != null) {
@@ -141,64 +138,8 @@ public class Realizar_compra extends javax.swing.JFrame {
             id_usuario.setText(String.valueOf(usuarioActual.getTelefono()));
         } else {
             JOptionPane.showMessageDialog(null, "El usuario actual es nulo");
-        }    
-        // Personalizar la tabla
-        scroll_compra.setBorder(BorderFactory.createEmptyBorder());  // Elimina el borde del JScrollPane
-        tabla_compra.setBackground(new Color(0x848487));  // Fondo de las celdas
-        tabla_compra.setForeground(new Color(000,000,000));  // Color del texto de las celdas
-        tabla_compra.setFont(new Font("sansserif", Font.PLAIN, 12));  // Fuente general de las celdas
-        tabla_compra.setRowHeight(20);  // Ajustar la altura de las filas
-        tabla_compra.setIntercellSpacing(new Dimension(1, 1));  // Ajustar el espaciado entre las celdas de-asi-asi horizontak
-        // Personalizar selección de filas
-        tabla_compra.setSelectionBackground(new Color(106,154,176));  // Fondo de selección más suave
-        tabla_compra.setSelectionForeground(new Color(102,102,102));  // Texto de la fila seleccionada
-        // Desactivar las líneas de división entre las celdas
-        tabla_compra.setGridColor(new Color(0x848487));  // Líneas de celda más suaves
-        tabla_compra.setShowHorizontalLines(true);  // Ocultar las líneas horizontales
-        tabla_compra.setShowVerticalLines(false);  // Ocultar las líneas verticales  
-        // Configuración de la tabla
-        tabla_compra.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Permitir solo una selección de fila
-        tabla_compra.setCellSelectionEnabled(false); // Desactivar selección de celdas
-        tabla_compra.setRowSelectionAllowed(true); // Habilitar la selección por fila
-        // Crear un renderizador personalizado para garantizar que el color de fondo se respete
-        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setBackground(new Color(0x4F5D75));  // Fondo verde del encabezado                
-                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
-                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
-                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
-                return label;
-            }
-        };
-         // Aplicar el renderizador a cada columna del encabezado
-        for (int i = 0; i < tabla_compra.getColumnModel().getColumnCount(); i++) {
-            tabla_compra.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
-        // Opcional: Deshabilitar la reordenación de columnas para evitar cambios accidentales
-        tabla_compra.getTableHeader().setReorderingAllowed(false); //aca cami a false
-        // Crear una barra de desplazamiento personalizada para reducir su grosor
-        JScrollBar verticalScrollBar = new JScrollBar(JScrollBar.VERTICAL) {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(10, super.getPreferredSize().height);  // Ajusta el ancho aquí (en este caso, 8 píxeles)
-            }
-        };
-        JScrollBar horizontalScrollBar = new JScrollBar(JScrollBar.HORIZONTAL) {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(super.getPreferredSize().width, 8);  // Ajusta el grosor de la barra horizontal aquí
-            }
-        };
-        // Aplicar las barras de desplazamiento personalizadas al JScrollPane
-        scroll_compra.setBackground(Color.WHITE);
-        scroll_compra.setForeground(Color.white);
-        scroll_compra.setVerticalScrollBar(verticalScrollBar);
-        scroll_compra.setHorizontalScrollBar(horizontalScrollBar);
-        scroll_compra.revalidate();
-        scroll_compra.repaint();
-        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -221,7 +162,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        precio_kg1 = new javax.swing.JTextField();
         stock = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -237,6 +177,7 @@ public class Realizar_compra extends javax.swing.JFrame {
         status = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         observaciones = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
         descuento = new javax.swing.JTextField();
         peso_bruto = new javax.swing.JTextField();
@@ -248,6 +189,11 @@ public class Realizar_compra extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         precioss = new javax.swing.JComboBox<>();
+        combox_flete = new javax.swing.JComboBox<>();
+        jLabel20 = new javax.swing.JLabel();
+        costo_adicional = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
         borde_revisor = new javax.swing.JPanel();
         nombre_usuario = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -380,9 +326,9 @@ public class Realizar_compra extends javax.swing.JFrame {
             }
         });
         tabla_compra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tabla_compra.setRowSelectionAllowed(false);
         tabla_compra.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tabla_compra.setShowHorizontalLines(false);
+        tabla_compra.setSurrendersFocusOnKeystroke(true);
         tabla_compra.getTableHeader().setReorderingAllowed(false);
         scroll_compra.setViewportView(tabla_compra);
         if (tabla_compra.getColumnModel().getColumnCount() > 0) {
@@ -463,20 +409,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
         jLabel5.setText("Precio (kg)");
 
-        precio_kg1.setEditable(false);
-        precio_kg1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        precio_kg1.setBorder(null);
-        precio_kg1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                precio_kg1ActionPerformed(evt);
-            }
-        });
-        precio_kg1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                precio_kg1KeyPressed(evt);
-            }
-        });
-
         stock.setEditable(false);
         stock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         stock.setBorder(null);
@@ -545,20 +477,25 @@ public class Realizar_compra extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(48, 56, 65));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observaciónes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
 
+        observaciones.setBorder(null);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(observaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(jSeparator4))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(observaciones)
-                .addGap(1, 1, 1))
+                .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
@@ -642,6 +579,31 @@ public class Realizar_compra extends javax.swing.JFrame {
 
         precioss.setBackground(new java.awt.Color(48, 56, 65));
 
+        combox_flete.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "No", "Si" }));
+
+        jLabel20.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        jLabel20.setText("Servicio Flete");
+
+        costo_adicional.setBorder(null);
+        costo_adicional.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                costo_adicionalMousePressed(evt);
+            }
+        });
+        costo_adicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                costo_adicionalActionPerformed(evt);
+            }
+        });
+        costo_adicional.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                costo_adicionalKeyReleased(evt);
+            }
+        });
+
+        jLabel21.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        jLabel21.setText("Costo Adicional");
+
         javax.swing.GroupLayout borde_opcLayout = new javax.swing.GroupLayout(borde_opc);
         borde_opc.setLayout(borde_opcLayout);
         borde_opcLayout.setHorizontalGroup(
@@ -689,7 +651,7 @@ public class Realizar_compra extends javax.swing.JFrame {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(precioss, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(36, Short.MAX_VALUE))
+                        .addContainerGap(56, Short.MAX_VALUE))
                     .addGroup(borde_opcLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -715,9 +677,16 @@ public class Realizar_compra extends javax.swing.JFrame {
                     .addComponent(stock))
                 .addGap(10, 10, 10)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(precio_kg1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(15, 15, 15)
+                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(combox_flete, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jSeparator5)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(costo_adicional))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         borde_opcLayout.setVerticalGroup(
             borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -764,26 +733,39 @@ public class Realizar_compra extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(borde_opcLayout.createSequentialGroup()
-                        .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(borde_opcLayout.createSequentialGroup()
-                                .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(1, 1, 1)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precio_kg1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(borde_opcLayout.createSequentialGroup()
+                                        .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12))
+                    .addGroup(borde_opcLayout.createSequentialGroup()
+                        .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(borde_opcLayout.createSequentialGroup()
+                                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel21))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(borde_opcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(combox_flete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
+                        .addComponent(jSeparator5))))
         );
 
         peso.getAccessibleContext().setAccessibleName("");
 
-        panel_principal.add(borde_opc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1020, 170));
+        panel_principal.add(borde_opc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1040, 170));
         borde_opc.getAccessibleContext().setAccessibleName("Opciones:");
 
         borde_revisor.setBackground(new java.awt.Color(48, 56, 65));
@@ -954,20 +936,20 @@ public class Realizar_compra extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addComponent(panel_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(59, 59, 59))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(58, 58, 58)
                 .addComponent(panel_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
-        panel_principal.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, 170, 110));
+        panel_principal.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 50, 210, 170));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1066,10 +1048,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_descuentoKeyPressed
-
-    private void precio_kg1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_precio_kg1KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_precio_kg1KeyPressed
     //private boolean limpiado = false;
     private void pesoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pesoMousePressed
 
@@ -1094,7 +1072,7 @@ public class Realizar_compra extends javax.swing.JFrame {
         // TODO add your handling code here:
        
     }//GEN-LAST:event_descuentoKeyTyped
-        private boolean limpiado = false;
+    private boolean limpiado = false;
     private void descuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descuentoFocusGained
         // TODO add your handling code here:        
         if (!limpiado) {
@@ -1124,10 +1102,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         //cerrar procesos que quedaron anteriormente
         this.dispose(); 
     }//GEN-LAST:event_panel_atrasMouseClicked
-
-    private void precio_kg1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio_kg1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_precio_kg1ActionPerformed
 
     private void label_eliminarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_eliminarMousePressed
         // TODO add your handling code here:
@@ -1161,8 +1135,10 @@ public class Realizar_compra extends javax.swing.JFrame {
     }//GEN-LAST:event_label_eliminarMouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Muestra un cuadro de diálogo para confirmar la compra      
+        // Muestra un cuadro de diálogo para confirmar la compra
+        ctrl_material material = new ctrl_material();
         RegistrarCompra();
+        material.bucarMaterial(name_material);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1193,6 +1169,27 @@ public class Realizar_compra extends javax.swing.JFrame {
     private void id_provedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_provedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_id_provedorActionPerformed
+
+    private void costo_adicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_costo_adicionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_costo_adicionalActionPerformed
+    //private boolean limpiado4 =false;
+    private void costo_adicionalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_costo_adicionalMousePressed
+      /*  // TODO add your handling code here:
+                // Verificar si el campo ha sido limpiado antes
+       if(!limpiado4){
+           //limpiar el texto
+           if(!costo_adicional.getText().equals("")){
+               costo_adicional.setText("");
+           }
+           limpiado4 = true;
+       } */
+    }//GEN-LAST:event_costo_adicionalMousePressed
+
+    private void costo_adicionalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costo_adicionalKeyReleased
+        // TODO add your handling code here:
+        total_pagar();
+    }//GEN-LAST:event_costo_adicionalKeyReleased
 
     public static void main(String args[]) {
         try {
@@ -1226,6 +1223,8 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JPanel barra;
     private javax.swing.JPanel borde_opc;
     private javax.swing.JPanel borde_revisor;
+    private javax.swing.JComboBox<String> combox_flete;
+    private javax.swing.JTextField costo_adicional;
     private javax.swing.JTextField descuento;
     private javax.swing.JTextField id_material;
     private javax.swing.JComboBox<String> id_provedor;
@@ -1245,6 +1244,8 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1260,6 +1261,8 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel label_eliminar;
     private javax.swing.JLabel label_total_pagar;
     private javax.swing.JComboBox<String> metodo_pago;
@@ -1275,7 +1278,6 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JLabel peso_bruto_text;
     private javax.swing.JLabel peso_tara;
     private javax.swing.JTextField peso_tara1;
-    private javax.swing.JTextField precio_kg1;
     private javax.swing.JComboBox<String> precioss;
     private javax.swing.JScrollPane scroll_compra;
     private javax.swing.JComboBox<String> status;
@@ -1296,6 +1298,22 @@ public class Realizar_compra extends javax.swing.JFrame {
             }
         } catch (NumberFormatException e) {
             System.out.println("Error al convertir el valor a double: " + e.getMessage());
+        }
+    }
+    // Agregar el Costo Adicional al TotalPagar solo si no está vacío y es un número válido
+    String costoAdicionalText = costo_adicional.getText(); // Asegúrate de que "costo_adicional" es el nombre correcto del campo de texto
+    if (costoAdicionalText != null && !costoAdicionalText.isEmpty() && !costoAdicionalText.equals(".")) {
+        try {
+            // Verificar si el valor es un número decimal válido
+            if (costoAdicionalText.matches("^[0-9]+(\\.[0-9]+)?$")) {
+                double costoAdicional = Double.parseDouble(costoAdicionalText);
+                TotalPagar += costoAdicional;
+            } else {
+                // Mostrar un mensaje de advertencia al usuario si el formato no es válido
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido para el costo adicional.", "Valor inválido", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Error al convertir el costo adicional a número: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     //Asegurarse de que el total no sea negativo
@@ -1344,86 +1362,110 @@ public class Realizar_compra extends javax.swing.JFrame {
     try {
         // Verifica que haya filas en la tabla de compras
         if (tabla_compra.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "No hay Datos Disponibles para Registrar la Compra. Asegúrese de Agregar Elementos a la Tabla.","Mensaje",JOptionPane.WARNING_MESSAGE,adve);
+            JOptionPane.showMessageDialog(null, "No hay Datos Disponibles para Registrar la Compra. Asegúrese de Agregar Elementos a la Tabla.", "Mensaje", JOptionPane.WARNING_MESSAGE, adve);
             return;
         }
-        // Obtener el nombre del usuario desde el campo texto
+
+        // Verificar que el servicio de flete esté seleccionado correctamente
+        String servicioFlete = combox_flete.getSelectedItem().toString();
+        if (!servicioFlete.equals("Si") && !servicioFlete.equals("No")) {
+            JOptionPane.showMessageDialog(null, "Seleccione una opción válida para el servicio de flete (Sí o No).", "Mensaje", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // Validaciones adicionales según el valor de "Servicio Flete"
+        if (servicioFlete.equals("Si")) {
+            String costoAdicionalStr = costo_adicional.getText().trim();
+            // Verificar que el costo adicional no esté vacío y que sea numérico
+            if (costoAdicionalStr.isEmpty() || !esNumeroValido(costoAdicionalStr)) {
+                JOptionPane.showMessageDialog(null, "Ingrese un costo adicional válido.", "Mensaje", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
+
+        // Confirmar si se desea realizar la compra
+        int confirmacion = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas realizar la compra?", "Confirmar Compra", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(this, "Compra cancelada", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Obtener el nombre del usuario desde el campo de texto
         String nombreUsuario = nombre_usuario.getText();
         ctrl_usuario ctrlUsu = new ctrl_usuario();        
-        // Obtener el ID del usuario basado en su nombre
-        String telefono = ctrlUsu.obtenerusuarioPorNombre(nombreUsuario);        
-        // Validar si se encontró el usuario
+        String telefono = ctrlUsu.obtenerusuarioPorNombre(nombreUsuario);
+
         if (telefono == null) {
             JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
             return; // Salir del método si no se encontró el usuario
         }
-        // Obtener el nombre del proveedor desde el JComboBox
+
+        // Obtener el nombre del proveedor y el ID
         String nombreProveedor = id_provedor.getSelectedItem().toString();
         ctrl_provedor ctrlProv = new ctrl_provedor();
-        // Obtener el total de la compra, eliminando cualquier coma que haya en la representación
-        String totalCompraStr = label_total_pagar.getText().replace(",", "");
-        double totalCompra = Double.parseDouble(totalCompraStr);       
-        // Obtener el ID del proveedor
         int idProvedor = ctrlProv.obtenerIdProveedorPorNombre(nombreProveedor);
         if (idProvedor == -1) {
             JOptionPane.showMessageDialog(null, "Proveedor no encontrado.");
             return; // Salir del método si no se encontró el proveedor
         }
-        // Obtener método de pago y estatus
+
+        // Obtener el total de la compra y el costo de flete
+        String totalCompraStr = label_total_pagar.getText().replace(",", "");
+        double totalCompra = Double.parseDouble(totalCompraStr);     
+        double CostoFlete = Double.parseDouble(costo_adicional.getText().trim());
+
+        // Obtener método de pago, estatus y otros datos
         String metodoPago = metodo_pago.getSelectedItem().toString();
         String estatus = status.getSelectedItem().toString();
-        // Crear objeto Compra y establecer sus valores
+        String flete = combox_flete.getSelectedItem().toString();
+
+        // Crear el objeto Compra con los datos
         Compra compra = new Compra();
         compra.setTotal_compra(totalCompra);
         compra.setId_provedor(idProvedor);
         compra.setTelefono(telefono);
         compra.setMetodo_pago(metodoPago);
         compra.setStatus(estatus);
-        // Confirmar si se desea realizar la compra
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estás seguro de que deseas realizar la compra?", "Confirmar Compra", JOptionPane.YES_NO_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            // Llamar al método del controlador para registrar la compra
-            ctrl_compra ctrlCompra = new ctrl_compra();
-            int folio_compra = ctrlCompra.registrarCompra(compra); // Obtener el folio de la compra registrado
-            //aca la observacion se añade a la tabla
-            //String observacion = observaciones.getText();  // Obtener observaciones desde el JTextField
-            if (folio_compra != -1) { // Si se registró la compra correctamente
-                // Registrar los detalles de la compra
-                for (int i = 0; i < tabla_compra.getRowCount(); i++) {
-                    // Obtener datos de cada fila de la tabla de compras
-                    int id_material = Integer.parseInt(tabla_compra.getValueAt(i, 0).toString());
-                    double peso_bruto = Double.parseDouble(tabla_compra.getValueAt(i, 2).toString());
-                    double peso_tara = Double.parseDouble(tabla_compra.getValueAt(i, 3).toString());
-                    double peso_neto = Double.parseDouble(tabla_compra.getValueAt(i, 4).toString());
-                    double descuento = Double.parseDouble(tabla_compra.getValueAt(i, 6).toString());
-                    String observacion = capitalize(tabla_compra.getValueAt(i, 9).toString().trim());
-                    double subtotal = Double.parseDouble(tabla_compra.getValueAt(i, 10).toString());
-                    //añadir lo de precio selecionado
-                    double precio_seleccionado = Double.parseDouble(tabla_compra.getValueAt(i, 8).toString());
+        compra.setFlete(flete);
+        compra.setCosto_flete(CostoFlete);
 
-                    // Crear el objeto DetalleCompra
-                    DetalleCompra detalle = new DetalleCompra(folio_compra, id_material, peso_bruto, peso_tara, peso_neto, descuento, observacion, subtotal, precio_seleccionado);
+        // Registrar la compra y los detalles
+        ctrl_compra ctrlCompra = new ctrl_compra();
+        int folio_compra = ctrlCompra.registrarCompra(compra); // Obtener el folio de la compra registrada
 
-                    // Registrar el detalle de la compra
-                    ctrl_compra ctrlDetalle = new ctrl_compra();
-                    ctrlDetalle.registrarDetalle(detalle);
-                }
-                // Limpiar la tabla de compras y otros campos en la interfaz
-                DefaultTableModel modelo = (DefaultTableModel) tabla_compra.getModel();
-                modelo.setRowCount(0); // Limpiar todas las filas de la tabla de compra
-                id_provedor.setSelectedIndex(0); // Restablecer el JComboBox de proveedor
-                label_total_pagar.setText("$ 00.00"); // Restablecer el total a pagar
-                JOptionPane.showMessageDialog(this, "Compra Registrada Exitosamente","Compra Realizada", JOptionPane.WARNING_MESSAGE,correcto);
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al registrar la compra.");
+        if (folio_compra != -1) { // Si se registró la compra correctamente
+            for (int i = 0; i < tabla_compra.getRowCount(); i++) {
+                // Obtener datos de cada fila de la tabla de compras
+                int id_material = Integer.parseInt(tabla_compra.getValueAt(i, 0).toString());
+                double peso_bruto = Double.parseDouble(tabla_compra.getValueAt(i, 2).toString());
+                double peso_tara = Double.parseDouble(tabla_compra.getValueAt(i, 3).toString());
+                double peso_neto = Double.parseDouble(tabla_compra.getValueAt(i, 4).toString());
+                double descuento = Double.parseDouble(tabla_compra.getValueAt(i, 6).toString());
+                String observacion = capitalize(tabla_compra.getValueAt(i, 9).toString().trim());
+                double subtotal = Double.parseDouble(tabla_compra.getValueAt(i, 10).toString());
+                double precio_seleccionado = Double.parseDouble(tabla_compra.getValueAt(i, 8).toString());
+
+                // Crear el objeto DetalleCompra y registrar el detalle de la compra
+                DetalleCompra detalle = new DetalleCompra(folio_compra, id_material, peso_bruto, peso_tara, peso_neto, descuento, observacion, subtotal, precio_seleccionado);
+                ctrl_compra ctrlDetalle = new ctrl_compra();
+                ctrlDetalle.registrarDetalle(detalle);
             }
+
+            // Limpiar la tabla y otros campos en la interfaz
+            DefaultTableModel modelo = (DefaultTableModel) tabla_compra.getModel();
+            modelo.setRowCount(0); // Limpiar todas las filas de la tabla
+            id_provedor.setSelectedIndex(0); // Restablecer el JComboBox de proveedor
+            label_total_pagar.setText("$ 00.00"); // Restablecer el total a pagar
+            costo_adicional.setText("");
+            combox_flete.setSelectedItem("--Seleccionar--");
+            JOptionPane.showMessageDialog(this, "Compra Registrada Exitosamente", "Compra Realizada", JOptionPane.WARNING_MESSAGE, correcto);
         } else {
-            JOptionPane.showMessageDialog(this, "Compra cancelada", "Cancelado", JOptionPane.WARNING_MESSAGE, error);
+            JOptionPane.showMessageDialog(null, "Error al registrar la compra.");
         }
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
     }
     }
+    //
     private String capitalize(String str) {
     if (str == null || str.isEmpty()) {
         return str; // Retorna la cadena original si está vacía o es null
@@ -1431,5 +1473,89 @@ public class Realizar_compra extends javax.swing.JFrame {
     //UpperCase Mayuscula vs lowerCase minuscula
     return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
-    
+    //Personalizar tabla
+    public void personalizar_tabla(){
+        //Personalizamos la tablas 
+        tabla_compra.setBackground(new Color(0x333337));  // Fondo de las celdas
+        tabla_compra.setForeground(new Color(000,000,000));  // Color del texto de las celdas
+        tabla_compra.setGridColor(new Color(0x333337));  // Líneas de celda más suaves
+        tabla_compra.setRowHeight(25);  // Ajustar la altura de las filas
+        tabla_compra.setFont(new Font("sansserif", Font.PLAIN, 12));//ME PARECE, ES FUENTE DEL CONTENIDO DE LA TABLA
+        // Configurar el JScrollPane sin borde
+        scroll_compra.setBorder(BorderFactory.createEmptyBorder());
+        scroll_compra.setBackground(new Color(0x333337));
+        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Establecer los colores para celdas seleccionadas y no seleccionadas
+                if (isSelected) {
+                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
+                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
+                } else {
+                    //este es el que aplica para el fondo del tabla
+                    label.setBackground(new Color(0x333337));  // Fondo cuando no está seleccionada (blanco)
+                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
+                }
+                // Si deseas cambiar el alineamiento del texto
+                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
+
+                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
+                return label;
+            }
+        };
+        // Aplicar el renderizador personalizado a todas las columnas de la tabla
+        for (int i = 0; i < tabla_compra.getColumnCount(); i++) {
+            tabla_compra.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        //para encabezado de Tabla
+        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(120,171,168));  // Fondo verde del encabezado                
+                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
+                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
+                label.setFont((new Font("sansserif", Font.BOLD, 12))); //LA FUENTE DE LA TABLA  TITULO                 
+                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
+                return label;
+            }
+        };
+         // Aplicar el renderizador a cada columna del encabezado
+        for (int i = 0; i < tabla_compra.getColumnModel().getColumnCount(); i++) {
+            tabla_compra.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        tabla_compra.repaint();
+    }
+    public void personalizacion_extra(){
+        //ICONO DE LA VENTANA JAVA
+        this.setTitle("COMPRA");
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
+        this.setIconImage(icono);
+        this.setLocationRelativeTo(null);        
+        //para el icono JOPtion
+        error =new ImageIcon("src/imagenes/error.png");
+        correcto = new  ImageIcon("src/imagenes/correcto.png");
+        adve = new ImageIcon("src/imagenes/advertencia.png");
+        //fondo trasnparente botones para quitar lo blanco
+        nombre_usuario.setBackground(new java.awt.Color(0,0,0,1));
+        id_usuario.setBackground(new java.awt.Color(0,0,0,1));
+        stock.setBackground(new java.awt.Color(0,0,0,1));
+        id_material.setBackground(new java.awt.Color(0,0,0,1));
+        peso.setBackground(new java.awt.Color(0,0,0,1));
+        peso_bruto.setBackground(new java.awt.Color(0,0,0,1));
+        peso_tara1.setBackground(new java.awt.Color(0,0,0,1));
+        apellido_paterno.setBackground(new java.awt.Color(0,0,0,1));
+        descuento.setBackground(new java.awt.Color(0,0,0,1));
+        observaciones.setBackground(new java.awt.Color(0,0,0,1));
+        costo_adicional.setBackground(new java.awt.Color(0,0,0,1));
+    }
+    // Método auxiliar para validar si una cadena es un número válido
+    private boolean esNumeroValido(String str) {
+    str = str.trim(); // Eliminar espacios en blanco
+    // Expresión regular para números con o sin decimales
+    return str.matches("\\d+(\\.\\d+)?");
+    }
+
+
 }

@@ -22,12 +22,14 @@ public class ctrl_compra {
         //Conexión a la base de datos
         con = conexion.conectar();
         //Preparamos la consulta para insertar la compra
-        ps = con.prepareStatement("INSERT INTO COMPRA(total_compra, id_provedor, telefono, metodo_pago, status) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        ps = con.prepareStatement("INSERT INTO COMPRA(total_compra, id_provedor, telefono, metodo_pago, status, flete, costo_flete) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         ps.setDouble(1, c.getTotal_compra());
         ps.setInt(2, c.getId_provedor());
         ps.setString(3, c.getTelefono());
         ps.setString(4, c.getMetodo_pago());
         ps.setString(5, c.getStatus());
+        ps.setString(6, c.getFlete());
+        ps.setDouble(7, c.getCosto_flete());
         //Ejecutamos la inserción
         ps.executeUpdate();
         //Obtener el folio_compra generado
@@ -96,9 +98,12 @@ public class ctrl_compra {
         ResultSet rs = null;
         Connection con = null;
         List<Compra> listcompras = new ArrayList();
-        String sql = "SELECT DISTINCT compra.folio_compra, compra.fecha_compra, compra.total_compra, provedor.nombre, compra.metodo_pago, compra.status " +
-             "FROM compra " +
-             "JOIN provedor ON compra.id_provedor = provedor.id_provedor";
+        String sql = "SELECT DISTINCT compra.folio_compra, compra.fecha_compra, compra.total_compra, provedor.nombre, compra.metodo_pago, compra.status , " + 
+            "compra.flete, compra.costo_flete, usuario.nombre " +
+            "FROM compra " +
+            "JOIN provedor ON compra.id_provedor = provedor.id_provedor " +
+            "JOIN usuario ON compra.telefono = usuario.telefono " +    
+            "ORDER BY compra.folio_compra DESC";
         try {
             con = conexion.conectar(); // Establecemos conexión
             ps = con.prepareStatement(sql); // Preparamos la consulta
@@ -109,9 +114,12 @@ public class ctrl_compra {
                 compra.setFolio_compra(rs.getInt("compra.folio_compra"));
                 compra.setFecha(rs.getString("compra.fecha_compra"));
                 compra.setTotal_compra(rs.getDouble("compra.total_compra"));
-                compra.setNombre_provedor(rs.getString("nombre")); // Correctamente obtenemos el nombre del proveedor
+                compra.setNombre_provedor(rs.getString("provedor.nombre")); // Correctamente obtenemos el nombre del proveedor
                 compra.setMetodo_pago(rs.getString("compra.metodo_pago"));
                 compra.setStatus(rs.getString("compra.status"));
+                compra.setFlete(rs.getString("compra.flete"));
+                compra.setCosto_flete(rs.getDouble("compra.costo_flete"));
+                compra.setNombre(rs.getString("usuario.nombre"));
                 //añadir la compra a la lista
                 listcompras.add(compra);
             }            
@@ -313,7 +321,7 @@ public class ctrl_compra {
         String sql = "SELECT compra.folio_compra, compra.fecha_compra, provedor.nombre, compra.total_compra, compra.metodo_pago, compra.status, provedor.telefono, provedor.referencia\n" +
                     "FROM compra\n" +
                     "JOIN provedor ON compra.id_provedor = provedor.id_provedor\n" +
-                    "WHERE compra.status = 'Pendiente';";
+                    "WHERE compra.status = 'Pendiente' ORDER BY compra.folio_compra DESC;";
         try {
         con = conexion.conectar();
         ps = con.prepareStatement(sql);
@@ -352,7 +360,7 @@ public class ctrl_compra {
         String sql = "SELECT compra.folio_compra, compra.fecha_compra, provedor.nombre, compra.total_compra, compra.metodo_pago, compra.status, provedor.telefono, provedor.referencia\n" +
                     "FROM compra\n" +
                     "JOIN provedor ON compra.id_provedor = provedor.id_provedor\n" +
-                    "WHERE compra.status = 'Pagado';";
+                    "WHERE compra.status = 'Pagado' ORDER BY compra.folio_compra DESC;";
         try {
         con = conexion.conectar();
         ps = con.prepareStatement(sql);
@@ -381,22 +389,19 @@ public class ctrl_compra {
         }
     }
     return listaCompras;
-    }
-    
+    }   
     //para la parte de marcar como pagado en el modulo PAGO pendiente
     public boolean marcarComoPagado(int folio) {
     Connection con = null;
     PreparedStatement ps = null;
     String sql = "UPDATE compra SET status = 'Pagado' WHERE folio_compra = ?";
     boolean isUpdated = false;
-
     try {
         con = conexion.conectar(); // Asegúrate de que este método esté implementado correctamente
         ps = con.prepareStatement(sql);
         ps.setInt(1, folio);
-        int rowsAffected = ps.executeUpdate();
-        
-        isUpdated = rowsAffected > 0; // Retorna true si se actualizó el estatus
+        int rowsAffected = ps.executeUpdate();        
+        isUpdated = rowsAffected > 0; // Retorna true si se actualizó el estatus        
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error al cambiar el estatus: " + ex.getMessage());
     } finally {

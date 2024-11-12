@@ -516,6 +516,9 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         btn_pendiente.setText("PENDIENTE");
         btn_pendiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_pendiente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_pendienteMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btn_pendienteMouseEntered(evt);
             }
@@ -705,6 +708,14 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         ventas.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_btn_ventasMouseClicked
+
+    private void btn_pendienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pendienteMouseClicked
+        // TODO add your handling code here:
+        Vista_Pagos_Pendientes_Venta_Granel pagosP = new Vista_Pagos_Pendientes_Venta_Granel();
+        pagosP.setVisible(true);
+        pagosP.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_btn_pendienteMouseClicked
 
     /**
      * @param args the command line arguments

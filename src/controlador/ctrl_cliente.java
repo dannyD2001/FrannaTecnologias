@@ -15,7 +15,7 @@ public class ctrl_cliente {
         Connection con = null;
         //consultas-actualizacion,eliminacion,modificacion
         PreparedStatement ps = null;
-        String sql="INSERT INTO CLIENTE (nombre_cliente, apellido_p, telefono, ciudad) VALUES(?,?,?,?)" ;        
+        String sql="INSERT INTO CLIENTE (nombre_cliente, apellido_p, telefono, ciudad, referencia) VALUES(?,?,?,?,?)" ;        
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);
@@ -23,6 +23,7 @@ public class ctrl_cliente {
             ps.setString(2, object.getApellido_p());
             ps.setString(3, object.getTelefono());
             ps.setString(4, object.getCiudad());
+            ps.setString(5, object.getCuenta_clave());
             int result = ps.executeUpdate();
             // Verificar si la inserción fue exitosa
             if (result > 0) {

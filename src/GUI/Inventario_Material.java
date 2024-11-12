@@ -1,6 +1,6 @@
 package GUI;
 import Util.AppContext;
-
+import com.formdev.flatlaf.FlatDarkLaf;
 import controlador.ctrl_material;
 import java.awt.Color;
 import java.awt.Component;
@@ -8,124 +8,35 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.text.Normalizer;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollBar;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.TableCellRenderer;
 import modelo.Material;
 import modelo.usuario;
-
-
-/**
- *
- * @author Danny Dominguez
- */
 public class Inventario_Material extends javax.swing.JFrame {
     DefaultTableModel modelo;
-
     public Inventario_Material() {
+        // Aplica el tema oscuro de FlatLaf
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+        }        
         initComponents();
         ListarMateria();
         //quitar fondo de textfield
         texto_busqueda.setBackground(new java.awt.Color(0,0,0,1));
-                 //Recuperar usuario actual   
+        //Recuperar usuario actual   
         usuario usuarioActual = AppContext.getUsuarioActual();
         //para el usuario
         nombre_usuario.setText(usuarioActual.getNombre());
-        //aka
-            // Eliminar el borde del JScrollPane
-    scroll_material.setBorder(BorderFactory.createEmptyBorder());  // Elimina el borde del JScrollPane
-    
-    
-     
-    // Crear un renderizador personalizado para centrar el contenido
-    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-    centerRenderer.setHorizontalAlignment(JLabel.CENTER); // Centrar el contenido
-    // Aplicar el renderizador a cada columna de la tabla
-        for (int i = 0; i < tabla_material.getColumnModel().getColumnCount(); i++) {
-            tabla_material.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
-    
-    
-    // Personalizar la tabla
-    
-    tabla_material.setBackground(Color.WHITE);  // Fondo de las celdas
-    
-    tabla_material.setForeground(new Color(102,102,102));  // Color del texto de las celdas
-    tabla_material.setFont(new Font("sansserif", Font.PLAIN, 12));  // Fuente general de las celdas
-    tabla_material.setRowHeight(30);  // Ajustar la altura de las filas
-   // tabla_material.setGridColor(Color.GRAY);  // Color de las líneas de separación entre celdas
-    tabla_material.setIntercellSpacing(new Dimension(10, 10));  // Ajustar el espaciado entre las celdas
-     
-
-    // Eliminar el borde de la tabla
-    tabla_material.setBorder(BorderFactory.createEmptyBorder());  // Elimina el borde del JTable
-
-    // Selección solo de filas
-    tabla_material.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);  // Permitir seleccionar solo una fila a la vez
-    tabla_material.setColumnSelectionAllowed(false);  // Deshabilitar la selección de columnas
-    tabla_material.setRowSelectionAllowed(true);  // Habilitar solo la selección de filas
-
-    // Personalizar selección de filas
-    tabla_material.setSelectionBackground(new Color(255, 255, 255));  // Fondo de selección más suave
-    tabla_material.setSelectionForeground(new Color(102,102,102));  // Texto de la fila seleccionada
-
-    // Desactivar las líneas de división entre las celdas
-    tabla_material.setGridColor(new Color(255, 255, 255));  // Líneas de celda más suaves
-    tabla_material.setShowHorizontalLines(true);  // Ocultar las líneas horizontales
-    tabla_material.setShowVerticalLines(false);  // Ocultar las líneas verticales
-
-    
-    
-    //
-    // Crear un renderizador personalizado para centrar el encabezado
-    DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                                                       boolean hasFocus, int row, int column) {
-            // Centrar el texto del encabezado
-            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            label.setHorizontalAlignment(JLabel.CENTER); // Centrar texto en el encabezado
-            label.setFont(new Font("sansserif", Font.PLAIN, 12));
-            label.setOpaque(true); // Permitir el color de fondo
-            label.setBackground(new Color(0, 204, 0)); // Color de fondo del encabezado
-            label.setForeground(Color.WHITE); // Color del texto del encabezado
-            label.setOpaque(true);
-            return label;
-        }
-    };
-            // Aplicar el renderizador al encabezado de cada columna
-    for (int i = 0; i < tabla_material.getColumnModel().getColumnCount(); i++) {
-        tabla_material.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-    }
-
-    // Opcional: Deshabilitar la reordenación de columnas para evitar cambios accidentales
-    tabla_material.getTableHeader().setReorderingAllowed(false);  // Desactiva la re
-    ///
-      // Crear una barra de desplazamiento personalizada para reducir su grosor
-    JScrollBar verticalScrollBar = new JScrollBar(JScrollBar.VERTICAL) {
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(10, super.getPreferredSize().height);  // Ajusta el ancho aquí (en este caso, 8 píxeles)
-        }
-    };
-
-    JScrollBar horizontalScrollBar = new JScrollBar(JScrollBar.HORIZONTAL) {
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(super.getPreferredSize().width, 8);  // Ajusta el grosor de la barra horizontal aquí
-        }
-    };
-
-    // Aplicar las barras de desplazamiento personalizadas al JScrollPane
-    scroll_material.setBackground(Color.WHITE);
-    scroll_material.setForeground(Color.white);
-    scroll_material.setVerticalScrollBar(verticalScrollBar);
-    scroll_material.setHorizontalScrollBar(horizontalScrollBar);
+        personalizar_tabla();
+   
 
     }
     @SuppressWarnings("unchecked")
@@ -236,23 +147,21 @@ public class Inventario_Material extends javax.swing.JFrame {
 
         panel_principal.add(barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 40));
 
-        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound1.setBackground(new java.awt.Color(51, 50, 55));
         panelRound1.setRoundBottomLeft(30);
         panelRound1.setRoundBottomRight(30);
         panelRound1.setRoundTopLeft(30);
         panelRound1.setRoundTopRight(30);
 
-        scroll_material.setBackground(new java.awt.Color(255, 255, 255));
+        scroll_material.setBackground(new java.awt.Color(51, 50, 55));
+        scroll_material.setBorder(null);
 
-        tabla_material.setBackground(new java.awt.Color(255, 255, 255));
+        tabla_material.setBackground(new java.awt.Color(51, 50, 55));
         tabla_material.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         tabla_material.setForeground(new java.awt.Color(255, 255, 255));
         tabla_material.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Id", "Material", "Stock(Kg)", "Unidad de Medida"
@@ -285,26 +194,26 @@ public class Inventario_Material extends javax.swing.JFrame {
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1020, Short.MAX_VALUE)
+            .addGap(0, 1150, Short.MAX_VALUE)
             .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelRound1Layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(scroll_material, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE)
+                    .addComponent(scroll_material, javax.swing.GroupLayout.DEFAULT_SIZE, 1126, Short.MAX_VALUE)
                     .addContainerGap()))
             .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelRound1Layout.createSequentialGroup()
                     .addGap(192, 192, 192)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(683, Short.MAX_VALUE)))
+                    .addContainerGap(813, Short.MAX_VALUE)))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
+            .addGap(0, 390, Short.MAX_VALUE)
             .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scroll_material, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(90, 90, 90)))
+                .addGroup(panelRound1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(scroll_material, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                    .addContainerGap()))
             .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelRound1Layout.createSequentialGroup()
                     .addGap(172, 172, 172)
@@ -312,27 +221,27 @@ public class Inventario_Material extends javax.swing.JFrame {
                     .addGap(173, 173, 173)))
         );
 
-        panel_principal.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 1020, 330));
+        panel_principal.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 1150, 390));
 
-        panelRound2.setBackground(new java.awt.Color(189, 228, 197));
+        panelRound2.setBackground(new java.awt.Color(51, 50, 55));
         panelRound2.setRoundBottomLeft(40);
         panelRound2.setRoundBottomRight(40);
         panelRound2.setRoundTopLeft(40);
         panelRound2.setRoundTopRight(40);
 
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("¡Hola,");
 
         jLabel5.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Aquí está tu inventario actualizado.");
 
         nombre_usuario.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
-        nombre_usuario.setForeground(new java.awt.Color(0, 0, 0));
+        nombre_usuario.setForeground(new java.awt.Color(255, 255, 255));
         nombre_usuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        texto_busqueda.setForeground(new java.awt.Color(0, 0, 0));
+        texto_busqueda.setForeground(new java.awt.Color(255, 255, 255));
         texto_busqueda.setText("Ingrese el Nombre del Material");
         texto_busqueda.setBorder(null);
         texto_busqueda.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -374,7 +283,7 @@ public class Inventario_Material extends javax.swing.JFrame {
         panel_busqueda.setLayout(panel_busquedaLayout);
         panel_busquedaLayout.setHorizontalGroup(
             panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(busqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+            .addComponent(busqueda, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
         );
         panel_busquedaLayout.setVerticalGroup(
             panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -389,17 +298,19 @@ public class Inventario_Material extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRound2Layout.createSequentialGroup()
+                        .addGroup(panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(texto_busqueda)
+                            .addComponent(jSeparator1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panel_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(panelRound2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombre_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombre_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(texto_busqueda)
-                    .addComponent(jSeparator1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139))
+                        .addGap(0, 174, Short.MAX_VALUE))))
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -621,6 +532,59 @@ public class Inventario_Material extends javax.swing.JFrame {
     public void setVentanaOrigen(String origen) {
     this.ventanaOrigen = origen;
     }
+    //personalizar tabla
+    public void personalizar_tabla(){
+        //Personalizamos la tablas 
+        tabla_material.setBackground(new Color(0x333337));  // Fondo de las celdas
+        tabla_material.setForeground(new Color(000,000,000));  // Color del texto de las celdas
+        tabla_material.setGridColor(new Color(255, 255, 255));  // Líneas de celda más suaves
+        tabla_material.setRowHeight(25);  // Ajustar la altura de las filas
+        tabla_material.setFont(new Font("sansserif", Font.PLAIN, 12));//ME PARECE, ES FUENTE DEL CONTENIDO DE LA TABLA
+        tabla_material.setBorder(null); // Quitar el borde externo de la tabla
+        // Configurar la tabla sin borde
+        tabla_material.setBorder(BorderFactory.createEmptyBorder());
+        // Configurar el JScrollPane sin borde
+        scroll_material.setBorder(BorderFactory.createEmptyBorder());
+        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Establecer los colores para celdas seleccionadas y no seleccionadas
+                if (isSelected) {
+                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
+                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
+                } else {
+                    label.setBackground(new Color(0x333337));  // Fondo cuando no está seleccionada (blanco)
+                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
+                }
+                // Si deseas cambiar el alineamiento del texto
+                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
 
-
+                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
+                return label;
+            }
+        };
+        // Aplicar el renderizador personalizado a todas las columnas de la tabla
+        for (int i = 0; i < tabla_material.getColumnCount(); i++) {
+            tabla_material.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        //para encabezado de Tabla
+        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(000,204,000));  // Fondo verde del encabezado                
+                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
+                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
+                label.setFont((new Font("sansserif", Font.BOLD, 12))); //LA FUENTE DE LA TABLA  TITULO                 
+                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
+                return label;
+            }
+        };
+         // Aplicar el renderizador a cada columna del encabezado
+        for (int i = 0; i < tabla_material.getColumnModel().getColumnCount(); i++) {
+            tabla_material.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        
+    }
 }

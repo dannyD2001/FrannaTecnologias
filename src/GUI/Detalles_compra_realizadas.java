@@ -6,6 +6,7 @@
 package GUI;
 
 import Util.AppContext;
+import com.formdev.flatlaf.FlatDarkLaf;
 import controlador.ctrl_compra;
 import java.awt.Color;
 import java.awt.Component;
@@ -15,6 +16,9 @@ import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -24,73 +28,29 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     DefaultTableModel modelo;
 
     public Detalles_compra_realizadas() {
+        // Aplica el tema oscuro de FlatLaf
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+        }
         initComponents();
         //Para el usuario Actual
         usuario usuarioActual = AppContext.getUsuarioActual();
         //para el usuario
-        nombre_usuario_actual.setText(usuarioActual.getNombre());
-        
-                                
-        this.setTitle("DETALLE COMPRA");
-        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
-        this.setIconImage(icono);
-        this.setLocationRelativeTo(null);
-        //diseño de la tabla 
-        // Crear un renderizador personalizado para las celdas del contenido Es para el contenido Tabla
-        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Establecer los colores para celdas seleccionadas y no seleccionadas
-                if (isSelected) {
-                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
-                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
-                } else {
-                    label.setBackground(Color.WHITE);  // Fondo cuando no está seleccionada (blanco)
-                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
-                }
-
-                // Si deseas cambiar el alineamiento del texto
-                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
-
-                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
-                return label;
-            }
-        };
-        tabla_detalles.setFont(new Font("sansserif", Font.PLAIN, 12));
-        // Aplicar el renderizador personalizado a todas las columnas de la tabla
-        for (int i = 0; i < tabla_detalles.getColumnCount(); i++) {
-            tabla_detalles.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
-        }
-        //para encabezado de Tabla
-        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setBackground(new Color(0,142,0));  // Fondo verde del encabezado                
-                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
-                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
-                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
-                return label;
-            }
-        };
-         // Aplicar el renderizador a cada columna del encabezado
-        for (int i = 0; i < tabla_detalles.getColumnModel().getColumnCount(); i++) {
-            tabla_detalles.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
-        }
-        
+        nombre_usuario_actual.setText(usuarioActual.getNombre());                     
+        informacion_panel();
+        Personalizar_tabla();       
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panel_principal = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         panel_atras = new swing.PanelRound();
         atras = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scroll_detalle = new javax.swing.JScrollPane();
         tabla_detalles = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         nombre_usuario_actual = new javax.swing.JLabel();
@@ -102,11 +62,11 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(92, 189, 110));
-        jPanel1.setMaximumSize(new java.awt.Dimension(1200, 600));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1200, 600));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1200, 600));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panel_principal.setBackground(new java.awt.Color(92, 189, 110));
+        panel_principal.setMaximumSize(new java.awt.Dimension(1200, 600));
+        panel_principal.setMinimumSize(new java.awt.Dimension(1200, 600));
+        panel_principal.setPreferredSize(new java.awt.Dimension(1200, 600));
+        panel_principal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(92, 189, 110));
         jPanel2.setPreferredSize(new java.awt.Dimension(100, 40));
@@ -166,7 +126,7 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
+        panel_principal.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
 
         tabla_detalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,34 +144,34 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tabla_detalles);
+        scroll_detalle.setViewportView(tabla_detalles);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1160, 380));
+        panel_principal.add(scroll_detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1160, 380));
 
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Esto son los detalles de la Compra..");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 60, 290, 40));
+        panel_principal.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 60, 290, 40));
 
         nombre_usuario_actual.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         nombre_usuario_actual.setForeground(new java.awt.Color(204, 0, 0));
-        jPanel1.add(nombre_usuario_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, 120, 40));
+        panel_principal.add(nombre_usuario_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 60, 120, 40));
 
         jLabel4.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hombre (1).png"))); // NOI18N
         jLabel4.setText("Ola Buenas!");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 130, 40));
+        panel_principal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 130, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panel_principal, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panel_principal, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -264,6 +224,7 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Detalles_compra_realizadas().setVisible(true);
             }
@@ -275,11 +236,11 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nombre_usuario_actual;
     private swing.PanelRound panel_atras;
+    private javax.swing.JPanel panel_principal;
+    private javax.swing.JScrollPane scroll_detalle;
     private javax.swing.JTable tabla_detalles;
     // End of variables declaration//GEN-END:variables
     ctrl_compra ctr_com = new ctrl_compra();
@@ -302,4 +263,69 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     }    
     tabla_detalles.setModel(modelo); // Refresca la tabla con el nuevo modelo
     }
+    
+    public void Personalizar_tabla(){
+    // Configuración de la tabla
+    tabla_detalles.setBackground(new Color(0x333333));  // Fondo de las celdas
+    tabla_detalles.setForeground(new Color(000,000,000));  // Color del texto de las celdas
+    tabla_detalles.setGridColor(new Color(255, 255, 255));  // Líneas de celda más suaves
+    tabla_detalles.setRowHeight(20);  // Ajustar la altura de las filas
+    tabla_detalles.setFont(new Font("sansserif", Font.PLAIN, 14));  // Fuente general de las celdas
+    tabla_detalles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Permitir solo una selección de fila
+    tabla_detalles.setCellSelectionEnabled(false); // Desactivar selección de celdas
+    tabla_detalles.setRowSelectionAllowed(true); // Habilitar la selección por fila
+    // Crear un renderizador personalizado para las celdas del contenido Es para el contenido Tabla
+    TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // Establecer los colores para celdas seleccionadas y no seleccionadas
+            if (isSelected) {
+                label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
+                label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
+            } else {
+                label.setBackground(new Color(0x333337));  // Fondo cuando no está seleccionada (blanco)
+                label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
+            }
+
+            // Si deseas cambiar el alineamiento del texto
+            label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
+
+            label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
+            return label;
+        }
+    };
+    // Aplicar el renderizador personalizado a todas las columnas de la tabla
+    for (int i = 0; i < tabla_detalles.getColumnCount(); i++) {
+        tabla_detalles.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+    }
+    //para encabezado de Tabla
+    TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            label.setBackground(new Color(0,142,0));  // Fondo verde del encabezado                
+            label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
+            label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
+            label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
+            return label;
+        }
+    };
+     // Aplicar el renderizador a cada columna del encabezado
+    for (int i = 0; i < tabla_detalles.getColumnModel().getColumnCount(); i++) {
+        tabla_detalles.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+    }
+    //0,0,0,1                
+    //scroll_ventas.setBackground(Color.WHITE);
+    scroll_detalle.setBackground(new Color(0,0,1));
+    scroll_detalle.setForeground(Color.WHITE);
+    }
+    public void informacion_panel(){
+        this.setTitle("DETALLE COMPRA");
+        Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
+        this.setIconImage(icono);
+        this.setLocationRelativeTo(null);
+    }
+    
 }

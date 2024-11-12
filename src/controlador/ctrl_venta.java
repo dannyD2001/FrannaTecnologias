@@ -135,15 +135,21 @@ public class ctrl_venta {
         ResultSet rs = null;
         Connection con = null;
         List<Venta> listventa = new ArrayList();
-        String sql = "SELECT DISTINCT venta.folio_venta, venta.fecha_venta, venta.total_venta, cliente.nombre_cliente, venta.metodo_pago, venta.status, \n" +
-"                venta.flete, venta.costo_flete, chofer.nombre, usuario.nombre \n" +
-"                FROM VENTA \n" +
-"                JOIN \n" +
-"                CLIENTE ON VENTA.id_cliente = CLIENTE.id_cliente\n" +
-"                JOIN \n" +
-"                CHOFER ON VENTA.telefono_chofer = CHOFER.telefono_chofer\n" +
-"                JOIN \n" +
-"                USUARIO ON VENTA.telefono = USUARIO.telefono";
+        /*String sql = "SELECT DISTINCT venta.folio_venta, venta.fecha_venta, venta.total_venta, cliente.nombre_cliente, venta.metodo_pago, venta.status, " +
+        "venta.flete, venta.costo_flete, chofer.nombre, usuario.nombre " +
+        "FROM VENTA " +
+        "JOIN CLIENTE ON VENTA.id_cliente = CLIENTE.id_cliente " +
+        "JOIN CHOFER ON VENTA.telefono_chofer = CHOFER.telefono_chofer " +
+        "JOIN USUARIO ON VENTA.telefono = USUARIO.telefono " +
+        "ORDER BY venta.folio_venta ASC";*/
+        String sql = "SELECT DISTINCT venta.folio_venta, venta.fecha_venta, venta.total_venta, cliente.nombre_cliente, venta.metodo_pago, venta.status, " +
+        "venta.flete, venta.costo_flete, chofer.nombre, usuario.nombre " +
+        "FROM VENTA " +
+        "JOIN CLIENTE ON VENTA.id_cliente = CLIENTE.id_cliente " +
+        "JOIN CHOFER ON VENTA.telefono_chofer = CHOFER.telefono_chofer " +
+        "JOIN USUARIO ON VENTA.telefono = USUARIO.telefono " +
+        "ORDER BY venta.fecha_venta DESC";
+
         try {
             con = conexion.conectar();//establecer conexion a la bd
             ps = con.prepareStatement(sql); //para prepara la consulta
@@ -300,6 +306,153 @@ public class ctrl_venta {
             }        
         }
         return listasfolio;
+    }
+    //Consulta para detalles de la venta
+    public List<DetalleVenta> obtenerDetallesVenta(int folioVenta) {
+    List<DetalleVenta> detalles = new ArrayList<>();
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    String sql = "SELECT dv.folio_venta, m.nombre_material, dv.peso_bruto, dv.peso_tara, dv.peso_neto, "
+               + "dv.descuento_porcentaje, dv.precio_utilizado, dv.observacion, dv.subtotal "
+               + "FROM detalle_venta dv "
+               + "JOIN material m ON dv.id_material = m.id_material "
+               + "WHERE dv.folio_venta = ?";   
+    try {
+        con = conexion.conectar();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, folioVenta);
+        rs = ps.executeQuery();        
+        while (rs.next()) {
+            DetalleVenta detalle = new DetalleVenta();
+            detalle.setFolio_venta(rs.getInt("folio_venta"));
+            detalle.setNombre_material(rs.getString("nombre_material"));
+            detalle.setPeso_bruto(rs.getDouble("peso_bruto"));
+            detalle.setPeso_tara(rs.getDouble("peso_tara"));
+            detalle.setPeso_neto(rs.getDouble("peso_neto"));
+            detalle.setDescuento_porcentaje(rs.getDouble("descuento_porcentaje"));
+            detalle.setObservacion(rs.getString("observacion"));
+            detalle.setSubtotal(rs.getDouble("subtotal"));
+            detalle.setPrecio_selecionado(rs.getDouble("precio_utilizado"));
+            detalles.add(detalle);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, e.toString());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            // Manejo de cierre de recursos
+        }
+    }
+    return detalles;
+    }
+    //Pagos Pendientes
+    public List<Venta> obtenerPagosPendientes() {
+        List<Venta> listaVenta = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT venta.folio_venta, venta.fecha_venta, cliente.nombre_cliente, venta.total_venta, venta.metodo_pago, venta.status, cliente.telefono, cliente.referencia\n" +
+                    "FROM venta\n" +
+                    "JOIN cliente ON venta.id_cliente = cliente.id_cliente\n" +
+                    "WHERE venta.status = 'Pendiente' ORDER BY venta.folio_venta DESC;";
+        try {
+            con = conexion.conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+            Venta venta = new Venta();
+            venta.setFolio_venta(rs.getInt("venta.folio_venta"));
+            venta.setFecha_venta(rs.getString("venta.fecha_venta"));
+            venta.setNombre_cliente(rs.getString("cliente.nombre_cliente"));
+            venta.setTotal_venta(rs.getDouble("venta.total_venta"));
+            venta.setMetodo_pago(rs.getString("venta.metodo_pago"));
+            venta.setStatus(rs.getString("venta.status"));
+            venta.setTelefono(rs.getString("cliente.telefono"));
+            venta.setReferencia(rs.getString("cliente.referencia"));
+            
+            listaVenta.add(venta);
+        }
+            
+        } catch (Exception e) {
+        }finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+        }
+        }
+        return listaVenta;
+    }
+    //para el modulo venta para pagos pendientes
+    public boolean MarcarComoPagado(int Folio){
+        Connection con = null;
+        PreparedStatement  ps = null;
+        String sql = "UPDATE VENTA SET status = 'Pagado' WHERE folio_venta = ?";
+        boolean isUpdated = false;
+        try {
+            con = conexion.conectar();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Folio);
+            int filasAfectadas = ps.executeUpdate();
+            isUpdated = filasAfectadas > 0; // Retorna true si se actualizó el estatus            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cambiar el estatus: " + e.getMessage());
+        }finally{
+            try {
+                if(ps != null) ps.close();
+                if(con != null) con.close();
+            } catch (SQLException e) {
+                JOptionPane.showConfirmDialog(null, "Erro al cerrar los recursos");
+            }
+        }
+        return isUpdated;// Retorna el resultado de la actualización
+    }
+    //para pagos Realizados
+    public List<Venta> obtenerPagosRealizados(){
+        List<Venta> listaventa = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "select venta.folio_venta, venta.fecha_venta, cliente.nombre_cliente,\n" +
+                    "venta.total_venta, venta.metodo_pago, venta.status, cliente.telefono,\n" +
+                    "cliente.referencia from venta\n" +
+                    "join\n" +
+                    "cliente on\n" +
+                    "cliente.id_cliente = venta.id_cliente\n" +
+                    "WHERE venta.status = 'Pagado' ORDER BY venta.folio_venta DESC";
+        try {
+            con = conexion.conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Venta venta = new Venta();
+                venta.setFolio_venta(rs.getInt("venta.folio_venta"));
+                venta.setFecha_venta(rs.getString("venta.fecha_venta"));
+                venta.setNombre_cliente(rs.getString("cliente.nombre_cliente"));
+                venta.setTotal_venta(rs.getDouble("venta.total_venta"));
+                venta.setMetodo_pago(rs.getString("venta.metodo_pago"));
+                venta.setStatus(rs.getString("venta.status"));
+                venta.setTelefono(rs.getString("cliente.telefono"));
+                venta.setReferencia(rs.getString("cliente.referencia"));
+                listaventa.add(venta);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }finally{
+            try {
+                if(ps != null) ps.close();
+                if(rs != null ) rs.close();
+                if(con != null) con.close();
+            } catch (SQLException e) {
+                
+            }
+        }
+        return listaventa;
     }
     
 }

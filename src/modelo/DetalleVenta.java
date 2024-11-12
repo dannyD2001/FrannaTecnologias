@@ -11,10 +11,23 @@ public class DetalleVenta {
     private String observacion;
     private double subtotal;
     private double precio_selecionado; //nuevo
+    //constru vacio
+    public DetalleVenta() {
+        this.folio_venta = 0;
+        this.nombre_material = "";
+        this.id_material = 0;
+        this.peso_bruto = 0;
+        this.peso_tara = 0;
+        this.peso_neto = 0;
+        this.descuento_porcentaje = 0;
+        this.observacion = "";
+        this.subtotal = 0;
+    }
+        
 
     public DetalleVenta(int folio_venta, String nombre_material, int id_material, double peso_bruto, double peso_tara, double peso_neto, double descuento_porcentaje, String observacion, double subtotal, double precio_selecionado) {
         this.folio_venta = folio_venta;
-        //this.nombre_material = nombre_material;
+        this.nombre_material = nombre_material;
         this.id_material = id_material;
         this.peso_bruto = peso_bruto;
         this.peso_tara = peso_tara;
@@ -36,7 +49,7 @@ public class DetalleVenta {
         this.subtotal = subtotal;
         this.precio_selecionado = precio_selecionado;
     }    
-    
+
     public int getFolio_venta() {
         return folio_venta;
     }
@@ -115,5 +128,7 @@ public class DetalleVenta {
 
     public void setPrecio_selecionado(double precio_selecionado) {
         this.precio_selecionado = precio_selecionado;
-    } 
+    }
+    
+    
 }

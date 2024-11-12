@@ -43,7 +43,6 @@ public class Compra_realizadas extends javax.swing.JFrame {
         // Personalizar ambos calendarios con el método
         personalizarCalendario(fecha_inicio);
         personalizarCalendario(fecha_final);
-    
         this.setTitle("COMPRAS REALIZADAS");
         Image icono = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagenes/compra1.png"));
         this.setIconImage(icono);
@@ -140,11 +139,13 @@ public class Compra_realizadas extends javax.swing.JFrame {
         label_anular = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1200, 600));
         setMinimumSize(new java.awt.Dimension(1200, 600));
         setUndecorated(true);
         setResizable(false);
 
         panel_secundario.setBackground(new java.awt.Color(92, 189, 110));
+        panel_secundario.setMaximumSize(new java.awt.Dimension(1200, 600));
         panel_secundario.setMinimumSize(new java.awt.Dimension(1200, 600));
         panel_secundario.setPreferredSize(new java.awt.Dimension(1200, 600));
         panel_secundario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -390,14 +391,14 @@ public class Compra_realizadas extends javax.swing.JFrame {
         tabla_compras.setFont(new java.awt.Font("Bahnschrift", 0, 10)); // NOI18N
         tabla_compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
-                "Folio", "Fecha", "Provedor", "Total Compra", "Metódo de Pago", "Estatus"
+                "Folio", "Fecha", "Provedor", "Total Compra", "Metódo de Pago", "Estatus", "Flete", "Costo Flete", "Atendido por"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -416,16 +417,19 @@ public class Compra_realizadas extends javax.swing.JFrame {
         panel_secundario.add(scroll_compras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 1160, 340));
 
         panel_ver_detalle.setBackground(new java.awt.Color(65, 136, 79));
-        panel_ver_detalle.setRoundBottomLeft(20);
-        panel_ver_detalle.setRoundBottomRight(20);
-        panel_ver_detalle.setRoundTopLeft(20);
-        panel_ver_detalle.setRoundTopRight(20);
+        panel_ver_detalle.setRoundBottomLeft(40);
+        panel_ver_detalle.setRoundBottomRight(40);
+        panel_ver_detalle.setRoundTopLeft(40);
+        panel_ver_detalle.setRoundTopRight(40);
 
         label_detalle.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         label_detalle.setForeground(new java.awt.Color(255, 255, 255));
         label_detalle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_detalle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bolsa_venta.png"))); // NOI18N
         label_detalle.setText("VER DETALLE");
         label_detalle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_detalle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label_detalle.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         label_detalle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label_detalleMouseClicked(evt);
@@ -449,19 +453,23 @@ public class Compra_realizadas extends javax.swing.JFrame {
             .addComponent(label_detalle, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        panel_secundario.add(panel_ver_detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 530, -1, 50));
+        panel_secundario.add(panel_ver_detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 530, -1, 50));
 
         panel_anular.setBackground(new java.awt.Color(65, 136, 79));
-        panel_anular.setRoundBottomLeft(20);
-        panel_anular.setRoundBottomRight(20);
-        panel_anular.setRoundTopLeft(20);
-        panel_anular.setRoundTopRight(20);
+        panel_anular.setPreferredSize(new java.awt.Dimension(100, 50));
+        panel_anular.setRoundBottomLeft(40);
+        panel_anular.setRoundBottomRight(40);
+        panel_anular.setRoundTopLeft(40);
+        panel_anular.setRoundTopRight(40);
 
         label_anular.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         label_anular.setForeground(new java.awt.Color(255, 255, 255));
         label_anular.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_anular.setText("ANULAR");
+        label_anular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/anular_venta.png"))); // NOI18N
+        label_anular.setText("ANULAR COMPRA");
         label_anular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_anular.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label_anular.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         label_anular.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label_anularMouseClicked(evt);
@@ -478,11 +486,11 @@ public class Compra_realizadas extends javax.swing.JFrame {
         panel_anular.setLayout(panel_anularLayout);
         panel_anularLayout.setHorizontalGroup(
             panel_anularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_anular, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+            .addComponent(label_anular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panel_anularLayout.setVerticalGroup(
             panel_anularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_anular, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(label_anular, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         panel_secundario.add(panel_anular, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 530, -1, -1));
@@ -721,14 +729,17 @@ public class Compra_realizadas extends javax.swing.JFrame {
         List<Compra> ListarMate = ctr_com.ConsultaCompra();
         modelo  = (DefaultTableModel) tabla_compras.getModel();
         modelo.setRowCount(0);
-        Object[] object = new Object[6];
+        Object[] object = new Object[9];
         for (int i = 0; i < ListarMate.size(); i++) {
             object[0] = ListarMate.get(i).getFolio_compra();
             object[1] = ListarMate.get(i).getFecha();
             object[2] = ListarMate.get(i).getNombre_provedor();
             object[3] = ListarMate.get(i).getTotal_compra();
             object[4] = ListarMate.get(i).getMetodo_pago();
-            object[5] = ListarMate.get(i).getStatus();           
+            object[5] = ListarMate.get(i).getStatus();
+            object[6] = ListarMate.get(i).getFlete();
+            object[7] = ListarMate.get(i).getCosto_flete();
+            object[8] = ListarMate.get(i).getNombre();
             modelo.addRow(object);            
         }
         tabla_compras.setModel(modelo);

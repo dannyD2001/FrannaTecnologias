@@ -663,7 +663,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void configurarPermisos() {
                 // Verificar el tipo de usuario
-        if ("Administrador".equals(Usuario.getTipo_usuario())) {
+        if ("Administrador".equals(Usuario.getTipo_usuario()) || "Programador".equals(Usuario.getTipo_usuario())) {
             // Si es administrador, habilitar el menú de usuarios
             menu_usuario.setEnabled(true);
            
@@ -672,4 +672,6 @@ public class Principal extends javax.swing.JFrame {
             menu_usuario.setEnabled(false);
         }
     }
+    //revisa lo del ultima vez de usuario y avanza con lo de cambiar pecios 
+    //
 }
