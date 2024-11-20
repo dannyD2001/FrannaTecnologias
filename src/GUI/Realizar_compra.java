@@ -49,7 +49,7 @@ public class Realizar_compra extends javax.swing.JFrame {
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e) {
-        }        
+        }
         initComponents();
         personalizar_tabla();
         personalizacion_extra();
@@ -1139,7 +1139,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         ctrl_material material = new ctrl_material();
         RegistrarCompra();
         material.bucarMaterial(name_material);
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void peso_brutoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peso_brutoMousePressed
@@ -1210,7 +1209,7 @@ public class Realizar_compra extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {              
+            public void run() {                    
                 Realizar_compra compra = new Realizar_compra(); 
                 compra.setVisible(true);
                 compra.setLocationRelativeTo(null);

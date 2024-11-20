@@ -391,10 +391,17 @@ public class Login extends javax.swing.JFrame {
             return; // Salir si no es un número
         }
         
+        
         Usuario.setContraseña(jPasswordField_contraseña.getText().trim());
         
         // Pasamos el objeto Usuario a la clase Principal
         if (controlUsuario.loginUsuario(Usuario)) {
+            //logica aca
+             // Registrar inicio de sesión en la base de datos el campo inicio_sesion
+            boolean inicioRegistrado = controlUsuario.registrarInicioSesion(Usuario.getTelefono());            
+            if (!inicioRegistrado) {
+                JOptionPane.showMessageDialog(this, "Error al registrar el inicio de sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
             AppContext.setUsuarioActual(Usuario);
             Principal principal = new Principal(Usuario);
             principal.setVisible(true);

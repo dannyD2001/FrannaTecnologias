@@ -47,13 +47,20 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         btn_ventas = new javax.swing.JLabel();
         label_inventario_paca = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        panel_ventas_pacas = new swing.PanelRound();
+        panel_inventario_paca = new swing.PanelRound();
         panel_pagos_pendientes_pacas = new swing.PanelRound();
         label_pagos_pendientes = new javax.swing.JLabel();
+        panel_pagos_p = new swing.PanelRound();
         panel_pagos_pendientes_granel = new swing.PanelRound();
         label_pagos_pendientes1 = new javax.swing.JLabel();
         panel_pendientes = new swing.PanelRound();
         btn_pendiente = new javax.swing.JLabel();
         panel_de_cambio_precios = new swing.PanelRound();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        panel_precio = new swing.PanelRound();
+        label_precio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -415,6 +422,40 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(50, 50, 50));
         jLabel5.setText("Ventas Realizadas(PACA)");
 
+        panel_ventas_pacas.setBackground(new java.awt.Color(82, 170, 99));
+        panel_ventas_pacas.setRoundBottomLeft(20);
+        panel_ventas_pacas.setRoundBottomRight(20);
+        panel_ventas_pacas.setRoundTopLeft(20);
+        panel_ventas_pacas.setRoundTopRight(20);
+
+        javax.swing.GroupLayout panel_ventas_pacasLayout = new javax.swing.GroupLayout(panel_ventas_pacas);
+        panel_ventas_pacas.setLayout(panel_ventas_pacasLayout);
+        panel_ventas_pacasLayout.setHorizontalGroup(
+            panel_ventas_pacasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panel_ventas_pacasLayout.setVerticalGroup(
+            panel_ventas_pacasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        panel_inventario_paca.setBackground(new java.awt.Color(82, 170, 99));
+        panel_inventario_paca.setRoundBottomLeft(20);
+        panel_inventario_paca.setRoundBottomRight(20);
+        panel_inventario_paca.setRoundTopLeft(20);
+        panel_inventario_paca.setRoundTopRight(20);
+
+        javax.swing.GroupLayout panel_inventario_pacaLayout = new javax.swing.GroupLayout(panel_inventario_paca);
+        panel_inventario_paca.setLayout(panel_inventario_pacaLayout);
+        panel_inventario_pacaLayout.setHorizontalGroup(
+            panel_inventario_pacaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panel_inventario_pacaLayout.setVerticalGroup(
+            panel_inventario_pacaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panel_menu_comprasLayout = new javax.swing.GroupLayout(panel_menu_compras);
         panel_menu_compras.setLayout(panel_menu_comprasLayout);
         panel_menu_comprasLayout.setHorizontalGroup(
@@ -438,7 +479,13 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_menu_comprasLayout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(label_inventario_paca, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panel_menu_comprasLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(panel_ventas_pacas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_inventario_paca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         panel_menu_comprasLayout.setVerticalGroup(
             panel_menu_comprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,7 +502,11 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
                 .addGroup(panel_menu_comprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_inventario_paca, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(131, 131, 131))
+                .addGap(18, 18, 18)
+                .addGroup(panel_menu_comprasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panel_ventas_pacas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_inventario_paca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
         );
 
         jPanel1.add(panel_menu_compras, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 140, 330, 320));
@@ -473,6 +524,23 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         label_pagos_pendientes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label_pagos_pendientes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        panel_pagos_p.setBackground(new java.awt.Color(82, 170, 99));
+        panel_pagos_p.setRoundBottomLeft(20);
+        panel_pagos_p.setRoundBottomRight(20);
+        panel_pagos_p.setRoundTopLeft(20);
+        panel_pagos_p.setRoundTopRight(20);
+
+        javax.swing.GroupLayout panel_pagos_pLayout = new javax.swing.GroupLayout(panel_pagos_p);
+        panel_pagos_p.setLayout(panel_pagos_pLayout);
+        panel_pagos_pLayout.setHorizontalGroup(
+            panel_pagos_pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        panel_pagos_pLayout.setVerticalGroup(
+            panel_pagos_pLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panel_pagos_pendientes_pacasLayout = new javax.swing.GroupLayout(panel_pagos_pendientes_pacas);
         panel_pagos_pendientes_pacas.setLayout(panel_pagos_pendientes_pacasLayout);
         panel_pagos_pendientes_pacasLayout.setHorizontalGroup(
@@ -481,13 +549,19 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label_pagos_pendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(panel_pagos_pendientes_pacasLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(panel_pagos_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_pagos_pendientes_pacasLayout.setVerticalGroup(
             panel_pagos_pendientes_pacasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_pagos_pendientes_pacasLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(label_pagos_pendientes, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                .addGap(86, 86, 86))
+                .addComponent(label_pagos_pendientes)
+                .addGap(18, 18, 18)
+                .addComponent(panel_pagos_p, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         jPanel1.add(panel_pagos_pendientes_pacas, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 160, 200));
@@ -511,6 +585,7 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         panel_pendientes.setRoundTopLeft(20);
         panel_pendientes.setRoundTopRight(20);
 
+        btn_pendiente.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         btn_pendiente.setForeground(new java.awt.Color(255, 255, 255));
         btn_pendiente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btn_pendiente.setText("PENDIENTE");
@@ -569,15 +644,76 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         panel_de_cambio_precios.setRoundTopLeft(20);
         panel_de_cambio_precios.setRoundTopRight(20);
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel6.setText("Actualiza precio Material");
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel7.setText("Para Venta");
+
+        panel_precio.setBackground(new java.awt.Color(82, 170, 99));
+        panel_precio.setRoundBottomLeft(20);
+        panel_precio.setRoundBottomRight(20);
+        panel_precio.setRoundTopLeft(20);
+        panel_precio.setRoundTopRight(20);
+
+        label_precio.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_precio.setForeground(new java.awt.Color(255, 255, 255));
+        label_precio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_precio.setText("ACTUALIZAR");
+        label_precio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_precio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_precioMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_precioMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_precioMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_precioLayout = new javax.swing.GroupLayout(panel_precio);
+        panel_precio.setLayout(panel_precioLayout);
+        panel_precioLayout.setHorizontalGroup(
+            panel_precioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_precio, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+        panel_precioLayout.setVerticalGroup(
+            panel_precioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_precio, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panel_de_cambio_preciosLayout = new javax.swing.GroupLayout(panel_de_cambio_precios);
         panel_de_cambio_precios.setLayout(panel_de_cambio_preciosLayout);
         panel_de_cambio_preciosLayout.setHorizontalGroup(
             panel_de_cambio_preciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_de_cambio_preciosLayout.createSequentialGroup()
+                .addContainerGap(130, Short.MAX_VALUE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(107, 107, 107))
+            .addGroup(panel_de_cambio_preciosLayout.createSequentialGroup()
+                .addGroup(panel_de_cambio_preciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_de_cambio_preciosLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_de_cambio_preciosLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(panel_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_de_cambio_preciosLayout.setVerticalGroup(
             panel_de_cambio_preciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGroup(panel_de_cambio_preciosLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panel_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         jPanel1.add(panel_de_cambio_precios, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 480, 330, 200));
@@ -717,6 +853,26 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_pendienteMouseClicked
 
+    private void label_precioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_precioMouseClicked
+        // TODO add your handling code here:
+        Actualizar_Precio_Venta_Granel precio = new Actualizar_Precio_Venta_Granel();
+        precio.setVisible(true);
+        precio.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_precioMouseClicked
+
+    private void label_precioMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_precioMouseEntered
+        // TODO add your handling code here:
+        label_precio.setForeground(new Color(0xcccccc));
+        panel_precio.setBackground(new Color(0x499758));
+    }//GEN-LAST:event_label_precioMouseEntered
+
+    private void label_precioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_precioMouseExited
+        // TODO add your handling code here:
+        panel_precio.setBackground(new Color(0x52aa63));
+        label_precio.setForeground(Color.WHITE);
+    }//GEN-LAST:event_label_precioMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -763,6 +919,8 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
@@ -772,18 +930,23 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
     private javax.swing.JLabel label_nombre_comopras;
     private javax.swing.JLabel label_pagos_pendientes;
     private javax.swing.JLabel label_pagos_pendientes1;
+    private javax.swing.JLabel label_precio;
     private javax.swing.JTextField nombre_;
     private swing.PanelRound panelRound1;
     private swing.PanelRound panelRound2;
     private swing.PanelRound panel_atras;
     private swing.PanelRound panel_compras_stock;
     private swing.PanelRound panel_de_cambio_precios;
+    private swing.PanelRound panel_inventario_paca;
     private swing.PanelRound panel_material;
     private swing.PanelRound panel_menu_compras;
     private swing.PanelRound panel_pacas;
+    private swing.PanelRound panel_pagos_p;
     private swing.PanelRound panel_pagos_pendientes_granel;
     private swing.PanelRound panel_pagos_pendientes_pacas;
     private swing.PanelRound panel_pendientes;
+    private swing.PanelRound panel_precio;
+    private swing.PanelRound panel_ventas_pacas;
     private swing.PanelRound panel_ventas_realizadas;
     private javax.swing.JLabel usuario;
     private javax.swing.JTextField usuario_;

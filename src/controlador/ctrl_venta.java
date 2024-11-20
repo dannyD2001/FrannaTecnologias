@@ -266,7 +266,7 @@ public class ctrl_venta {
 "                JOIN \n" +
 "                CHOFER ON VENTA.telefono_chofer = CHOFER.telefono_chofer\n" +
 "                JOIN \n" +
-"                USUARIO ON VENTA.telefono = USUARIO.telefono";
+"                USUARIO ON VENTA.telefono = USUARIO.telefono ORDER BY venta.folio_venta DESC";
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);

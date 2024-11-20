@@ -645,7 +645,10 @@ public class Compra_realizadas extends javax.swing.JFrame {
                 compra.getNombre_provedor(),
                 compra.getTotal_compra(),
                 compra.getMetodo_pago(),
-                compra.getStatus()
+                compra.getStatus(),
+                compra.getFlete(),
+                compra.getCosto_flete(),
+                compra.getNombre()
             };
             model.addRow(rowData);
         }
@@ -750,7 +753,7 @@ public class Compra_realizadas extends javax.swing.JFrame {
         List<Compra> ListaFolio = compra.consultaFolio();
         modelo  = (DefaultTableModel) tabla_compras.getModel();
         modelo.setRowCount(0);
-        Object[] object = new  Object[6];
+        Object[] object = new  Object[9];
         for (Compra compra : ListaFolio){
             // Si folio es -1, mostrar todos los registros
         // Si no, mostrar solo los registros cuyo folio coincida con el folio buscad
@@ -761,6 +764,9 @@ public class Compra_realizadas extends javax.swing.JFrame {
             object[3] = compra.getTotal_compra();
             object[4]= compra.getMetodo_pago();
             object[5] = compra.getStatus();
+            object[6] = compra.getFlete();
+            object[7] = compra.getCosto_flete();
+            object[8] = compra.getNombre();
             modelo.addRow(object);            
             }
         }
@@ -796,7 +802,10 @@ public class Compra_realizadas extends javax.swing.JFrame {
                 compra.getNombre_provedor(),
                 compra.getTotal_compra(),
                 compra.getMetodo_pago(),
-                compra.getStatus()
+                compra.getStatus(),
+                compra.getFlete(),
+                compra.getCosto_flete(),
+                compra.getNombre()
             };
             model.addRow(rowData);
         } catch (Exception e) {

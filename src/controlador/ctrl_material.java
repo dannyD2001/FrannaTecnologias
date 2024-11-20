@@ -134,4 +134,131 @@ public class ctrl_material {
             JOptionPane.showMessageDialog(null, e.toString());
         }
     }
+    //Para Actualizar Precio para Compra  
+    public List<Material> consultarMateriales() {
+    List<Material> listaMateriales = new ArrayList<>();
+    String sql = "SELECT id_material, nombre_material, precio_compra, precio_compra2, precio_compra3 FROM material";
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try{
+        con = conexion.conectar();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Material material = new Material();
+            material.setId_material(rs.getInt("id_material"));
+            material.setNombre_material(rs.getString("nombre_material"));
+            material.setPrecio_compra(rs.getDouble("precio_compra"));
+            material.setPrecio_compra2(rs.getDouble("precio_compra2"));
+            material.setPrecio_compra3(rs.getDouble("precio_compra3"));
+            listaMateriales.add(material);
+        }
+    } catch (SQLException e) {
+     
+    }finally{
+        try {
+            if(ps != null) ps.close();
+            if(rs != null) rs.close();
+            if(con != null) con.close();
+        } catch (SQLException e) {
+        }
+    }
+    return listaMateriales;
+    }
+    //para actualizar precios
+    // Para actualizar precios
+    public boolean actualizarPrecio(Material material) {
+    String sql = "UPDATE material SET nombre_material = ?, precio_compra = ?, precio_compra2 = ?, precio_compra3 = ? WHERE id_material = ?";
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    try {
+        con = conexion.conectar(); // Obtener conexión
+        ps = con.prepareStatement(sql);
+
+        // Configurar los parámetros de la consulta
+        ps.setString(1, material.getNombre_material());
+        ps.setDouble(2, material.getPrecio_compra());
+        ps.setDouble(3, material.getPrecio_compra2());
+        ps.setDouble(4, material.getPrecio_compra3());
+        ps.setInt(5, material.getId_material());
+
+        // Ejecutar la actualización
+        return ps.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        return false;
+    } finally {
+        // Asegurar que los recursos se cierren
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+        }
+    }
+    }
+    //Para actualizar precio venta
+    public List<Material> consultarMateriales2() {
+    List<Material> listaMateriales = new ArrayList<>();
+    String sql = "SELECT id_material, nombre_material, precio_venta, precio_venta2, precio_venta3 FROM material";
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    try{
+        con = conexion.conectar();
+        ps = con.prepareStatement(sql);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Material material = new Material();
+            material.setId_material(rs.getInt("id_material"));
+            material.setNombre_material(rs.getString("nombre_material"));
+            material.setPrecio_venta(rs.getDouble("precio_venta"));
+            material.setPrecio_venta2(rs.getDouble("precio_venta2"));
+            material.setPrecio_venta3(rs.getDouble("precio_venta3"));
+            listaMateriales.add(material);
+        }
+    } catch (SQLException e) {
+     
+    }finally{
+        try {
+            if(ps != null) ps.close();
+            if(rs != null) rs.close();
+            if(con != null) con.close();
+        } catch (SQLException e) {
+        }
+    }
+    return listaMateriales;
+    }
+    //venta Para actualizar precios Venta
+    public boolean actualizarPrecioVenta(Material material) {
+    String sql = "UPDATE material SET nombre_material = ?, precio_venta = ?, precio_venta2 = ?, precio_venta3 = ? WHERE id_material = ?";
+    Connection con = null;
+    PreparedStatement ps = null;
+
+    try {
+        con = conexion.conectar(); // Obtener conexión
+        ps = con.prepareStatement(sql);
+
+        // Configurar los parámetros de la consulta
+        ps.setString(1, material.getNombre_material());
+        ps.setDouble(2, material.getPrecio_venta());
+        ps.setDouble(3, material.getPrecio_venta2());
+        ps.setDouble(4, material.getPrecio_venta3());
+        ps.setInt(5, material.getId_material());
+
+        // Ejecutar la actualización
+        return ps.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+        return false;
+    } finally {
+        // Asegurar que los recursos se cierren
+        try {
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException ex) {
+        }
+    }
+    }
 }

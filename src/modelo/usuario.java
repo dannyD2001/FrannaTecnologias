@@ -11,6 +11,8 @@ public class usuario {
     private String apellidoM;
     private String contraseña;
     private String tipo_usuario;
+    private String inicio_sesion;
+    private String ultimo_acceso;
         //constructor vacio
     public usuario() {
         this.telefono = "";
@@ -21,14 +23,17 @@ public class usuario {
         this.tipo_usuario = "";
     }
 
-    public usuario(String telefono, String nombre, String apellidoP, String apellidoM, String contraseña, String tipo_usuario) {
+    //constructor
+    public usuario(String telefono, String nombre, String apellidoP, String apellidoM, String contraseña, String tipo_usuario, String inicio_sesion, String ultimo_acceso) {
         this.telefono = telefono;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.contraseña = contraseña;
         this.tipo_usuario = tipo_usuario;
-    }
+        this.inicio_sesion = inicio_sesion;
+        this.ultimo_acceso = ultimo_acceso;
+    }    
 
     public String getTelefono() {
         return telefono;
@@ -77,6 +82,23 @@ public class usuario {
     public void setTipo_usuario(String tipo_usuario) {
         this.tipo_usuario = tipo_usuario;
     }
+
+    public String getInicio_sesion() {
+        return inicio_sesion;
+    }
+
+    public void setInicio_sesion(String inicio_sesion) {
+        this.inicio_sesion = inicio_sesion;
+    }
+
+    public String getUltimo_acceso() {
+        return ultimo_acceso;
+    }
+
+    public void setUltimo_acceso(String ultimo_acceso) {
+        this.ultimo_acceso = ultimo_acceso;
+    }
+    
     @Override
     public String toString() {
         return String.valueOf(this.nombre); // Esto asegura que se muestre el nombre del usuario

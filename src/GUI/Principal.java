@@ -1,6 +1,7 @@
 package GUI;
 import Util.AppContext;
 import com.formdev.flatlaf.FlatDarkLaf;
+import controlador.ctrl_usuario;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -71,6 +72,7 @@ public class Principal extends javax.swing.JFrame {
         menu_usuario = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         categoria = new javax.swing.JMenu();
         menu_agregarcategoria = new javax.swing.JMenuItem();
         provedor = new javax.swing.JMenu();
@@ -205,7 +207,7 @@ public class Principal extends javax.swing.JFrame {
         labelInventario.setForeground(new java.awt.Color(0, 0, 0));
         labelInventario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/inventario1.png"))); // NOI18N
-        labelInventario.setText("Registro Pacas");
+        labelInventario.setText("Producción Pacas");
         labelInventario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelInventario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         labelInventario.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -257,6 +259,7 @@ public class Principal extends javax.swing.JFrame {
         panelPrincipal.add(panelAcciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 530, 700));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("©Todos los derechos Reservado");
         panelPrincipal.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, 210, 42));
 
@@ -292,6 +295,18 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menu_usuario.add(jMenuItem3);
+
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem9.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/registros-24.png"))); // NOI18N
+        jMenuItem9.setText("Ultimos Registros");
+        jMenuItem9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        menu_usuario.add(jMenuItem9);
 
         jMenuBar1.add(menu_usuario);
 
@@ -376,9 +391,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu3.setFont(new java.awt.Font("Bell MT", 0, 15)); // NOI18N
 
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem7.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mas.png"))); // NOI18N
         jMenuItem7.setText("Agregar Chofer");
+        jMenuItem7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -393,8 +410,10 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu4.setFont(new java.awt.Font("Bell MT", 0, 15)); // NOI18N
 
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mas.png"))); // NOI18N
         jMenuItem8.setText("Agregar Vehiculo");
+        jMenuItem8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -411,6 +430,7 @@ public class Principal extends javax.swing.JFrame {
         sesion.setFont(new java.awt.Font("Bell MT", 0, 14)); // NOI18N
         sesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/iniciar-sesion.png"))); // NOI18N
         jMenuItem1.setText("Cerrar Sesión");
@@ -443,7 +463,15 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
      boolean loginOpen = false;
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-
+        ctrl_usuario ctrlUsuario = new ctrl_usuario();
+        //Recuperar usuario actual   
+        usuario usuarioActual = AppContext.getUsuarioActual();
+        String Usuarioo = usuarioActual.getTelefono();
+        boolean actualizado = ctrlUsuario.registrarUltimoAcceso(Usuarioo);
+        if (!actualizado) {
+        JOptionPane.showMessageDialog(this, "No se pudo registrar el último acceso.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
         // Verificar si ya hay una instancia visible de Login
         Window[] windows = Window.getWindows(); // Obtiene todas las ventanas abiertas en la aplicación
         for (Window window : windows) {
@@ -524,7 +552,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        mostrar_usuario mostrar = new mostrar_usuario();
+        Mostrar_Usuario mostrar = new Mostrar_Usuario();
         mostrar.setVisible(true);
         mostrar.setLocationRelativeTo(null);
         this.dispose();
@@ -567,7 +595,7 @@ public class Principal extends javax.swing.JFrame {
     private void labelInventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelInventarioMouseClicked
         // TODO add your handling code here:
                // al dar click
-        Menu_Vista_Inventario Administar_inventario = new Menu_Vista_Inventario();
+        Menu_Vista_Produccion Administar_inventario = new Menu_Vista_Produccion();
         Administar_inventario.setVisible(true);
         Administar_inventario.setLocationRelativeTo(null);
         this.dispose();
@@ -596,6 +624,13 @@ public class Principal extends javax.swing.JFrame {
         vista_vehi.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        Ultimo_Acceso ultimo = new Ultimo_Acceso();
+        ultimo.setVisible(true);
+        ultimo.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     public static void main(String args[]) {
 
@@ -647,6 +682,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JLabel labelCompra;
     private javax.swing.JLabel labelInventario;
     private javax.swing.JLabel labelVenta;
@@ -666,7 +702,7 @@ public class Principal extends javax.swing.JFrame {
         if ("Administrador".equals(Usuario.getTipo_usuario()) || "Programador".equals(Usuario.getTipo_usuario())) {
             // Si es administrador, habilitar el menú de usuarios
             menu_usuario.setEnabled(true);
-           
+       
         } else {
             // Si no es administrador, deshabilitar el menú de usuarios
             menu_usuario.setEnabled(false);
