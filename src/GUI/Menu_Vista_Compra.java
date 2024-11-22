@@ -41,9 +41,6 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         panel_pacas = new swing.PanelRound();
         pacas = new javax.swing.JLabel();
         panel_logo = new swing.PanelRound();
-        jLabel5 = new javax.swing.JLabel();
-        panel_tendencia = new swing.PanelRound();
-        label_tendencia = new javax.swing.JLabel();
         panelRound2 = new swing.PanelRound();
         usuario = new javax.swing.JLabel();
         usuario_ = new javax.swing.JTextField();
@@ -59,6 +56,12 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         panel_compras_stock = new swing.PanelRound();
         btn_stock = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        panel_tendencia = new swing.PanelRound();
+        label_tendencia = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        panel_prove = new swing.PanelRound();
+        label_pro = new javax.swing.JLabel();
         panel_actualizar_precios = new swing.PanelRound();
         label_nombre_comopras2 = new javax.swing.JLabel();
         panel_actualizar_material = new swing.PanelRound();
@@ -270,67 +273,15 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         panel_logo.setRoundTopLeft(20);
         panel_logo.setRoundTopRight(20);
 
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(50, 50, 50));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-stock-24.png"))); // NOI18N
-        jLabel5.setText("Tendecia Compras");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        panel_tendencia.setBackground(new java.awt.Color(82, 170, 99));
-        panel_tendencia.setPreferredSize(new java.awt.Dimension(99, 39));
-        panel_tendencia.setRoundBottomLeft(20);
-        panel_tendencia.setRoundBottomRight(20);
-        panel_tendencia.setRoundTopLeft(20);
-        panel_tendencia.setRoundTopRight(20);
-
-        label_tendencia.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        label_tendencia.setForeground(new java.awt.Color(255, 255, 255));
-        label_tendencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_tendencia.setText("TENDECIA");
-        label_tendencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        label_tendencia.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_tendenciaMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                label_tendenciaMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                label_tendenciaMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panel_tendenciaLayout = new javax.swing.GroupLayout(panel_tendencia);
-        panel_tendencia.setLayout(panel_tendenciaLayout);
-        panel_tendenciaLayout.setHorizontalGroup(
-            panel_tendenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_tendencia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        panel_tendenciaLayout.setVerticalGroup(
-            panel_tendenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(label_tendencia, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout panel_logoLayout = new javax.swing.GroupLayout(panel_logo);
         panel_logo.setLayout(panel_logoLayout);
         panel_logoLayout.setHorizontalGroup(
             panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_logoLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel_tendencia, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+            .addGap(0, 160, Short.MAX_VALUE)
         );
         panel_logoLayout.setVerticalGroup(
             panel_logoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_logoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(35, 35, 35)
-                .addComponent(panel_tendencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+            .addGap(0, 190, Short.MAX_VALUE)
         );
 
         panel_principal.add(panel_logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 480, 160, 190));
@@ -506,6 +457,89 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-stock-24.png"))); // NOI18N
+        jLabel5.setText("Tendecia Compras");
+        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        panel_tendencia.setBackground(new java.awt.Color(82, 170, 99));
+        panel_tendencia.setPreferredSize(new java.awt.Dimension(99, 39));
+        panel_tendencia.setRoundBottomLeft(20);
+        panel_tendencia.setRoundBottomRight(20);
+        panel_tendencia.setRoundTopLeft(20);
+        panel_tendencia.setRoundTopRight(20);
+
+        label_tendencia.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_tendencia.setForeground(new java.awt.Color(255, 255, 255));
+        label_tendencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_tendencia.setText("TENDECIA");
+        label_tendencia.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_tendencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_tendenciaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_tendenciaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_tendenciaMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_tendenciaLayout = new javax.swing.GroupLayout(panel_tendencia);
+        panel_tendencia.setLayout(panel_tendenciaLayout);
+        panel_tendenciaLayout.setHorizontalGroup(
+            panel_tendenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_tendencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panel_tendenciaLayout.setVerticalGroup(
+            panel_tendenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_tendencia, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+        );
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-stock-24.png"))); // NOI18N
+        jLabel6.setText("Proveedor Activos");
+        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        panel_prove.setBackground(new java.awt.Color(82, 170, 99));
+        panel_prove.setRoundBottomLeft(20);
+        panel_prove.setRoundBottomRight(20);
+        panel_prove.setRoundTopLeft(20);
+        panel_prove.setRoundTopRight(20);
+
+        label_pro.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_pro.setForeground(new java.awt.Color(255, 255, 255));
+        label_pro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_pro.setText("ACTIVIDAD");
+        label_pro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_pro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_proMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_proMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_proMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_proveLayout = new javax.swing.GroupLayout(panel_prove);
+        panel_prove.setLayout(panel_proveLayout);
+        panel_proveLayout.setHorizontalGroup(
+            panel_proveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_pro, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+        panel_proveLayout.setVerticalGroup(
+            panel_proveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_pro, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panel_menu_graficasLayout = new javax.swing.GroupLayout(panel_menu_graficas);
         panel_menu_graficas.setLayout(panel_menu_graficasLayout);
         panel_menu_graficasLayout.setHorizontalGroup(
@@ -513,21 +547,24 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
             .addGroup(panel_menu_graficasLayout.createSequentialGroup()
                 .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_menu_graficasLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(panel_compras_realizadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_menu_graficasLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(label_nombre_comopras, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(label_nombre_comopras, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel_menu_graficasLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panel_compras_realizadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_tendencia, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))))
+                .addGap(35, 35, 35)
+                .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_menu_graficasLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panel_compras_stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)))
-                .addContainerGap(3, Short.MAX_VALUE))
+                        .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_compras_stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel_prove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         panel_menu_graficasLayout.setVerticalGroup(
             panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -540,7 +577,15 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
                 .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_compras_realizadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panel_compras_stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(panel_menu_graficasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_tendencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_prove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         panel_principal.add(panel_menu_graficas, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 140, 330, 320));
@@ -897,6 +942,27 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         label_tendencia.setForeground(Color.WHITE); 
     }//GEN-LAST:event_label_tendenciaMouseExited
 
+    private void label_proMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proMouseClicked
+        // TODO add your handling code here:
+        Grafico_Provedor gp = new Grafico_Provedor();
+        gp.setVentanaOrigen("compra");
+        gp.setVisible(true);
+        gp.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_proMouseClicked
+
+    private void label_proMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proMouseEntered
+        // TODO add your handling code here:
+        panel_prove.setBackground(new Color(0x499758));
+        label_pro.setForeground(new Color(0xcccccc)); 
+    }//GEN-LAST:event_label_proMouseEntered
+
+    private void label_proMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proMouseExited
+        // TODO add your handling code here:
+        panel_prove.setBackground(new Color(0x52aa63));
+        label_pro.setForeground(Color.WHITE); 
+    }//GEN-LAST:event_label_proMouseExited
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -947,6 +1013,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -956,6 +1023,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private javax.swing.JLabel label_pagos_pendientes;
     private javax.swing.JLabel label_pendiente;
     private javax.swing.JLabel label_precio;
+    private javax.swing.JLabel label_pro;
     private javax.swing.JLabel label_tendencia;
     private javax.swing.JLabel material;
     private javax.swing.JTextField nombre_;
@@ -973,6 +1041,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private swing.PanelRound panel_pagos_pendientes;
     private javax.swing.JPanel panel_principal;
     private swing.PanelRound panel_principal_verde;
+    private swing.PanelRound panel_prove;
     private swing.PanelRound panel_tendencia;
     private javax.swing.JLabel usuario;
     private javax.swing.JTextField usuario_;

@@ -15,9 +15,10 @@ public class Material {
     private double precio_venta;
     private double precio_venta2;
     private double precio_venta3;
-    
-       // Constructor con 6 parámetros
-    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, double precio_venta, double precio_compra2, double precio_compra3, double precio_venta2, double precio_venta3) {    
+    private double precio_compra4;
+    private double precio_compra5;
+       // Constructor con 8 parámetros
+    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, double precio_venta, double precio_compra2, double precio_compra3, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5) {    
         this.id_material = id_material;
         this.nombre_material = nombre_material;
         this.cantidad_kg = cantidad_kg;
@@ -27,8 +28,9 @@ public class Material {
         this.precio_compra3 = precio_compra3;
         this.precio_venta2 = precio_venta2;
         this.precio_venta3 = precio_venta3;
+        this.precio_compra4 = precio_compra4;
+        this.precio_compra5 = precio_compra5;
     }
-
     //constructor vacio
     public Material() {
         this.id_material = 0;
@@ -42,20 +44,24 @@ public class Material {
         this.precio_compra3 = 0;
         this.precio_venta2 = 0;
         this.precio_venta3 = 0;
+        this.precio_compra4 = 0;
+        this.precio_compra5 = 0;
     }
 
-    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, double precio_venta, int id_categoria, String unidad_de_medida, double precio_compra2, double precio_compra3, double precio_venta2, double precio_venta3) {
+    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, int id_categoria, String unidad_de_medida, double precio_compra2, double precio_compra3, double precio_venta, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5) {
         this.id_material = id_material;
         this.nombre_material = nombre_material;
         this.cantidad_kg = cantidad_kg;
         this.precio_compra = precio_compra;
-        this.precio_venta = precio_venta;
         this.id_categoria = id_categoria;
         this.unidad_de_medida = unidad_de_medida;
         this.precio_compra2 = precio_compra2;
         this.precio_compra3 = precio_compra3;
+        this.precio_venta = precio_venta;
         this.precio_venta2 = precio_venta2;
         this.precio_venta3 = precio_venta3;
+        this.precio_compra4 = precio_compra4;
+        this.precio_compra5 = precio_compra5;
     }
 
     public int getId_material() {
@@ -90,14 +96,6 @@ public class Material {
         this.precio_compra = precio_compra;
     }
 
-    public double getPrecio_venta() {
-        return precio_venta;
-    }
-
-    public void setPrecio_venta(double precio_venta) {
-        this.precio_venta = precio_venta;
-    }
-
     public int getId_categoria() {
         return id_categoria;
     }
@@ -130,6 +128,14 @@ public class Material {
         this.precio_compra3 = precio_compra3;
     }
 
+    public double getPrecio_venta() {
+        return precio_venta;
+    }
+
+    public void setPrecio_venta(double precio_venta) {
+        this.precio_venta = precio_venta;
+    }
+
     public double getPrecio_venta2() {
         return precio_venta2;
     }
@@ -145,11 +151,25 @@ public class Material {
     public void setPrecio_venta3(double precio_venta3) {
         this.precio_venta3 = precio_venta3;
     }
-    
+
+    public double getPrecio_compra4() {
+        return precio_compra4;
+    }
+
+    public void setPrecio_compra4(double precio_compra4) {
+        this.precio_compra4 = precio_compra4;
+    }
+
+    public double getPrecio_compra5() {
+        return precio_compra5;
+    }
+
+    public void setPrecio_compra5(double precio_compra5) {
+        this.precio_compra5 = precio_compra5;
+    }
+       
     @Override
     public String toString() {
         return String.valueOf(this.nombre_material); // Esto asegura que se muestre el id_material
     }
-   
-
 }

@@ -505,7 +505,6 @@ public class ctrl_compra {
     PreparedStatement ps = null;
     ResultSet rs = null;
     List<Object[]> datos = new ArrayList<>();
-
     String sql = "SELECT m.nombre_material AS material, " +
                  "       COUNT(DISTINCT dc.folio_compra) AS cantidad_compras " +
                  "FROM detalle_compra dc " +

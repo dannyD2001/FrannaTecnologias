@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import modelo.Provedor;
@@ -80,4 +82,106 @@ public class ctrl_provedor {
         }
         return idProveedor; // Retornar el ID del proveedor o -1 si no lo encontró
     }
+     // sirve para la de los provedores activos
+    // Clase para contener tanto los datos como el mes actual
+    public class DatosGrafico {
+    private List<Object[]> datos;
+    private String mesActual;
+
+    public DatosGrafico(List<Object[]> datos, String mesActual) {
+        this.datos = datos;
+        this.mesActual = mesActual;
+    }
+
+    public List<Object[]> getDatos() {
+        return datos;
+    }
+
+    public String getMesActual() {
+        return mesActual;
+    }
+    }  
+    public DatosGrafico obtenerDatosGrafico_c() {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    String mesActual = "";  // Variable para almacenar el mes actual
+    List<Object[]> datos = new ArrayList<>();
+    try {      
+         // Obtener la conexión a la base de datos
+        con = conexion.conectar();
+        // Ejecutar el comando para establecer el idioma en español
+        String setLanguageSql = "SET lc_time_names = 'es_ES';";
+        ps = con.prepareStatement(setLanguageSql);
+        ps.execute(); // Ejecutar el comando SET
+        ps.close(); // Cerramos el PreparedStatement después de ejecutarlo
+
+        // Consulta SQL para obtener los datos
+        String selectSql = "SELECT p.nombre AS nombre_proveedor, " +
+                           "COUNT(c.folio_compra) AS numero_compras, " +
+                           "MONTHNAME(CURDATE()) AS mes_actual " +
+                           "FROM provedor p " +
+                           "LEFT JOIN compra c ON p.id_provedor = c.id_provedor " +
+                           "AND MONTH(c.fecha_compra) = MONTH(CURDATE()) " +
+                           "AND YEAR(c.fecha_compra) = YEAR(CURDATE()) " +
+                           "GROUP BY p.nombre " +
+                           "ORDER BY numero_compras DESC;";
+
+        ps = con.prepareStatement(selectSql);
+        rs = ps.executeQuery(); // Ejecutar la consulta SELECT
+
+        while (rs.next()) {
+            String nombre_provedor = rs.getString("nombre_proveedor");
+            int numero_compras = rs.getInt("numero_compras");
+            mesActual = rs.getString("mes_actual"); // Obtener el mes actual
+            datos.add(new Object[]{nombre_provedor, numero_compras});
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Retorna tanto los datos como el mes actual
+    return new DatosGrafico(datos, mesActual);
+    }
+    //consulta para obtener infromacion del prove para principal
+    public List Consultaprovedor(){
+        List <Provedor> listaprove = new ArrayList();
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sql = "SELECT id_provedor, nombre, telefono, ciudad from provedor";
+        try {
+            con = conexion.conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Provedor prove = new Provedor();
+                prove.setId_provedor(rs.getInt("id_provedor"));
+                prove.setNombre(rs.getString("nombre"));
+                prove.setTelefono(rs.getString("telefono"));
+                prove.setCiudad(rs.getString("ciudad"));
+                listaprove.add(prove);
+            }
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"error al conslutar Provedor");
+        }finally{
+            try {
+                if(rs != null) rs.close();
+                if(ps != null) ps.close();
+                if(con != null) con.close();
+            } catch (SQLException e) {
+            }
+        }
+        return listaprove;
+    }
 }
+

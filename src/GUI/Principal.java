@@ -77,10 +77,12 @@ public class Principal extends javax.swing.JFrame {
         menu_agregarcategoria = new javax.swing.JMenuItem();
         provedor = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -265,7 +267,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(950, 39));
         jMenuBar1.setMinimumSize(new java.awt.Dimension(950, 39));
-        jMenuBar1.setPreferredSize(new java.awt.Dimension(950, 39));
+        jMenuBar1.setPreferredSize(new java.awt.Dimension(950, 40));
 
         menu_usuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/agregar_usuario1.png"))); // NOI18N
         menu_usuario.setText("Usuario  ");
@@ -346,6 +348,17 @@ public class Principal extends javax.swing.JFrame {
         });
         provedor.add(jMenuItem4);
 
+        jMenuItem11.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consulta.png"))); // NOI18N
+        jMenuItem11.setText("Mostrar Proveedor");
+        jMenuItem11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        provedor.add(jMenuItem11);
+
         jMenuBar1.add(provedor);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/adquisitivo.png"))); // NOI18N
@@ -383,6 +396,17 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem6);
+
+        jMenuItem10.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/consulta.png"))); // NOI18N
+        jMenuItem10.setText("Mostrar Materiales");
+        jMenuItem10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
 
         jMenuBar1.add(jMenu2);
 
@@ -552,7 +576,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        mostrar_usuario mostrar = new mostrar_usuario();
+        Mostrar_Usuario mostrar = new Mostrar_Usuario();
         mostrar.setVisible(true);
         
         mostrar.setLocationRelativeTo(null);
@@ -580,6 +604,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
         Administra_Provedor provedor = new Administra_Provedor();
+        provedor.setVentanaOrigen("Principal");
         provedor.setLocationRelativeTo(null);
         provedor.setVisible(true);
         this.dispose();
@@ -633,6 +658,22 @@ public class Principal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        Mostrar_Material mm = new Mostrar_Material();
+        mm.setVisible(true);
+        mm.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        Mostrar_Proveedor mp = new Mostrar_Proveedor();
+        mp.setVisible(true);
+        mp.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     public static void main(String args[]) {
 
         try {
@@ -676,6 +717,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

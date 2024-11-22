@@ -114,11 +114,13 @@ public class Realizar_compra extends javax.swing.JFrame {
             else if (selectedItem instanceof Material) {
                 Material selectedMaterial = (Material) selectedItem;
                 id_material.setText(String.valueOf(selectedMaterial.getId_material())); // Mostrar el ID en el JTextField
-                // Poblar el JComboBox con los tres precios
+                // Poblar el JComboBox con los 5 precios
                 precioss.removeAllItems(); // Limpiar precios anteriores
                 precioss.addItem(String.valueOf(selectedMaterial.getPrecio_compra()));
                 precioss.addItem(String.valueOf(selectedMaterial.getPrecio_compra2()));
                 precioss.addItem(String.valueOf(selectedMaterial.getPrecio_compra3()));
+                precioss.addItem(String.valueOf(selectedMaterial.getPrecio_compra4()));
+                precioss.addItem(String.valueOf(selectedMaterial.getPrecio_compra5()));
                 //precio_kg1.setText(String.valueOf(selectedMaterial.getPrecio_compra()));
                 stock.setText(String.valueOf(selectedMaterial.getCantidad_kg()));
                 peso_bruto.enable();
@@ -144,13 +146,13 @@ public class Realizar_compra extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
         panel_principal = new javax.swing.JPanel();
         barra = new javax.swing.JPanel();
         panel_fondo = new swing.PanelRound();
         panel_atras = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        btn_provedor = new swing.PanelRound();
+        label_provedor = new javax.swing.JLabel();
         scroll_compra = new javax.swing.JScrollPane();
         tabla_compra = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
@@ -209,30 +211,6 @@ public class Realizar_compra extends javax.swing.JFrame {
         panel_eliminar = new swing.PanelRound();
         label_eliminar = new javax.swing.JLabel();
 
-        jInternalFrame1.setVisible(true);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1300, 650));
         setUndecorated(true);
@@ -286,22 +264,56 @@ public class Realizar_compra extends javax.swing.JFrame {
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Compra Granel");
 
+        btn_provedor.setBackground(new java.awt.Color(44, 62, 80));
+
+        label_provedor.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
+        label_provedor.setForeground(new java.awt.Color(255, 255, 255));
+        label_provedor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_provedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mas.png"))); // NOI18N
+        label_provedor.setText("Agregar Proveedor");
+        label_provedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_provedor.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        label_provedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_provedorMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_provedorMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_provedorMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout btn_provedorLayout = new javax.swing.GroupLayout(btn_provedor);
+        btn_provedor.setLayout(btn_provedorLayout);
+        btn_provedorLayout.setHorizontalGroup(
+            btn_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_provedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        btn_provedorLayout.setVerticalGroup(
+            btn_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_provedor, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout barraLayout = new javax.swing.GroupLayout(barra);
         barra.setLayout(barraLayout);
         barraLayout.setHorizontalGroup(
             barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(barraLayout.createSequentialGroup()
                 .addComponent(panel_fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(516, 516, 516)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 583, Short.MAX_VALUE)
                 .addComponent(jLabel15)
-                .addGap(0, 621, Short.MAX_VALUE))
+                .addGap(430, 430, 430)
+                .addComponent(btn_provedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         barraLayout.setVerticalGroup(
             barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(barraLayout.createSequentialGroup()
                 .addGroup(barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_fondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_provedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -549,6 +561,7 @@ public class Realizar_compra extends javax.swing.JFrame {
 
         peso_tara1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         peso_tara1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        peso_tara1.setText("0.00");
         peso_tara1.setBorder(null);
         peso_tara1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         peso_tara1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1152,9 +1165,16 @@ public class Realizar_compra extends javax.swing.JFrame {
     private void peso_brutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_peso_brutoKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_peso_brutoKeyPressed
-
+    private boolean limpiado2 = false;
     private void peso_tara1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peso_tara1MousePressed
         // TODO add your handling code here:
+        if(!limpiado2){
+           //limpiar el texto
+           if(!peso_tara1.getText().equals("")){
+               peso_tara1.setText("");
+           }
+           limpiado2 = true;
+       }   
     }//GEN-LAST:event_peso_tara1MousePressed
 
     private void peso_tara1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peso_tara1ActionPerformed
@@ -1190,6 +1210,27 @@ public class Realizar_compra extends javax.swing.JFrame {
         total_pagar();
     }//GEN-LAST:event_costo_adicionalKeyReleased
 
+    private void label_provedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_provedorMouseClicked
+        // TODO add your handling code here:
+        Administra_Provedor ap = new Administra_Provedor();
+        ap.setVentanaOrigen("Realiza_compra");
+        ap.setVisible(true);
+        ap.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_provedorMouseClicked
+
+    private void label_provedorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_provedorMouseEntered
+        // TODO add your handling code here:
+        btn_provedor.setBackground(new Color(0x415161));
+        label_provedor.setForeground(Color.BLACK);
+    }//GEN-LAST:event_label_provedorMouseEntered
+
+    private void label_provedorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_provedorMouseExited
+        // TODO add your handling code here:
+        btn_provedor.setBackground(new Color(0x2C3E50));
+        label_provedor.setForeground(Color.WHITE);
+    }//GEN-LAST:event_label_provedorMouseExited
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1222,6 +1263,7 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JPanel barra;
     private javax.swing.JPanel borde_opc;
     private javax.swing.JPanel borde_revisor;
+    private swing.PanelRound btn_provedor;
     private javax.swing.JComboBox<String> combox_flete;
     private javax.swing.JTextField costo_adicional;
     private javax.swing.JTextField descuento;
@@ -1229,8 +1271,6 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> id_provedor;
     private javax.swing.JLabel id_usuario;
     private javax.swing.JButton jButton1;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1263,6 +1303,7 @@ public class Realizar_compra extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JLabel label_eliminar;
+    private javax.swing.JLabel label_provedor;
     private javax.swing.JLabel label_total_pagar;
     private javax.swing.JComboBox<String> metodo_pago;
     private javax.swing.JComboBox<String> name_material;
@@ -1306,7 +1347,7 @@ public class Realizar_compra extends javax.swing.JFrame {
             // Verificar si el valor es un número decimal válido
             if (costoAdicionalText.matches("^[0-9]+(\\.[0-9]+)?$")) {
                 double costoAdicional = Double.parseDouble(costoAdicionalText);
-                TotalPagar += costoAdicional;
+                TotalPagar -= costoAdicional;
             } else {
                 // Mostrar un mensaje de advertencia al usuario si el formato no es válido
                 JOptionPane.showMessageDialog(null, "Por favor, ingrese un valor numérico válido para el costo adicional.", "Valor inválido", JOptionPane.WARNING_MESSAGE);

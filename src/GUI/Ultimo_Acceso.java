@@ -1,5 +1,6 @@
 package GUI;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import controlador.ctrl_usuario;
 import java.awt.Color;
 import java.awt.Component;
@@ -8,14 +9,19 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import modelo.usuario;
-
 public class Ultimo_Acceso extends javax.swing.JFrame {
-
     public Ultimo_Acceso() {
+        // Aplica el tema oscuro de FlatLaf
+        try {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+        } catch (UnsupportedLookAndFeelException e) {
+        }
         initComponents();
         cargarAccesoTabla();
         personalizar_tabla();
@@ -204,9 +210,6 @@ public class Ultimo_Acceso extends javax.swing.JFrame {
         atras1.setForeground(Color.BLACK);
     }//GEN-LAST:event_atras1MouseExited
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -239,7 +242,6 @@ public class Ultimo_Acceso extends javax.swing.JFrame {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel atras1;
     private javax.swing.JLabel jLabel1;

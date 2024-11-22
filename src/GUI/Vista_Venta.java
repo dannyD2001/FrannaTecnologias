@@ -1362,10 +1362,10 @@ import modelo.Vehiculo;
                 JOptionPane.showMessageDialog(null, "Ingrese el teléfono del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if (placa_unidad.getText().trim().isEmpty()) {
+            /*if (placa_unidad.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Ingrese la placa de la unidad.", "Mensaje", JOptionPane.WARNING_MESSAGE);
                 return;
-            }
+            }*/
             if(apellido_chofer.getText().trim().isEmpty()){
                 JOptionPane.showMessageDialog(null,"Ingrese el apellido del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
                 return;

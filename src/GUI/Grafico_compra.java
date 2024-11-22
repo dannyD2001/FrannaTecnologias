@@ -16,6 +16,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -43,6 +44,10 @@ public class Grafico_compra extends javax.swing.JFrame {
         panel_atras = new swing.PanelRound();
         atras = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        panel_provedor = new swing.PanelRound();
+        label_prove = new javax.swing.JLabel();
+        panel_comparacion_compra = new swing.PanelRound();
+        label_p = new javax.swing.JLabel();
         panel_grafico_c = new javax.swing.JPanel();
         btn_compras_r = new swing.PanelRound();
         label_compras = new javax.swing.JLabel();
@@ -54,10 +59,6 @@ public class Grafico_compra extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         label_provedor = new javax.swing.JLabel();
         panel_grafico = new swing.PanelRound();
-        panel_comparacion_compra = new swing.PanelRound();
-        jLabel6 = new javax.swing.JLabel();
-        panel_provedor = new swing.PanelRound();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -65,15 +66,15 @@ public class Grafico_compra extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(18, 18, 18));
-        jPanel1.setMaximumSize(new java.awt.Dimension(1250, 600));
-        jPanel1.setMinimumSize(new java.awt.Dimension(1250, 600));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1250, 600));
+        jPanel1.setBackground(new java.awt.Color(33, 37, 41));
+        jPanel1.setMaximumSize(new java.awt.Dimension(1250, 750));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1250, 750));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1250, 750));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel_barra.setBackground(new java.awt.Color(18, 18, 18));
+        panel_barra.setBackground(new java.awt.Color(33, 37, 41));
 
-        panel_atras.setBackground(new java.awt.Color(18, 18, 18));
+        panel_atras.setBackground(new java.awt.Color(33, 37, 41));
         panel_atras.setPreferredSize(new java.awt.Dimension(70, 40));
         panel_atras.setRoundBottomLeft(100);
         panel_atras.setRoundBottomRight(100);
@@ -105,12 +106,79 @@ public class Grafico_compra extends javax.swing.JFrame {
         );
         panel_atrasLayout.setVerticalGroup(
             panel_atrasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jLabel2.setFont(new java.awt.Font("Bell MT", 1, 20)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Bell MT", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(224, 224, 224));
         jLabel2.setText("Tendecia en Compras");
+
+        panel_provedor.setBackground(new java.awt.Color(106, 154, 176));
+        panel_provedor.setRoundBottomLeft(5);
+        panel_provedor.setRoundBottomRight(5);
+        panel_provedor.setRoundTopLeft(5);
+        panel_provedor.setRoundTopRight(5);
+
+        label_prove.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_prove.setForeground(new java.awt.Color(255, 255, 255));
+        label_prove.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_prove.setText("COMPARACION");
+        label_prove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_prove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_proveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_proveMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_provedorLayout = new javax.swing.GroupLayout(panel_provedor);
+        panel_provedor.setLayout(panel_provedorLayout);
+        panel_provedorLayout.setHorizontalGroup(
+            panel_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_prove, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+        );
+        panel_provedorLayout.setVerticalGroup(
+            panel_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_prove, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
+        panel_comparacion_compra.setBackground(new java.awt.Color(106, 154, 176));
+        panel_comparacion_compra.setRoundBottomLeft(5);
+        panel_comparacion_compra.setRoundBottomRight(5);
+        panel_comparacion_compra.setRoundTopLeft(5);
+        panel_comparacion_compra.setRoundTopRight(5);
+
+        label_p.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_p.setForeground(new java.awt.Color(255, 255, 255));
+        label_p.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_p.setText("PROVEEDOR ACTIVO");
+        label_p.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_p.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_pMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_pMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_pMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_comparacion_compraLayout = new javax.swing.GroupLayout(panel_comparacion_compra);
+        panel_comparacion_compra.setLayout(panel_comparacion_compraLayout);
+        panel_comparacion_compraLayout.setHorizontalGroup(
+            panel_comparacion_compraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_comparacion_compraLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(label_p))
+        );
+        panel_comparacion_compraLayout.setVerticalGroup(
+            panel_comparacion_compraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_p, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout panel_barraLayout = new javax.swing.GroupLayout(panel_barra);
         panel_barra.setLayout(panel_barraLayout);
@@ -119,16 +187,25 @@ public class Grafico_compra extends javax.swing.JFrame {
             .addGroup(panel_barraLayout.createSequentialGroup()
                 .addComponent(panel_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(431, 431, 431)
-                .addComponent(jLabel2)
-                .addContainerGap(539, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 322, Short.MAX_VALUE)
+                .addComponent(panel_provedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(panel_comparacion_compra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5))
         );
         panel_barraLayout.setVerticalGroup(
             panel_barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_atras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_barraLayout.createSequentialGroup()
+                .addGroup(panel_barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_provedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_comparacion_compra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panel_barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 40));
+        jPanel1.add(panel_barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1250, 40));
 
         panel_grafico_c.setBackground(new java.awt.Color(51, 50, 55));
 
@@ -140,12 +217,12 @@ public class Grafico_compra extends javax.swing.JFrame {
         );
         panel_grafico_cLayout.setVerticalGroup(
             panel_grafico_cLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
 
-        jPanel1.add(panel_grafico_c, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 570, 430));
+        jPanel1.add(panel_grafico_c, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 160, 570, 490));
 
-        btn_compras_r.setBackground(new java.awt.Color(30, 144, 255));
+        btn_compras_r.setBackground(new java.awt.Color(74, 144, 226));
         btn_compras_r.setPreferredSize(new java.awt.Dimension(130, 70));
         btn_compras_r.setRoundBottomLeft(10);
         btn_compras_r.setRoundBottomRight(10);
@@ -181,7 +258,7 @@ public class Grafico_compra extends javax.swing.JFrame {
 
         jPanel1.add(btn_compras_r, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
 
-        btn_materiales.setBackground(new java.awt.Color(50, 205, 50));
+        btn_materiales.setBackground(new java.awt.Color(33, 136, 56));
         btn_materiales.setPreferredSize(new java.awt.Dimension(130, 70));
         btn_materiales.setRoundBottomLeft(10);
         btn_materiales.setRoundBottomRight(10);
@@ -219,7 +296,7 @@ public class Grafico_compra extends javax.swing.JFrame {
 
         jPanel1.add(btn_materiales, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 150, -1));
 
-        btn_provedor.setBackground(new java.awt.Color(255, 99, 71));
+        btn_provedor.setBackground(new java.awt.Color(200, 35, 51));
         btn_provedor.setRoundBottomLeft(10);
         btn_provedor.setRoundBottomRight(10);
         btn_provedor.setRoundTopLeft(10);
@@ -268,60 +345,10 @@ public class Grafico_compra extends javax.swing.JFrame {
         );
         panel_graficoLayout.setVerticalGroup(
             panel_graficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
+            .addGap(0, 490, Short.MAX_VALUE)
         );
 
-        jPanel1.add(panel_grafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 600, 430));
-
-        panel_comparacion_compra.setBackground(new java.awt.Color(166, 123, 203));
-        panel_comparacion_compra.setRoundBottomLeft(25);
-        panel_comparacion_compra.setRoundBottomRight(25);
-        panel_comparacion_compra.setRoundTopLeft(25);
-        panel_comparacion_compra.setRoundTopRight(25);
-
-        jLabel6.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("PROVEEDOR ACTIVO");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout panel_comparacion_compraLayout = new javax.swing.GroupLayout(panel_comparacion_compra);
-        panel_comparacion_compra.setLayout(panel_comparacion_compraLayout);
-        panel_comparacion_compraLayout.setHorizontalGroup(
-            panel_comparacion_compraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-        );
-        panel_comparacion_compraLayout.setVerticalGroup(
-            panel_comparacion_compraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(panel_comparacion_compra, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 80, 130, 40));
-
-        panel_provedor.setBackground(new java.awt.Color(96, 229, 224));
-        panel_provedor.setRoundBottomLeft(25);
-        panel_provedor.setRoundBottomRight(25);
-        panel_provedor.setRoundTopLeft(25);
-        panel_provedor.setRoundTopRight(25);
-
-        jLabel5.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("COMPARAR");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout panel_provedorLayout = new javax.swing.GroupLayout(panel_provedor);
-        panel_provedor.setLayout(panel_provedorLayout);
-        panel_provedorLayout.setHorizontalGroup(
-            panel_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        panel_provedorLayout.setVerticalGroup(
-            panel_provedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(panel_provedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 80, -1, 40));
+        jPanel1.add(panel_grafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 600, 490));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -352,9 +379,42 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     private void atrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseExited
         // TODO add your handling code here:
-        panel_atras.setBackground(new Color(0x5CBD6E));
-        atras.setForeground(Color.BLACK);
+        panel_atras.setBackground(new Color(0x212529));
+        atras.setForeground(Color.WHITE);
     }//GEN-LAST:event_atrasMouseExited
+
+    private void label_pMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_pMouseClicked
+        // TODO add your handling code here:
+        Grafico_Provedor GP = new Grafico_Provedor();
+        GP.setVentanaOrigen("Proveedor");
+        GP.setVisible(true);
+        GP.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_pMouseClicked
+
+    private void label_pMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_pMouseEntered
+        // TODO add your handling code here:
+        panel_comparacion_compra.setBackground(new Color(0x4a6b7b));
+        label_p.setForeground(Color.GRAY);
+    }//GEN-LAST:event_label_pMouseEntered
+
+    private void label_pMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_pMouseExited
+        // TODO add your handling code here:
+        panel_comparacion_compra.setBackground(new Color(0x6A9AB0));
+        label_p.setForeground(Color.WHITE);
+    }//GEN-LAST:event_label_pMouseExited
+
+    private void label_proveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proveMouseEntered
+        // TODO add your handling code here:
+        panel_provedor.setBackground(new Color(0x4a6b7b));
+        label_prove.setForeground(Color.GRAY);
+    }//GEN-LAST:event_label_proveMouseEntered
+
+    private void label_proveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proveMouseExited
+        // TODO add your handling code here:
+        panel_provedor.setBackground(new Color(0x6A9AB0));
+        label_prove.setForeground(Color.WHITE);
+    }//GEN-LAST:event_label_proveMouseExited
 
     /**
      * @param args the command line arguments
@@ -400,11 +460,11 @@ public class Grafico_compra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_compras;
     private javax.swing.JLabel label_material;
+    private javax.swing.JLabel label_p;
+    private javax.swing.JLabel label_prove;
     private javax.swing.JLabel label_provedor;
     private swing.PanelRound panel_atras;
     private javax.swing.JPanel panel_barra;
@@ -443,14 +503,18 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     // Personalizar el gráfico
     CategoryPlot plot = barChart.getCategoryPlot();
-    plot.setBackgroundPaint(new Color(0x121212)); // Fondo gris oscuro
+    plot.setBackgroundPaint(new Color(0x212529)); // Fondo gris oscuro
     plot.setRangeGridlinePaint(Color.WHITE);      // Líneas de cuadrícula blancas
-    barChart.setBackgroundPaint(new Color(0x121212)); // Fondo del gráfico
+    barChart.setBackgroundPaint(new Color(0x212529)); // Fondo del gráfico
 
     // Personalizar el título y cambiar la fuente
     TextTitle title = barChart.getTitle();
     title.setFont(new Font("Bell MT", Font.BOLD, 18));
-    title.setPaint(Color.WHITE);  
+    title.setPaint(Color.WHITE); 
+    
+    LegendTitle legend = barChart.getLegend();
+    legend.setBackgroundPaint(new Color(0x212529));
+    legend.setItemPaint(Color.WHITE);
 
     // Cambiar los colores de los textos de los ejes
     CategoryAxis domainAxis = plot.getDomainAxis(); // Eje X
@@ -480,25 +544,28 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     // Configurar la leyenda en la parte inferior
     barChart.getLegend().setPosition(RectangleEdge.BOTTOM);
-    barChart.getLegend().setItemPaint(Color.BLACK);
+    barChart.getLegend().setItemPaint(Color.WHITE);
 
     // Crear el panel del gráfico
     ChartPanel chartPanel = new ChartPanel(barChart);
     chartPanel.setPreferredSize(new java.awt.Dimension(800, 600)); // Tamaño del gráfico
-    chartPanel.setMouseWheelEnabled(true); // Habilitar zoom con la rueda del ratón
+    chartPanel.setMouseWheelEnabled(false); // Habilitar zoom con la rueda del ratón
+    //chartPanel.setPopupMenu(null); //Deshabilitar el menú contextual:
+    
+
 
     // Agregar el gráfico al panel principal
     panel_grafico.removeAll(); // Limpiar el panel
     panel_grafico.setLayout(new java.awt.BorderLayout()); // Configurar el layout
     panel_grafico.add(chartPanel, java.awt.BorderLayout.CENTER); // Agregar gráfico
     panel_grafico.validate(); // Validar el panel para que se actualice
-}
+    }
 
-   public void total_compras(){
-       ctrl_compra ctrl = new ctrl_compra();
-       int total_compra = ctrl.obtenerTotalCompras();
-       label_compras.setText(String.valueOf(total_compra));
-   }
+    public void total_compras(){
+        ctrl_compra ctrl = new ctrl_compra();
+        int total_compra = ctrl.obtenerTotalCompras();
+        label_compras.setText(String.valueOf(total_compra));
+    }
    public void total_materiales(){
        ctrl_compra ctrl = new ctrl_compra();
        int total_materiales = ctrl.CantidadMaterial();
@@ -542,17 +609,23 @@ public class Grafico_compra extends javax.swing.JFrame {
     plot.setLabelLinkPaint(Color.WHITE);
 
     // Cambiar el fondo del gráfico
-    pieChart.setBackgroundPaint(new Color(0x121212)); // Fondo gris claro
+    pieChart.setBackgroundPaint(new Color(0x212529)); // Fondo gris claro
     // Personalizar el título y cambiar la fuente
+    pieChart.getLegend().setItemPaint(new Color(0x212529));
     TextTitle title = pieChart.getTitle();
     title.setFont(new Font("Bell MT", Font.BOLD, 18)); // Cambiar la fuente a Arial, negrita, tamaño 18
-    plot.setBackgroundPaint(new Color(0x121212));                 // Fondo blanco del gráfico
+    plot.setBackgroundPaint(new Color(0x212529));                 // Fondo blanco del gráfico
     plot.setOutlineVisible(false);                        // Eliminar bordes alrededor del gráfico
     title.setPaint(Color.WHITE);  
     // Crear el panel del gráfico
     ChartPanel chartPanel = new ChartPanel(pieChart);
     chartPanel.setPreferredSize(new java.awt.Dimension(800, 600)); // Tamaño del gráfico
     chartPanel.setMouseWheelEnabled(true); // Habilitar zoom con la rueda del ratón
+    //chartPanel.setBackground(new Color(0x212529));
+    //aca
+    LegendTitle legend = pieChart.getLegend();
+    legend.setBackgroundPaint(new Color(0x212529));
+    legend.setItemPaint(Color.WHITE);
 
     panel_grafico_c.removeAll();
     panel_grafico_c.repaint();

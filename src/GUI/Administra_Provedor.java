@@ -353,18 +353,24 @@ public class Administra_Provedor extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel5MousePressed
     private void atras1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atras1MouseClicked
         // TODO add your handling code here:
-        // instnaciar el usuario
-        usuario usuarioActual =new usuario();
-        //insatncia a principal y pasa el modelo usuario para saber quien es y se sepa quien regresa a principal
-        Principal principal = new Principal(usuarioActual);
-        //es un metodo que esta en princiapal que se encarga de verficar que usuario es por eso se le pasa atualizar a principal
-        //sabiendo que principal ya sabe quie es el usuario principal
-        principal.actualizarPermisos();
-        //es para mostar el menu princiapal
-        principal.setVisible(true);
-        //para poner el jframe centrado en la pantalla
-        principal.setLocationRelativeTo(null);
-        //cerrar procesos que quedaron anteriormente
+        if("Principal".equals(ventanaOrigen)){
+            // instnaciar el usuario
+            usuario usuarioActual =new usuario();
+            //insatncia a principal y pasa el modelo usuario para saber quien es y se sepa quien regresa a principal
+            Principal principal = new Principal(usuarioActual);
+            //es un metodo que esta en princiapal que se encarga de verficar que usuario es por eso se le pasa atualizar a principal
+            //sabiendo que principal ya sabe quie es el usuario principal
+            principal.actualizarPermisos();
+            //es para mostar el menu princiapal
+            principal.setVisible(true);
+            //para poner el jframe centrado en la pantalla
+            principal.setLocationRelativeTo(null);
+            //cerrar procesos que quedaron anteriormente     
+        }else if("Realiza_compra".equals(ventanaOrigen)){
+            Realizar_compra rc = new Realizar_compra();
+            rc.setVisible(true);
+            rc.setLocationRelativeTo(null);
+        }
         this.dispose();
     }//GEN-LAST:event_atras1MouseClicked
 
@@ -460,6 +466,11 @@ public class Administra_Provedor extends javax.swing.JFrame {
         telefono.setBackground(new java.awt.Color(0,0,0,1));
         referencia.setBackground(new java.awt.Color(0,0,0,1));
         ciudad.setBackground(new java.awt.Color(0,0,0,1));    
+    }
+    //extra para las ventanas
+    private String ventanaOrigen; // Agrega esta línea
+    public void setVentanaOrigen(String origen) {
+    this.ventanaOrigen = origen;
     }
     
 }
