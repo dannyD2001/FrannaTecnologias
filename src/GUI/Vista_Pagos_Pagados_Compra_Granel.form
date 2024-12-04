@@ -200,9 +200,9 @@
                         <Column editable="false" title="Fecha Compra" type="java.lang.Object"/>
                         <Column editable="false" title="Proveedor" type="java.lang.Object"/>
                         <Column editable="false" title="Total Compra" type="java.lang.Object"/>
-                        <Column editable="false" title="Metodo Pago" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xe9;todo Pago" type="java.lang.Object"/>
                         <Column editable="false" title="Estatus" type="java.lang.Object"/>
-                        <Column editable="false" title="Telefono Proveedor" type="java.lang.Object"/>
+                        <Column editable="false" title="Tel&#xe9;fono Proveedor" type="java.lang.Object"/>
                         <Column editable="false" title="Cuenta Clave" type="java.lang.Object"/>
                       </Table>
                     </Property>

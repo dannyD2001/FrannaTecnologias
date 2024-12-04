@@ -35,6 +35,9 @@ public class Administra_Provedor extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        correo = new javax.swing.JTextField();
+        jSeparator5 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -122,9 +125,11 @@ public class Administra_Provedor extends javax.swing.JFrame {
 
         nombre_texto.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         nombre_texto.setForeground(new java.awt.Color(0, 0, 0));
+        nombre_texto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nombre_texto.setText("Nombre");
 
         nombre.setForeground(new java.awt.Color(0, 0, 0));
+        nombre.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nombre.setBorder(null);
         nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,16 +139,20 @@ public class Administra_Provedor extends javax.swing.JFrame {
 
         telefono_texto.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         telefono_texto.setForeground(new java.awt.Color(0, 0, 0));
-        telefono_texto.setText("Telefono");
+        telefono_texto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        telefono_texto.setText("Teléfono");
 
         telefono.setForeground(new java.awt.Color(0, 0, 0));
+        telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         telefono.setBorder(null);
 
         ciudad_texto.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         ciudad_texto.setForeground(new java.awt.Color(0, 0, 0));
+        ciudad_texto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ciudad_texto.setText("Ciudad");
 
         ciudad.setForeground(new java.awt.Color(0, 0, 0));
+        ciudad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         ciudad.setBorder(null);
 
         panel_boton.setBackground(new java.awt.Color(92, 189, 110));
@@ -180,15 +189,25 @@ public class Administra_Provedor extends javax.swing.JFrame {
 
         referencia_texto.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         referencia_texto.setForeground(new java.awt.Color(0, 0, 0));
+        referencia_texto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         referencia_texto.setText("Referencia");
 
         referencia.setForeground(new java.awt.Color(0, 0, 0));
+        referencia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         referencia.setBorder(null);
         referencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 referenciaActionPerformed(evt);
             }
         });
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Correo Electrónico");
+
+        correo.setForeground(new java.awt.Color(0, 0, 0));
+        correo.setBorder(null);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -223,7 +242,10 @@ public class Administra_Provedor extends javax.swing.JFrame {
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(telefono)
                                         .addComponent(telefono_texto, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))))
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -255,7 +277,13 @@ public class Administra_Provedor extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(correo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
@@ -272,7 +300,7 @@ public class Administra_Provedor extends javax.swing.JFrame {
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jPanel1.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 700, 410));
@@ -338,6 +366,7 @@ public class Administra_Provedor extends javax.swing.JFrame {
         provedor.setTelefono(capitalize(telefono.getText().trim()));
         provedor.setCiudad(capitalize(ciudad.getText().trim()));
         provedor.setReferencia(capitalize(referencia.getText().trim()));
+        provedor.setCorreo_electronico(capitalize(correo.getText().trim()));
          // Llamar al método agregarUsuarios del controlador
         boolean resultado = controlador.RegistarProvedor(provedor);        
         if(resultado){
@@ -346,6 +375,7 @@ public class Administra_Provedor extends javax.swing.JFrame {
             telefono.setText("");
             ciudad.setText("");
             referencia.setText("");
+            correo.setText("");
         }else{
         
             JOptionPane.showMessageDialog(null,"Erro al guardar");
@@ -436,7 +466,9 @@ public class Administra_Provedor extends javax.swing.JFrame {
     private javax.swing.JLabel atras1;
     private javax.swing.JTextField ciudad;
     private javax.swing.JLabel ciudad_texto;
+    private javax.swing.JTextField correo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -445,6 +477,7 @@ public class Administra_Provedor extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombre_texto;
     private swing.PanelRound panelRound1;
@@ -465,7 +498,8 @@ public class Administra_Provedor extends javax.swing.JFrame {
         nombre.setBackground(new java.awt.Color(0,0,0,1));
         telefono.setBackground(new java.awt.Color(0,0,0,1));
         referencia.setBackground(new java.awt.Color(0,0,0,1));
-        ciudad.setBackground(new java.awt.Color(0,0,0,1));    
+        ciudad.setBackground(new java.awt.Color(0,0,0,1));   
+        correo.setBackground(new java.awt.Color(0,0,0,1));
     }
     //extra para las ventanas
     private String ventanaOrigen; // Agrega esta línea

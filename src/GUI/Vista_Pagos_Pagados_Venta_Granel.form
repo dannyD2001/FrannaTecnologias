@@ -206,9 +206,9 @@
                         <Column editable="false" title="Fecha y Hora Venta" type="java.lang.Object"/>
                         <Column editable="false" title="Cliente" type="java.lang.Object"/>
                         <Column editable="false" title="Total Venta" type="java.lang.Object"/>
-                        <Column editable="false" title="Metodo Pago" type="java.lang.Object"/>
+                        <Column editable="false" title="M&#xe9;todo Pago" type="java.lang.Object"/>
                         <Column editable="false" title="Estatus" type="java.lang.Object"/>
-                        <Column editable="false" title="Telefono Cliente" type="java.lang.Object"/>
+                        <Column editable="false" title="Tel&#xe9;fono Cliente" type="java.lang.Object"/>
                         <Column editable="false" title="Cuenta Clave" type="java.lang.Object"/>
                       </Table>
                     </Property>

@@ -160,7 +160,7 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hombre (1).png"))); // NOI18N
-        jLabel4.setText("Ola Buenas!");
+        jLabel4.setText("Hola Buenas!");
         panel_principal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 130, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

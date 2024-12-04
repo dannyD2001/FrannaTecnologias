@@ -128,7 +128,7 @@ public class Ultimo_Acceso extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre", "Apellido Paterno", "Apellido Materno", "Inicio Sesión", "Ultimo Acceso"
+                "Nombre", "Apellido Paterno", "Apellido Materno", "Inicio Sesión", "Último Acceso"
             }
         ) {
             boolean[] canEdit = new boolean [] {

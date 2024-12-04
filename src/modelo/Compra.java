@@ -14,35 +14,26 @@ public class Compra {
     private String referencia;
     private String flete;
     private double costo_flete;
+    private String telefono_chofer;
+    private String nombre_chofer;  //cambiamos el telefono_chofer por nombre_chofer
+    private double adelanto;
 
-    public Compra(int folio_compra, String fecha, double total_compra, int id_provedor, String nombre_provedor, String telefono, String nombre, String metodo_pago, String status, String telefono_provedor, String referencia, String flete, double costo_flete) {
-        this.folio_compra = folio_compra;
-        this.fecha = fecha;
-        this.total_compra = total_compra;
-        this.id_provedor = id_provedor;
-        this.nombre_provedor = nombre_provedor;
-        this.telefono = telefono;
-        this.nombre = nombre;
-        this.metodo_pago = metodo_pago;
-        this.status = status;
-        this.telefono_provedor = telefono_provedor;
-        this.referencia = referencia;
-        this.flete = flete;
-        this.costo_flete = costo_flete;
-    }
-    //
     public Compra() {
-        this.total_compra = 0.0;
+        this.folio_compra = 0;
+        this.total_compra = 0;
         this.id_provedor = 0;
         this.nombre_provedor = "";
         this.telefono = "";
+        this.nombre = "";
         this.metodo_pago = "";
         this.status = "";
         this.telefono_provedor = "";
         this.referencia = "";
         this.flete = "";
-        this.costo_flete = 0.0;
-        this.nombre = "";
+        this.costo_flete = 0;
+        this.nombre_chofer = "";
+        this.telefono_chofer = "";
+        this.adelanto = 0;
     }
 
     public int getFolio_compra() {
@@ -148,6 +139,32 @@ public class Compra {
     public void setCosto_flete(double costo_flete) {
         this.costo_flete = costo_flete;
     }
+
+    public String getTelefono_chofer() {
+        return telefono_chofer;
+    }
+
+    public void setTelefono_chofer(String telefono_chofer) {
+        this.telefono_chofer = telefono_chofer;
+    }
+
+    public String getNombre_chofer() {
+        return nombre_chofer;
+    }
+
+    public void setNombre_chofer(String nombre_chofer) {
+        this.nombre_chofer = nombre_chofer;
+    }
+
+    public double getAdelanto() {
+        return adelanto;
+    }
+
+    public void setAdelanto(double adelanto) {
+        this.adelanto = adelanto;
+    }
+
+    
     
 }
 

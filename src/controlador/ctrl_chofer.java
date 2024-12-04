@@ -78,15 +78,14 @@ public class ctrl_chofer {
     public boolean RegistrarChofer(Chofer chofer){
         Connection con = null;
         PreparedStatement ps = null;
-        String sql = "INSERT INTO chofer(telefono_chofer, nombre, apellido_p, tipo_chofer, placa) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO chofer(telefono_chofer, nombre, tipo_chofer, placa) VALUES(?,?,?,?)";
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);
             ps.setString(1, chofer.getTelefono_chofer());
             ps.setString(2, chofer.getNombre());
-            ps.setString(3, chofer.getApellido_p());
-            ps.setString(4, chofer.getTipo_chofer());
-            ps.setString(5, chofer.getPlaca());     
+            ps.setString(3, chofer.getTipo_chofer());
+            ps.setString(4, chofer.getPlaca());     
             int result = ps.executeUpdate();
             // Verificar si la inserción fue exitosa
             if (result > 0) {
@@ -127,10 +126,10 @@ public class ctrl_chofer {
             while(rs.next()){
                 String telefono = rs.getString("telefono_chofer");
                 String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido_p");
+                //String apellido = rs.getString("apellido_p");
                 String tipo = rs.getString("tipo_chofer");
                 String placa = rs.getString("placa");
-                Chofer choofer = new Chofer(telefono, nombre, apellido, tipo, placa);
+                Chofer choofer = new Chofer(telefono, nombre, tipo, placa);
                 chofer.addItem(choofer);                            
             }
             
@@ -153,6 +152,58 @@ public class ctrl_chofer {
             }
         }
     }
+    //consulta para choferes externos con datos extras 
+    public void bucarChoferExterno(JComboBox chofer){
+        Connection con = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+        String sql ="SELECT * FROM chofer where tipo_chofer = 'Externo'";
+        try {
+            chofer.removeAllItems(); // Limpiar el JComboBox*/
+            chofer.addItem("--Seleccionar--"); // Agregar opción "vacía" o inicial*/
+            con = conexion.conectar();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                String telefono = rs.getString("telefono_chofer");
+                String nombre = rs.getString("nombre");
+                String tipo = rs.getString("tipo_chofer");
+                String placa = rs.getString("placa");
+                Chofer choofer = new Chofer(telefono, nombre, tipo, placa);
+                chofer.addItem(choofer);                            
+            }
+            
+        } catch (SQLException e) {
+        }finally {
+            // Close resources in reverse order of their opening
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                // Log any exception while closing resources
+                System.err.println("Error closing resources: " + ex.getMessage());
+            }
+        }
+    }
+    //
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // Verificar si el chofer externo ya está registrado en la base de datos
 public Chofer buscarChoferExternoPorTelefono(String telefono) {
     Chofer chofer = null;
@@ -177,7 +228,6 @@ public Chofer buscarChoferExternoPorTelefono(String telefono) {
             chofer = new Chofer(
                 rs.getString("telefono_chofer"), 
                 rs.getString("nombre"), 
-                rs.getString("apellido_p"), 
                 "Externo", 
                 rs.getString("placa")
             );
@@ -232,15 +282,15 @@ public Chofer buscarChoferExternoPorTelefono(String telefono) {
         con = conexion.conectar(); // Método para obtener la conexión
         
         // Crear la consulta SQL para actualizar el chofer
-        String sql = "UPDATE chofer SET nombre = ?, apellido_p = ?, tipo_chofer = ?, placa = ? WHERE telefono_chofer = ?";
+        String sql = "UPDATE chofer SET nombre = ?, tipo_chofer = ?, placa = ? WHERE telefono_chofer = ?";
         ps = con.prepareStatement(sql); // Cambiado a 'con'
 
         // Establecer los parámetros de la consulta
         ps.setString(1, choferExistente.getNombre());
-        ps.setString(2, choferExistente.getApellido_p());
-        ps.setString(3, choferExistente.getTipo_chofer()); // "Interno" o "Externo"
-        ps.setString(4, choferExistente.getPlaca());
-        ps.setString(5, choferExistente.getTelefono_chofer()); // Usar teléfono como identificador
+        //ps.setString(2, choferExistente.getApellido_p());
+        ps.setString(2, choferExistente.getTipo_chofer()); // "Interno" o "Externo"
+        ps.setString(3, choferExistente.getPlaca());
+        ps.setString(4, choferExistente.getTelefono_chofer()); // Usar teléfono como identificador
 
         // Ejecutar la actualización
         int filasAfectadas = ps.executeUpdate(); // Cambiado a 'ps'
@@ -260,4 +310,43 @@ public Chofer buscarChoferExternoPorTelefono(String telefono) {
         }
     }
     }
+    // Método para realizar la consulta
+    public Chofer buscarChofer(String telefono) {
+    Connection con = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    Chofer chofer = null; // Inicializar fuera del bloque para evitar errores
+    // Consulta SQL para buscar al chofer
+    String sql = "SELECT telefono_chofer, nombre, placa FROM chofer WHERE telefono_chofer = ?";
+    try {
+        // Conexión a la base de datos
+        con = conexion.conectar();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, telefono); // Pasar el teléfono como parámetro
+        rs = ps.executeQuery();
+        // Si se encuentra el chofer, crear el objeto
+        if (rs.next()) {
+            chofer = new Chofer(
+                rs.getString("telefono_chofer"),
+                rs.getString("nombre"),
+                //rs.getString("apellido_p"),
+                rs.getString("placa")
+            );
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar el chofer: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        // Cerrar recursos
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cerrar recursos: " + e.getMessage());
+        }
+    }
+    return chofer; // Retornar el objeto Chofer (null si no se encontró)
+    }
+    
+
 }

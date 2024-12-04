@@ -17,7 +17,7 @@ public class ctrl_material {
     ResultSet rs; 
     Statement  st;
     public boolean RegistrarMateria(Material mate){
-        String sql="INSERT INTO MATERIAL (nombre_material, cantidad_kg, precio_compra, precio_venta, id_categoria, precio_compra2, precio_compra3, precio_venta2, precio_venta3) VALUES(?,?,?,?,?,?,?,?,?)" ;
+        String sql="INSERT INTO MATERIAL (nombre_material, cantidad_kg, precio_compra, precio_venta, id_categoria, precio_compra2, precio_compra3, precio_venta2, precio_venta3, precio_compra4, precio_compra5, precio_compra6) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)" ;
         try {
            con = conexion.conectar();
             ps = con.prepareStatement(sql);
@@ -30,6 +30,9 @@ public class ctrl_material {
             ps.setDouble(7, mate.getPrecio_compra3());
             ps.setDouble(8, mate.getPrecio_venta2());
             ps.setDouble(9, mate.getPrecio_venta3());
+            ps.setDouble(10, mate.getPrecio_compra4());
+            ps.setDouble(11, mate.getPrecio_compra5());
+            ps.setDouble(12, mate.getPrecio_compra6());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -109,7 +112,7 @@ public class ctrl_material {
     }
       //para la buscar material compra
     public void bucarMaterial(JComboBox materialComboBox){
-         String sql ="SELECT id_material, nombre_material, cantidad_kg, precio_compra, precio_venta, precio_compra2, precio_compra3, precio_venta2, precio_venta3, precio_compra4, precio_compra5 FROM MATERIAL";
+         String sql ="SELECT id_material, nombre_material, cantidad_kg, precio_compra, precio_venta, precio_compra2, precio_compra3, precio_venta2, precio_venta3, precio_compra4, precio_compra5, precio_compra6 FROM MATERIAL";
         try {
              // Verificar si el JComboBox no es nulo y vaciarlo
             materialComboBox.removeAllItems(); // Limpiar el JComboBox*/
@@ -129,7 +132,8 @@ public class ctrl_material {
                 double precio_venta3 = rs.getDouble("precio_venta3");
                 double precio_compra4 = rs.getDouble("precio_compra4");
                 double precio_compra5 = rs.getDouble("precio_compra5");
-                Material material = new Material(idMaterial, nombreMaterial,cantidad, precio,precio_venta,precio2,precio3,precio_venta2,precio_venta3,precio_compra4,precio_compra5);
+                double precio_compra6 = rs.getDouble("precio_compra6");
+                Material material = new Material(idMaterial, nombreMaterial,cantidad, precio,precio_venta,precio2,precio3,precio_venta2,precio_venta3,precio_compra4,precio_compra5,precio_compra6);
                 materialComboBox.addItem(material);                            
             }
         } catch (SQLException e) {
@@ -139,7 +143,7 @@ public class ctrl_material {
     //Para Actualizar Precio para Compra  
     public List<Material> consultarMateriales() {
     List<Material> listaMateriales = new ArrayList<>();
-    String sql = "SELECT id_material, nombre_material, precio_compra, precio_compra2, precio_compra3, precio_compra4, precio_compra5 FROM material";
+    String sql = "SELECT id_material, nombre_material, precio_compra, precio_compra2, precio_compra3, precio_compra4, precio_compra5, precio_compra6 FROM material";
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -156,6 +160,7 @@ public class ctrl_material {
             material.setPrecio_compra3(rs.getDouble("precio_compra3"));
             material.setPrecio_compra4(rs.getDouble("precio_compra4"));
             material.setPrecio_compra5(rs.getDouble("precio_compra5"));
+            material.setPrecio_compra6(rs.getDouble("precio_compra6"));
             listaMateriales.add(material);
         }
     } catch (SQLException e) {
@@ -173,7 +178,7 @@ public class ctrl_material {
     //para actualizar precios
     // Para actualizar precios
     public boolean actualizarPrecio(Material material) {
-    String sql = "UPDATE material SET nombre_material = ?, precio_compra = ?, precio_compra2 = ?, precio_compra3 = ?, precio_compra4 = ?, precio_compra5 = ? WHERE id_material = ?";
+    String sql = "UPDATE material SET nombre_material = ?, precio_compra = ?, precio_compra2 = ?, precio_compra3 = ?, precio_compra4 = ?, precio_compra5 = ?, precio_compra6 = ? WHERE id_material = ?";
     Connection con = null;
     PreparedStatement ps = null;
 
@@ -188,7 +193,8 @@ public class ctrl_material {
         ps.setDouble(4, material.getPrecio_compra3());
         ps.setDouble(5, material.getPrecio_compra4());
         ps.setDouble(6, material.getPrecio_compra5());
-        ps.setInt(7, material.getId_material());
+        ps.setDouble(7, material.getPrecio_compra6());        
+        ps.setInt(8, material.getId_material());
 
         // Ejecutar la actualización
         return ps.executeUpdate() > 0;

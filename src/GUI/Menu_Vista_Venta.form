@@ -317,7 +317,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/punto-de-venta.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Ola! Realize la Venta "/>
+            <Property name="text" type="java.lang.String" value="Hola! Realize la Venta "/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -1007,7 +1007,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="32" green="32" red="32" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Actualiza precio Material"/>
+                <Property name="text" type="java.lang.String" value="Actualizar Precio Material"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">

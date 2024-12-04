@@ -188,7 +188,7 @@ public class Administrar_usuario extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Telefono");
+        jLabel5.setText("Teléfono");
 
         telefono_usuario.setForeground(new java.awt.Color(0, 0, 0));
         telefono_usuario.setBorder(null);

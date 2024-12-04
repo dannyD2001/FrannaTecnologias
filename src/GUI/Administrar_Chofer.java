@@ -33,9 +33,6 @@ public class Administrar_Chofer extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
-        apellido_p = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
         jPanel2 = new javax.swing.JPanel();
         panel_atras1 = new swing.PanelRound();
         atras1 = new javax.swing.JLabel();
@@ -62,26 +59,32 @@ public class Administrar_Chofer extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nombre del chofer");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Telefono del Chofer");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Teléfono del Chofer");
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Tipo Chofer");
 
         nombre_chofer.setForeground(new java.awt.Color(0, 0, 0));
+        nombre_chofer.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nombre_chofer.setBorder(null);
 
         telefono.setForeground(new java.awt.Color(0, 0, 0));
+        telefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         telefono.setBorder(null);
 
         combox_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Interno" }));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Vehiculo");
 
         panel_boton.setBackground(new java.awt.Color(92, 189, 110));
@@ -117,10 +120,6 @@ public class Administrar_Chofer extends javax.swing.JFrame {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jLabel6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Apellido Paterno");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -130,29 +129,26 @@ public class Administrar_Chofer extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jSeparator3)
-                            .addComponent(apellido_p)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator1)
                             .addComponent(nombre_chofer)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(42, 42, 42)
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(telefono)
                             .addComponent(jSeparator2))
-                        .addGap(51, 51, 51)
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(combox_tipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                        .addGap(38, 38, 38)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(combox_vehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(combox_vehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(274, 274, 274)
                         .addComponent(panel_boton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addGap(108, 108, 108))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,21 +161,15 @@ public class Administrar_Chofer extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combox_vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combox_vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(apellido_p, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(panel_boton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
         );
@@ -246,7 +236,7 @@ public class Administrar_Chofer extends javax.swing.JFrame {
 
         titulo_chofer.setFont(new java.awt.Font("Bell MT", 0, 18)); // NOI18N
         titulo_chofer.setForeground(new java.awt.Color(0, 0, 0));
-        titulo_chofer.setText("Administrar Chofer");
+        titulo_chofer.setText("Registrar Chofer");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -281,18 +271,25 @@ public class Administrar_Chofer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void atras1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atras1MouseClicked
-        // TODO add your handling code here:
-        // instnaciar el usuario
-        usuario usuarioActual =new usuario();
-        //insatncia a principal y pasa el modelo usuario para saber quien es y se sepa quien regresa a principal
-        Principal principal = new Principal(usuarioActual);
-        //es un metodo que esta en princiapal que se encarga de verficar que usuario es por eso se le pasa atualizar a principal
-        //sabiendo que principal ya sabe quie es el usuario principal
-        principal.actualizarPermisos();
-        //es para mostar el menu princiapal
-        principal.setVisible(true);
-        //para poner el jframe centrado en la pantalla
-        principal.setLocationRelativeTo(null);
+        // TODO add your handling code here:        
+        //aca logica para las ventanas
+        if("Principal".equals(ventanaOrigen)){
+            // instnaciar el usuario
+            usuario usuarioActual =new usuario();
+            //insatncia a principal y pasa el modelo usuario para saber quien es y se sepa quien regresa a principal
+            Principal principal = new Principal(usuarioActual);
+            //es un metodo que esta en princiapal que se encarga de verficar que usuario es por eso se le pasa atualizar a principal
+            //sabiendo que principal ya sabe quie es el usuario principal
+            principal.actualizarPermisos();
+            //es para mostar el menu princiapal
+            principal.setVisible(true);
+            //para poner el jframe centrado en la pantalla
+            principal.setLocationRelativeTo(null);
+        }else if("Realizar_Compra".equals(ventanaOrigen)){
+            Realizar_compra rc = new Realizar_compra();
+            rc.setVisible(true);
+            rc.setLocationRelativeTo(null);            
+        }
         //cerrar procesos que quedaron anteriormente
         this.dispose();
     }//GEN-LAST:event_atras1MouseClicked
@@ -324,13 +321,13 @@ public class Administrar_Chofer extends javax.swing.JFrame {
         ctrl_chofer ctrlChofer = new ctrl_chofer();
         // TODO add your handling code here:
         if(nombre_chofer.getText().isEmpty() || telefono.getText().isEmpty()
-                || apellido_p.getText().isEmpty()
+                /*|| apellido_p.getText().isEmpty()*/
                 || combox_tipo.getSelectedItem() == null || combox_vehiculo.getSelectedItem() == null){
             JOptionPane.showMessageDialog(null, "Por favor complete todos los campos");
             return;
         }
-        if(!nombre_chofer.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+") ||
-                !apellido_p.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")){
+        if(!nombre_chofer.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")/*||
+                !apellido_p.getText().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")*/){
             JOptionPane.showMessageDialog(null, "El nombre del chofer y apellido solo debe contener letras y espacios");
             return;
         }
@@ -341,7 +338,7 @@ public class Administrar_Chofer extends javax.swing.JFrame {
         //verificar si existe ya el chofer
         if(!ctrlChofer.existeTelefono(telefono.getText().trim())){
             chofer.setNombre(capitalize(nombre_chofer.getText()));
-            chofer.setApellido_p(capitalize(apellido_p.getText()));
+            //chofer.setApellido_p(capitalize(apellido_p.getText()));
             chofer.setTelefono_chofer(telefono.getText());            
             //obtener la tipo de chofer selecionado
             String tipoSeleccion = (String) combox_tipo.getSelectedItem();
@@ -350,16 +347,12 @@ public class Administrar_Chofer extends javax.swing.JFrame {
             Vehiculo PlacaSelecionada = (Vehiculo) combox_vehiculo.getSelectedItem();
             chofer.setPlaca(PlacaSelecionada.getPlaca());
             //registrar al chofer
-            ctrlChofer.RegistrarChofer(chofer);
-            
-        
+            ctrlChofer.RegistrarChofer(chofer);        
         }else{
-            JOptionPane.showMessageDialog(null, "El chofer ya existe");
-        
+            JOptionPane.showMessageDialog(null, "El chofer ya existe");        
         }
         limpiar();
     }//GEN-LAST:event_jLabel5MouseClicked
-
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -395,7 +388,6 @@ public class Administrar_Chofer extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_principal;
-    private javax.swing.JTextField apellido_p;
     private javax.swing.JLabel atras1;
     private javax.swing.JComboBox<String> combox_tipo;
     private javax.swing.JComboBox<String> combox_vehiculo;
@@ -404,12 +396,10 @@ public class Administrar_Chofer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField nombre_chofer;
     private swing.PanelRound panelRound1;
     private swing.PanelRound panel_atras1;
@@ -424,7 +414,7 @@ public class Administrar_Chofer extends javax.swing.JFrame {
     public void limpiar(){
         nombre_chofer.setText("");
         telefono.setText("");
-        apellido_p.setText("");
+        //apellido_p.setText("");
         combox_tipo.setSelectedIndex(-1);
         combox_vehiculo.setSelectedIndex(-1);
     }
@@ -449,4 +439,8 @@ public class Administrar_Chofer extends javax.swing.JFrame {
     // Quitamos el espacio final extra
     return resultado.toString().trim();
     }
+     private String ventanaOrigen;
+     public void setVentanaOrigen(String origen){
+         this.ventanaOrigen = origen;
+     }
 }

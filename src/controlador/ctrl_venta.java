@@ -204,7 +204,7 @@ public class ctrl_venta {
            + "JOIN cliente ON venta.id_cliente = cliente.id_cliente "
            + "JOIN chofer ON venta.telefono_chofer = chofer.telefono_chofer "
            + "JOIN usuario ON venta.telefono = usuario.telefono "
-           + "WHERE DATE(venta.fecha_venta) BETWEEN ? AND ?";
+           + "WHERE venta.fecha_venta >= ? AND venta.fecha_venta < ?";
         try {
             con = conexion.conectar();
             if (con == null) {            

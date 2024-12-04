@@ -38,8 +38,6 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         panel_principal_verde = new swing.PanelRound();
         panel_material = new swing.PanelRound();
         material = new javax.swing.JLabel();
-        panel_pacas = new swing.PanelRound();
-        pacas = new javax.swing.JLabel();
         panel_logo = new swing.PanelRound();
         panelRound2 = new swing.PanelRound();
         usuario = new javax.swing.JLabel();
@@ -210,49 +208,13 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
             .addComponent(material, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
         );
 
-        panel_pacas.setBackground(new java.awt.Color(73, 151, 88));
-        panel_pacas.setRoundBottomLeft(40);
-        panel_pacas.setRoundBottomRight(40);
-        panel_pacas.setRoundTopLeft(40);
-        panel_pacas.setRoundTopRight(40);
-
-        pacas.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
-        pacas.setForeground(new java.awt.Color(50, 50, 50));
-        pacas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pacas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-caja-20.png"))); // NOI18N
-        pacas.setText("Paca");
-        pacas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        pacas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pacas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        pacas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                pacasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                pacasMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panel_pacasLayout = new javax.swing.GroupLayout(panel_pacas);
-        panel_pacas.setLayout(panel_pacasLayout);
-        panel_pacasLayout.setHorizontalGroup(
-            panel_pacasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pacas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-        );
-        panel_pacasLayout.setVerticalGroup(
-            panel_pacasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pacas, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout panel_principal_verdeLayout = new javax.swing.GroupLayout(panel_principal_verde);
         panel_principal_verde.setLayout(panel_principal_verdeLayout);
         panel_principal_verdeLayout.setHorizontalGroup(
             panel_principal_verdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_principal_verdeLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(panel_principal_verdeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel_pacas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panel_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panel_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         panel_principal_verdeLayout.setVerticalGroup(
@@ -260,9 +222,7 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
             .addGroup(panel_principal_verdeLayout.createSequentialGroup()
                 .addGap(128, 128, 128)
                 .addComponent(panel_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addComponent(panel_pacas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(448, Short.MAX_VALUE))
         );
 
         panel_principal.add(panel_principal_verde, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 400, 660));
@@ -780,20 +740,6 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
         material.setForeground(new Color(0x323232));       
     }//GEN-LAST:event_materialMouseExited
 
-    private void pacasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pacasMouseExited
-        // TODO add your handling code here:ç CC0000
-            // al sacar el mouse
-        panel_pacas.setBackground(new Color(0x499758));
-        pacas.setForeground(new Color(0x323232));        
-    }//GEN-LAST:event_pacasMouseExited
-
-    private void pacasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pacasMouseEntered
-        // TODO add your handling code here: FF0000
-        panel_pacas.setBackground(new Color(0x3a7846));
-        pacas.setForeground(new Color(0xcccccc)); 
-
-    }//GEN-LAST:event_pacasMouseEntered
-
     private void atrasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atrasMouseExited
         // TODO add your handling code here:
         panel_atras.setBackground(new Color(0x52aa63));
@@ -1027,7 +973,6 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private javax.swing.JLabel label_tendencia;
     private javax.swing.JLabel material;
     private javax.swing.JTextField nombre_;
-    private javax.swing.JLabel pacas;
     private swing.PanelRound panelRound2;
     private swing.PanelRound panel_actualizar_material;
     private swing.PanelRound panel_actualizar_precios;
@@ -1037,7 +982,6 @@ public class Menu_Vista_Compra extends javax.swing.JFrame {
     private swing.PanelRound panel_logo;
     private swing.PanelRound panel_material;
     private swing.PanelRound panel_menu_graficas;
-    private swing.PanelRound panel_pacas;
     private swing.PanelRound panel_pagos_pendientes;
     private javax.swing.JPanel panel_principal;
     private swing.PanelRound panel_principal_verde;

@@ -207,7 +207,7 @@ public class Vista_Pagos_Pendientes_Venta_Granel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio Venta", "Fecha y Hora Venta", "Cliente", "Total Venta", "Metodo Pago", "Estatus", "Telefono del Cliente", "Cuenta Clave"
+                "Folio Venta", "Fecha y Hora Venta", "Cliente", "Total Venta", "Método Pago", "Estatus", "Teléfono del Cliente", "Cuenta Clave"
             }
         ) {
             boolean[] canEdit = new boolean [] {

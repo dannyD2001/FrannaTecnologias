@@ -4,8 +4,6 @@ import controlador.ctrl_material;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -20,7 +18,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import modelo.Material;
-
 public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
     Icon senal;
     public Actualizar_Precio_Compra_Granel() {
@@ -68,6 +65,9 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         precio5 = new javax.swing.JTextField();
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
+        precio6 = new javax.swing.JTextField();
+        jSeparator7 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -155,11 +155,11 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id Material", "Material", "Precio I", "Precio II", "Precio III", "Precio IV", "Precio V"
+                "Id Material", "Material", "Precio I", "Precio II", "Precio III", "Precio IV", "Precio V", "Precio VI"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -175,6 +175,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
             tabla_precios.getColumnModel().getColumn(4).setResizable(false);
             tabla_precios.getColumnModel().getColumn(5).setResizable(false);
             tabla_precios.getColumnModel().getColumn(6).setResizable(false);
+            tabla_precios.getColumnModel().getColumn(7).setResizable(false);
         }
 
         javax.swing.GroupLayout panel_para_tablaLayout = new javax.swing.GroupLayout(panel_para_tabla);
@@ -190,11 +191,11 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
             panel_para_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_para_tablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_para_tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 800, 400));
+        panel_principal.add(panel_para_tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 800, 430));
 
         panel_datos_cambios.setBackground(new java.awt.Color(51, 50, 55));
         panel_datos_cambios.setRoundBottomLeft(30);
@@ -283,7 +284,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Precio IV");
+        jLabel7.setText("Precio V");
 
         precio5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         precio5.setBorder(null);
@@ -295,10 +296,26 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
 
         jSeparator5.setPreferredSize(new java.awt.Dimension(10, 2));
 
+        precio6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        precio6.setBorder(null);
+        precio6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                precio6ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Precio VI");
+
         javax.swing.GroupLayout panel_datos_cambiosLayout = new javax.swing.GroupLayout(panel_datos_cambios);
         panel_datos_cambios.setLayout(panel_datos_cambiosLayout);
         panel_datos_cambiosLayout.setHorizontalGroup(
             panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_datos_cambiosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87))
             .addGroup(panel_datos_cambiosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -307,72 +324,77 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5)
-                .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precio1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precio2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precio3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombre)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precio4, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precio5)
-                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator7)
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                    .addComponent(precio1)
+                    .addComponent(precio2)
+                    .addComponent(precio3)
+                    .addComponent(nombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator3)
+                    .addComponent(jSeparator4)
+                    .addComponent(precio4)
+                    .addComponent(precio5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator6)
+                    .addComponent(precio6))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_datos_cambiosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94))
         );
         panel_datos_cambiosLayout.setVerticalGroup(
             panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_datos_cambiosLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(nombre)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(15, 15, 15)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(precio1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(12, 12, 12)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(precio2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(12, 12, 12)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(precio3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(12, 12, 12)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(precio4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(15, 15, 15)
                 .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(precio5))
                 .addGap(0, 0, 0)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addGroup(panel_datos_cambiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(precio6, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_datos_cambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 80, 310, 400));
+        panel_principal.add(panel_datos_cambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 80, 310, 430));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -409,7 +431,8 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
             !precio2.getText().matches("\\d+(\\.\\d+)?") || 
             !precio3.getText().matches("\\d+(\\.\\d+)?") ||
             !precio4.getText().matches("\\d+(\\.\\d+)?") ||
-            !precio5.getText().matches("\\d+(\\.\\d+)?")){
+            !precio5.getText().matches("\\d+(\\.\\d+)?") ||
+            !precio6.getText().matches("\\d+(\\.\\d+)?")){
             JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para los precios.");
             return;
         }
@@ -421,6 +444,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         String precio3Tabla = tabla_precios.getValueAt(selectedRow, 4).toString();
         String precio4Tabla = tabla_precios.getValueAt(selectedRow, 5).toString();
         String precio5Tabla = tabla_precios.getValueAt(selectedRow, 6).toString();
+        String precio6Tabla = tabla_precios.getValueAt(selectedRow, 7).toString();
 
         // Comparar los valores originales con los valores ingresados
         if (nombre.getText().equals(nombreTabla) &&
@@ -428,7 +452,8 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
             precio2.getText().equals(precio2Tabla) &&
             precio3.getText().equals(precio3Tabla) &&
             precio4.getText().equals(precio4Tabla) &&
-            precio5.getText().equals(precio5Tabla)){
+            precio5.getText().equals(precio5Tabla) &&
+            precio6.getText().equals(precio6Tabla)){
             JOptionPane.showMessageDialog(this, "No hay cambios realizados para actualizar.");
             return;
         }
@@ -450,6 +475,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         double precioIII = Double.parseDouble(precio3.getText());
         double precioIV = Double.parseDouble(precio4.getText());
         double precioV = Double.parseDouble(precio5.getText());
+        double precioVI = Double.parseDouble(precio6.getText());
         int idMaterial = Integer.parseInt(tabla_precios.getValueAt(selectedRow, 0).toString()); // ID columna  0
         ctrl_material materiales = new ctrl_material();
         // Crear objeto Material
@@ -460,6 +486,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         material.setPrecio_compra3(precioIII);
         material.setPrecio_compra4(precioIV);
         material.setPrecio_compra5(precioV);
+        material.setPrecio_compra6(precioVI);
         material.setId_material(idMaterial);
         
         // Actualizar el registro en la base de datos
@@ -508,6 +535,10 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_precio5ActionPerformed
 
+    private void precio6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precio6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precio6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -553,12 +584,14 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JLabel label_btn;
     private javax.swing.JTextField nombre;
     private swing.PanelRound panel_atras1;
@@ -572,6 +605,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
     private javax.swing.JTextField precio3;
     private javax.swing.JTextField precio4;
     private javax.swing.JTextField precio5;
+    private javax.swing.JTextField precio6;
     private javax.swing.JScrollPane scroll_panel;
     private javax.swing.JTable tabla_precios;
     // End of variables declaration//GEN-END:variables
@@ -591,7 +625,8 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
             material.getPrecio_compra2(),
             material.getPrecio_compra3(),
             material.getPrecio_compra4(),
-            material.getPrecio_compra5()
+            material.getPrecio_compra5(),
+            material.getPrecio_compra6()
         });
     }
     }
@@ -668,6 +703,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
                 precio3.setText(tabla_precios.getValueAt(selectedRow, 4).toString());
                 precio4.setText(tabla_precios.getValueAt(selectedRow, 5).toString());
                 precio5.setText(tabla_precios.getValueAt(selectedRow, 6).toString());
+                precio6.setText(tabla_precios.getValueAt(selectedRow, 7).toString());
             }
         }
     });
@@ -679,6 +715,7 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         precio3.setBackground(new java.awt.Color(0,0,0,1));
         precio4.setBackground(new java.awt.Color(0,0,0,1));
         precio5.setBackground(new java.awt.Color(0,0,0,1));
+        precio6.setBackground(new java.awt.Color(0,0,0,1));
         senal  = new ImageIcon("src/imagenes/correcto.png");
     }
     public void limpiado(){
@@ -688,5 +725,6 @@ public class Actualizar_Precio_Compra_Granel extends javax.swing.JFrame {
         precio3.setText("");
         precio4.setText("");
         precio5.setText("");
+        precio6.setText("");
     }
 }

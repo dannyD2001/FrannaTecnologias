@@ -22,7 +22,7 @@ public class ctrl_compra {
         //Conexión a la base de datos
         con = conexion.conectar();
         //Preparamos la consulta para insertar la compra
-        ps = con.prepareStatement("INSERT INTO COMPRA(total_compra, id_provedor, telefono, metodo_pago, status, flete, costo_flete) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+        ps = con.prepareStatement("INSERT INTO COMPRA(total_compra, id_provedor, telefono, metodo_pago, status, flete, costo_flete, telefono_chofer, adelanto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         ps.setDouble(1, c.getTotal_compra());
         ps.setInt(2, c.getId_provedor());
         ps.setString(3, c.getTelefono());
@@ -30,6 +30,8 @@ public class ctrl_compra {
         ps.setString(5, c.getStatus());
         ps.setString(6, c.getFlete());
         ps.setDouble(7, c.getCosto_flete());
+        ps.setString(8, c.getTelefono_chofer());
+        ps.setDouble(9, c.getAdelanto());
         //Ejecutamos la inserción
         ps.executeUpdate();
         //Obtener el folio_compra generado
@@ -99,9 +101,10 @@ public class ctrl_compra {
         Connection con = null;
         List<Compra> listcompras = new ArrayList();
         String sql = "SELECT DISTINCT compra.folio_compra, compra.fecha_compra, compra.total_compra, provedor.nombre, compra.metodo_pago, compra.status , " + 
-            "compra.flete, compra.costo_flete, usuario.nombre " +
+            "compra.flete, compra.costo_flete, chofer.nombre, usuario.nombre, compra.adelanto " +
             "FROM compra " +
             "JOIN provedor ON compra.id_provedor = provedor.id_provedor " +
+            "JOIN chofer ON compra.telefono_chofer = chofer.telefono_chofer " +
             "JOIN usuario ON compra.telefono = usuario.telefono " +    
             "ORDER BY compra.folio_compra DESC";
         try {
@@ -119,6 +122,8 @@ public class ctrl_compra {
                 compra.setStatus(rs.getString("compra.status"));
                 compra.setFlete(rs.getString("compra.flete"));
                 compra.setCosto_flete(rs.getDouble("compra.costo_flete"));
+                compra.setNombre_chofer(rs.getString("chofer.nombre"));
+                compra.setAdelanto(rs.getDouble("compra.adelanto"));
                 compra.setNombre(rs.getString("usuario.nombre"));
                 //añadir la compra a la lista
                 listcompras.add(compra);
@@ -230,9 +235,10 @@ public class ctrl_compra {
         ResultSet rs = null;
         List <Compra> listfolio = new ArrayList();
         String sql = "SELECT DISTINCT compra.folio_compra, compra.fecha_compra, compra.total_compra, provedor.nombre, compra.metodo_pago, compra.status , " + 
-            "compra.flete, compra.costo_flete, usuario.nombre " +
+            "compra.flete, compra.costo_flete, chofer.nombre, usuario.nombre, compra.adelanto " +
             "FROM compra " +
             "JOIN provedor ON compra.id_provedor = provedor.id_provedor " +
+            "JOIN chofer ON compra.telefono_chofer = chofer.telefono_chofer "+    
             "JOIN usuario ON compra.telefono = usuario.telefono " +    
             "ORDER BY compra.folio_compra DESC";
         try {
@@ -249,11 +255,13 @@ public class ctrl_compra {
                 compra.setStatus(rs.getString("compra.status"));
                 compra.setFlete(rs.getString("compra.flete"));
                 compra.setCosto_flete(rs.getDouble("compra.costo_flete"));
+                compra.setNombre_chofer(rs.getString("chofer.nombre"));
+                compra.setAdelanto(rs.getDouble("compra.adelanto"));
                 compra.setNombre(rs.getString("usuario.nombre"));
                 listfolio.add(compra);
             
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //agrega mensaje
         } finally{
             try {
@@ -270,19 +278,23 @@ public class ctrl_compra {
     public List<Compra> buscarComprasPorFecha(Date fechaInicio, Date fechaFin) {
     List<Compra> listaCompras = new ArrayList<>();
     String sql = "SELECT DISTINCT " +
-             "compra.folio_compra, " +
-             "compra.fecha_compra, " +
-             "compra.total_compra, " +
-             "provedor.nombre, " +
-             "compra.metodo_pago, " +
-             "compra.status, " +
-             "compra.flete, " +
-             "compra.costo_flete, " +
-             "usuario.nombre " +
-             "FROM compra " +
-             "JOIN provedor ON compra.id_provedor = provedor.id_provedor " +
-             "JOIN usuario ON compra.telefono = usuario.telefono " +
-             "WHERE DATE(compra.fecha_compra) BETWEEN ? AND ? ";    
+            "compra.folio_compra, " +
+            "compra.fecha_compra, " +
+            "compra.total_compra, " +
+            "provedor.nombre, " +
+            "compra.metodo_pago, " +
+            "compra.status, " +
+            "compra.flete, " +
+            "compra.costo_flete, " +
+            "chofer.nombre, "+
+            "usuario.nombre, " +
+            "compra.adelanto "+
+            "FROM compra " +
+            "JOIN provedor ON compra.id_provedor = provedor.id_provedor " +
+            "JOIN chofer ON compra.telefono_chofer = chofer.telefono_chofer " + 
+            "JOIN usuario ON compra.telefono = usuario.telefono " +
+            "WHERE compra.fecha_compra >= ? AND compra.fecha_compra < ?"+
+            "ORDER BY compra.folio_compra DESC";   
     Connection con = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
@@ -312,6 +324,8 @@ public class ctrl_compra {
             compra.setStatus(rs.getString("compra.status"));
             compra.setFlete(rs.getString("compra.flete"));
             compra.setCosto_flete(rs.getDouble("compra.costo_flete"));
+            compra.setNombre_chofer(rs.getString("chofer.nombre"));
+            compra.setAdelanto(rs.getDouble("compra.adelanto"));
             compra.setNombre(rs.getString("usuario.nombre"));
             listaCompras.add(compra);
         }
@@ -438,14 +452,14 @@ public class ctrl_compra {
     List<Object[]> datos = new ArrayList<>();
 
     String sql = "SELECT m.nombre_material AS material, " +
-                 "SUM(dc.subtotal) AS total_vendido " +
+                 "SUM(dc.peso_neto) AS total_peso " +
                  "FROM detalle_compra dc " +
                  "JOIN material m ON dc.id_material = m.id_material " +
                  "JOIN compra c ON dc.folio_compra = c.folio_compra " +
                  "WHERE MONTH(c.fecha_compra) = MONTH(CURDATE()) " +
                  "AND YEAR(c.fecha_compra) = YEAR(CURDATE()) " +
                  "GROUP BY m.nombre_material " +
-                 "ORDER BY total_vendido DESC";
+                 "ORDER BY total_peso DESC";
 
     try {
         con = conexion.conectar(); // Conexión a la base de datos
@@ -454,7 +468,7 @@ public class ctrl_compra {
 
         while (rs.next()) {
             String material = rs.getString("material"); // Nombre del material
-            double totalVendido = rs.getDouble("total_vendido"); // Total vendido
+            double totalVendido = rs.getDouble("total_peso"); // Total vendido
             datos.add(new Object[]{material, totalVendido}); // Agregar a la lista
         }
     } catch (SQLException e) {
@@ -601,6 +615,55 @@ public class ctrl_compra {
     }
         return totalProvedor;
     }
+    //es para lo del mes vs mes
+    public List<Object[]> obtenerDatosPorMes(int mes, int año) throws Exception {
+        List<Object[]> datos = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            // Conexión a la base de datos (asegúrate de tener un método para obtener la conexión)
+            con = conexion.conectar();
+
+            // Consulta SQL
+            String sql = "SELECT m.nombre_material AS material, " +
+                         "SUM(dc.peso_neto) AS total_vendido " +
+                         "FROM detalle_compra dc " +
+                         "JOIN material m ON dc.id_material = m.id_material " +
+                         "JOIN compra c ON dc.folio_compra = c.folio_compra " +
+                         "WHERE MONTH(c.fecha_compra) = ? AND YEAR(c.fecha_compra) = ? " +
+                         "GROUP BY m.nombre_material " +
+                         "ORDER BY total_vendido DESC";
+
+            // Preparar la consulta
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, mes); // Sustituir el mes
+            pst.setInt(2, año); // Sustituir el año
+
+            // Ejecutar la consulta
+            rs = pst.executeQuery();
+
+            // Procesar los resultados
+            while (rs.next()) {
+                String material = rs.getString("material");
+                double totalVendido = rs.getDouble("total_vendido");
+                datos.add(new Object[] { material, totalVendido });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error al obtener datos por mes: " + e.getMessage());
+        } finally {
+            // Cerrar recursos
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        }
+
+        return datos;
+    }
+    //
 
 
 

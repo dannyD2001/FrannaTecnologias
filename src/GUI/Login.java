@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -89,16 +90,21 @@ public class Login extends javax.swing.JFrame {
                 entrar_btnMousePressed(evt);
             }
         });
+        entrar_btn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                entrar_btnKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout fondo_botonLayout = new javax.swing.GroupLayout(fondo_boton);
         fondo_boton.setLayout(fondo_botonLayout);
         fondo_botonLayout.setHorizontalGroup(
             fondo_botonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 130, Short.MAX_VALUE)
+            .addGap(0, 120, Short.MAX_VALUE)
             .addGroup(fondo_botonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(fondo_botonLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(entrar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(entrar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         fondo_botonLayout.setVerticalGroup(
@@ -111,7 +117,7 @@ public class Login extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        bg.add(fondo_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, -1, -1));
+        bg.add(fondo_boton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 120, -1));
 
         barra_salida.setBackground(new java.awt.Color(207, 241, 164));
         barra_salida.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -191,7 +197,7 @@ public class Login extends javax.swing.JFrame {
 
         jTextField_usuario.setBackground(new java.awt.Color(255, 255, 255));
         jTextField_usuario.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField_usuario.setText(" Ingrese su numero Telefonico");
+        jTextField_usuario.setText(" Ingrese su número Teléfonico");
         jTextField_usuario.setBorder(null);
         jTextField_usuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_usuario.setOpaque(false);
@@ -304,7 +310,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField_contraseñaMousePressed
 
     private void entrar_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrar_btnMouseClicked
-       
+
     }//GEN-LAST:event_entrar_btnMouseClicked
 
     private void entrar_btnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_entrar_btnFocusGained
@@ -312,12 +318,17 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_entrar_btnFocusGained
 
     private void entrar_btnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_entrar_btnMousePressed
-         this.Login();
+        this.Login(); // Llama la acción de iniciar sesión    
     }//GEN-LAST:event_entrar_btnMousePressed
 
     private void jTextField_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_usuarioActionPerformed
+
+    private void entrar_btnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entrar_btnKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_entrar_btnKeyPressed
 
     /**
      * @param args the command line arguments

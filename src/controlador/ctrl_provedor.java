@@ -21,7 +21,7 @@ public class ctrl_provedor {
     ResultSet rs;
     
     public boolean RegistarProvedor(Provedor prov){
-        String sql = "INSERT INTO PROVEDOR(nombre, telefono, ciudad, referencia) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO PROVEDOR(nombre, telefono, ciudad, referencia, correo_electronico) VALUES(?, ?, ?, ?, ?)";
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);
@@ -30,6 +30,7 @@ public class ctrl_provedor {
             ps.setString(2, prov.getTelefono());
             ps.setString(3, prov.getCiudad());
             ps.setString(4, prov.getReferencia());
+            ps.setString(5, prov.getCorreo_electronico());
             ps.execute();
             return true;
             
@@ -40,7 +41,7 @@ public class ctrl_provedor {
     }
     //Para la buscar Provedor
     public void bucarProvedor(JComboBox provedorComboBox){
-         String sql ="SELECT id_provedor, nombre FROM PROVEDOR";
+         String sql ="SELECT id_provedor, nombre, correo_electronico FROM PROVEDOR";
         try {
              // Verificar si el JComboBox no es nulo y vaciarlo
             provedorComboBox.removeAllItems(); // Limpiar el JComboBox*/
@@ -51,7 +52,8 @@ public class ctrl_provedor {
             while(rs.next()){
                 int idProvedor = rs.getInt("id_provedor");
                 String nombreP = rs.getString("nombre");
-                Provedor provedor = new Provedor(idProvedor, nombreP);
+                String correoo = rs.getString("correo_electronico");
+                Provedor provedor = new Provedor(idProvedor, nombreP, correoo);
                 provedorComboBox.addItem(provedor);                            
             }
         } catch (SQLException e) {
@@ -157,7 +159,7 @@ public class ctrl_provedor {
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sql = "SELECT id_provedor, nombre, telefono, ciudad from provedor";
+        String sql = "SELECT id_provedor, nombre, telefono, ciudad, correo_electronico from provedor";
         try {
             con = conexion.conectar();
             ps = con.prepareStatement(sql);
@@ -168,6 +170,7 @@ public class ctrl_provedor {
                 prove.setNombre(rs.getString("nombre"));
                 prove.setTelefono(rs.getString("telefono"));
                 prove.setCiudad(rs.getString("ciudad"));
+                prove.setCorreo_electronico(rs.getString("correo_electronico"));
                 listaprove.add(prove);
             }
             

@@ -1,33 +1,36 @@
-
 package modelo;
-
 public class Chofer {
     private String telefono_chofer;
     private String nombre;
-    private String apellido_p;
+    //private String apellido_p;
     private String tipo_chofer;
     private String placa;
 
-    public Chofer(String telefono_chofer, String nombre, String apellido_p, String tipo_chofer, String placa) {
+    
+    public Chofer(String telefono_chofer, String nombre,String placa) {
         this.telefono_chofer = telefono_chofer;
         this.nombre = nombre;
-        this.apellido_p = apellido_p;
-        this.tipo_chofer = tipo_chofer;
         this.placa = placa;
     }
+    
 
     public Chofer(String telefono_chofer) {
         this.telefono_chofer = telefono_chofer;
     }
     
     
-
-     public Chofer() {
+    public Chofer() {
         this.telefono_chofer = "";
         this.nombre = "";
-        this.apellido_p = "";
         this.tipo_chofer = "";
         this.placa = "";
+    }
+
+    public Chofer(String telefono_chofer, String nombre, String tipo_chofer, String placa) {
+        this.telefono_chofer = telefono_chofer;
+        this.nombre = nombre;
+        this.tipo_chofer = tipo_chofer;
+        this.placa = placa;
     }
 
     public String getTelefono_chofer() {
@@ -46,14 +49,6 @@ public class Chofer {
         this.nombre = nombre;
     }
 
-    public String getApellido_p() {
-        return apellido_p;
-    }
-
-    public void setApellido_p(String apellido_p) {
-        this.apellido_p = apellido_p;
-    }
-
     public String getTipo_chofer() {
         return tipo_chofer;
     }
@@ -68,8 +63,8 @@ public class Chofer {
 
     public void setPlaca(String placa) {
         this.placa = placa;
-    }
-        @Override
+    }    
+    @Override
     public String toString() {
         return String.valueOf(this.nombre); // Esto asegura que se muestre el nombre chofer
         

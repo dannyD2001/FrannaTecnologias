@@ -129,7 +129,7 @@ public class Detalle_venta_realizadas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio", "Material Granel", "Peso Bruto(Kg)", "Peso Tara(Kg)", "Peso Neto(Kg)", "Descuento en (%)", "Precio ($)", "Observacion", "Subtotal"
+                "Folio", "Material Granel", "Peso Bruto(Kg)", "Peso Tara(Kg)", "Peso Neto(Kg)", "Descuento en (%)", "Precio ($)", "Observación", "Subtotal"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -141,6 +141,9 @@ public class Detalle_venta_realizadas extends javax.swing.JFrame {
             }
         });
         scroll_detalle.setViewportView(tabla_detalles);
+        if (tabla_detalles.getColumnModel().getColumnCount() > 0) {
+            tabla_detalles.getColumnModel().getColumn(8).setResizable(false);
+        }
 
         panel_principal.add(scroll_detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1140, 470));
 

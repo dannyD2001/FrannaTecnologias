@@ -262,7 +262,6 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("©Todos los derechos Reservado");
         panelPrincipal.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, 210, 42));
 
         jMenuBar1.setMaximumSize(new java.awt.Dimension(950, 39));
@@ -313,14 +312,14 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(menu_usuario);
 
         categoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/categorias1.png"))); // NOI18N
-        categoria.setText("Categoria  ");
+        categoria.setText("Categoría  ");
         categoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         categoria.setFont(new java.awt.Font("Bell MT", 0, 15)); // NOI18N
 
         menu_agregarcategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         menu_agregarcategoria.setFont(new java.awt.Font("Bell MT", 0, 12)); // NOI18N
         menu_agregarcategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mas.png"))); // NOI18N
-        menu_agregarcategoria.setText("Agregar Categoria");
+        menu_agregarcategoria.setText("Agregar Categoría");
         menu_agregarcategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         menu_agregarcategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,13 +429,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/vehiculo01.png"))); // NOI18N
-        jMenu4.setText("Vehiculo");
+        jMenu4.setText("Vehículo");
         jMenu4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu4.setFont(new java.awt.Font("Bell MT", 0, 15)); // NOI18N
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mas.png"))); // NOI18N
-        jMenuItem8.setText("Agregar Vehiculo");
+        jMenuItem8.setText("Agregar Vehículo");
         jMenuItem8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -638,8 +637,9 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
         Administrar_Chofer vista_chofer = new Administrar_Chofer();
-        vista_chofer.setLocationRelativeTo(null);
         vista_chofer.setVisible(true);
+        vista_chofer.setVentanaOrigen("Principal");
+        vista_chofer.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 

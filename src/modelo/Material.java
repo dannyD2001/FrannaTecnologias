@@ -17,8 +17,9 @@ public class Material {
     private double precio_venta3;
     private double precio_compra4;
     private double precio_compra5;
-       // Constructor con 8 parámetros
-    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, double precio_venta, double precio_compra2, double precio_compra3, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5) {    
+    private double precio_compra6;
+       // Constructor con 9 parámetros
+    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, double precio_venta, double precio_compra2, double precio_compra3, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5, double precio_compra6) {    
         this.id_material = id_material;
         this.nombre_material = nombre_material;
         this.cantidad_kg = cantidad_kg;
@@ -30,6 +31,7 @@ public class Material {
         this.precio_venta3 = precio_venta3;
         this.precio_compra4 = precio_compra4;
         this.precio_compra5 = precio_compra5;
+        this.precio_compra6 = precio_compra6;
     }
     //constructor vacio
     public Material() {
@@ -46,9 +48,10 @@ public class Material {
         this.precio_venta3 = 0;
         this.precio_compra4 = 0;
         this.precio_compra5 = 0;
+        this.precio_compra6 = 0;
     }
 
-    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, int id_categoria, String unidad_de_medida, double precio_compra2, double precio_compra3, double precio_venta, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5) {
+    public Material(int id_material, String nombre_material, int cantidad_kg, double precio_compra, int id_categoria, String unidad_de_medida, double precio_compra2, double precio_compra3, double precio_venta, double precio_venta2, double precio_venta3, double precio_compra4, double precio_compra5, double precio_compra6) {
         this.id_material = id_material;
         this.nombre_material = nombre_material;
         this.cantidad_kg = cantidad_kg;
@@ -62,6 +65,7 @@ public class Material {
         this.precio_venta3 = precio_venta3;
         this.precio_compra4 = precio_compra4;
         this.precio_compra5 = precio_compra5;
+        this.precio_compra6 = precio_compra6;
     }
 
     public int getId_material() {
@@ -167,6 +171,15 @@ public class Material {
     public void setPrecio_compra5(double precio_compra5) {
         this.precio_compra5 = precio_compra5;
     }
+
+    public double getPrecio_compra6() {
+        return precio_compra6;
+    }
+
+    public void setPrecio_compra6(double precio_compra6) {
+        this.precio_compra6 = precio_compra6;
+    }
+    
        
     @Override
     public String toString() {

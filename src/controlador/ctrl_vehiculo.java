@@ -27,7 +27,7 @@ public class ctrl_vehiculo {
                 JOptionPane.showMessageDialog(null, "Error al Registrar el Vehiculo");
                 return false;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al registar el vehiculo en la BD");
             return false;
         }finally{

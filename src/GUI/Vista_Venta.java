@@ -22,8 +22,15 @@ import modelo.Material;
 import modelo.Venta;
 import modelo.usuario;
 import controlador.ctrl_venta;
+import java.awt.Component;
+import java.awt.Font;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import modelo.Vehiculo;
     public class Vista_Venta extends javax.swing.JFrame {
         //iconos
@@ -49,6 +56,7 @@ import modelo.Vehiculo;
         initComponents();
         borrar_bordes();
         utilidades();
+        personalizar_tabla();
         if(usuarioActual != null){
         nombre_usuario.setText(usuarioActual.getNombre());
         apellido_paterno.setText(usuarioActual.getApellidoP());
@@ -82,7 +90,6 @@ import modelo.Vehiculo;
                 costo_adicional.enable();
                 // Deshabilitar campos para chofer externo
                 nombre_chofer.disable();
-                apellido_chofer.disable();
                 telefono_chofer.disable();
                 placa_unidad.disable();
                 combox_tipo.disable();
@@ -93,7 +100,6 @@ import modelo.Vehiculo;
                 costo_adicional.disable();
                 // Habilitar campos para chofer externo
                 nombre_chofer.enable();
-                apellido_chofer.enable();
                 telefono_chofer.enable();
                 placa_unidad.enable();
                 combox_tipo.disable();
@@ -198,10 +204,7 @@ import modelo.Vehiculo;
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        apellido_chofer = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator5 = new javax.swing.JSeparator();
@@ -210,7 +213,7 @@ import modelo.Vehiculo;
         panel_eliminar_filas = new javax.swing.JPanel();
         panel_eliminar = new swing.PanelRound();
         label_eliminar = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scroll_venta = new javax.swing.JScrollPane();
         tabla_venta = new javax.swing.JTable();
         panel_importe = new javax.swing.JPanel();
         label_total_pagar = new javax.swing.JLabel();
@@ -312,15 +315,19 @@ import modelo.Vehiculo;
         });
 
         label_nombre_chofer.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        label_nombre_chofer.setText("Nombre del Chofer");
+        label_nombre_chofer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_nombre_chofer.setText("Nombre Chofer");
 
         label_telefono.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        label_telefono.setText("Telefono del Chofer");
+        label_telefono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_telefono.setText("Teléfono del Chofer");
 
         label_placa.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_placa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_placa.setText("Placa de la Unidad");
 
         label_codigo_material.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_codigo_material.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_codigo_material.setText("Codigo Material");
 
         codigo_material.setEditable(false);
@@ -334,25 +341,32 @@ import modelo.Vehiculo;
         });
 
         label_pesoTara.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_pesoTara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_pesoTara.setText("Peso Tara");
 
         label_pesoBruto.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_pesoBruto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_pesoBruto.setText("Peso Bruto");
 
         label_pesoNeto.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_pesoNeto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_pesoNeto.setText("Peso Neto");
 
         peso_tara.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_tara.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         peso_tara.setBorder(null);
 
         peso_bruto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_bruto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         peso_bruto.setBorder(null);
 
         peso_neto.setEditable(false);
         peso_neto.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        peso_neto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         peso_neto.setBorder(null);
 
         label_precio.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_precio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_precio.setText("Precio");
 
         combox_precio.setBackground(new java.awt.Color(48, 56, 65));
@@ -360,6 +374,7 @@ import modelo.Vehiculo;
         combox_precio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         label_seleccion_chofer.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_seleccion_chofer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_seleccion_chofer.setText("Seleccione el Chofer");
 
         combox_tipo.setBackground(new java.awt.Color(48, 56, 65));
@@ -381,6 +396,11 @@ import modelo.Vehiculo;
 
         telefono_chofer.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         telefono_chofer.setBorder(null);
+        telefono_chofer.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                telefono_choferKeyPressed(evt);
+            }
+        });
 
         placa_unidad.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         placa_unidad.setBorder(null);
@@ -391,6 +411,7 @@ import modelo.Vehiculo;
         });
 
         label_stock.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_stock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_stock.setText("Stock");
 
         stock.setEditable(false);
@@ -407,6 +428,7 @@ import modelo.Vehiculo;
         label_costo.setText("Costo Adicional");
 
         costo_adicional.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        costo_adicional.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         costo_adicional.setText("0.00");
         costo_adicional.setBorder(null);
         costo_adicional.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -426,6 +448,7 @@ import modelo.Vehiculo;
         });
 
         label_servicio.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        label_servicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_servicio.setText("Tipo Chofer");
 
         panel_observaciones_descuento.setBackground(new java.awt.Color(48, 56, 65));
@@ -435,6 +458,7 @@ import modelo.Vehiculo;
         observaciones.setBorder(null);
 
         descuento.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        descuento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         descuento.setBorder(null);
         descuento.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -453,13 +477,13 @@ import modelo.Vehiculo;
                 .addGap(5, 5, 5)
                 .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jSeparator9)
-                    .addComponent(observaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                    .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addComponent(label_descuento)
                 .addGap(5, 5, 5)
                 .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator8)
-                    .addComponent(descuento, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
+                    .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panel_observaciones_descuentoLayout.setVerticalGroup(
@@ -467,8 +491,8 @@ import modelo.Vehiculo;
             .addGroup(panel_observaciones_descuentoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(observaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_descuento))
                 .addGap(0, 0, 0)
                 .addGroup(panel_observaciones_descuentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -514,7 +538,7 @@ import modelo.Vehiculo;
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_pagoLayout.setVerticalGroup(
             panel_pagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -535,6 +559,7 @@ import modelo.Vehiculo;
         combox_servicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccionar--", "No", "Si" }));
         combox_servicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Servicio Flete");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -545,11 +570,6 @@ import modelo.Vehiculo;
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-weight-kg-24.png"))); // NOI18N
-
-        apellido_chofer.setBorder(null);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
-        jLabel5.setText("Apellido Chofer");
 
         javax.swing.GroupLayout panel_detallesLayout = new javax.swing.GroupLayout(panel_detalles);
         panel_detalles.setLayout(panel_detallesLayout);
@@ -562,7 +582,7 @@ import modelo.Vehiculo;
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(name_material, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_material))
-                        .addGap(43, 43, 43)
+                        .addGap(40, 40, 40)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_codigo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
@@ -589,68 +609,67 @@ import modelo.Vehiculo;
                     .addGroup(panel_detallesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(panel_observaciones_descuento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panel_detallesLayout.createSequentialGroup()
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_pesoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(label_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panel_detallesLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_pesoNeto, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(30, 30, 30)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panel_detallesLayout.createSequentialGroup()
+                                        .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(label_stock, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addComponent(label_seleccion_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(15, 15, 15)
-                                .addComponent(label_nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE))
+                                .addGap(35, 35, 35)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_seleccion_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(telefono_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_telefono, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(15, 15, 15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(25, 25, 25)
                                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jSeparator1)
-                                    .addComponent(nombre_chofer, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))))))
-                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                                    .addComponent(placa_unidad, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
+                            .addGroup(panel_detallesLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panel_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(panel_detallesLayout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(1, 1, 1)
-                        .addComponent(panel_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_detallesLayout.createSequentialGroup()
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(apellido_chofer, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2))
-                        .addGap(12, 12, 12)
+                        .addGap(170, 170, 170)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(label_telefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(telefono_chofer)
-                            .addComponent(jSeparator3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(label_placa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(placa_unidad)
-                            .addComponent(jSeparator4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(costo_adicional)
-                            .addComponent(label_costo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator5))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(costo_adicional, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(label_costo, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         panel_detallesLayout.setVerticalGroup(
             panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -673,13 +692,13 @@ import modelo.Vehiculo;
                                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(peso_tara, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(peso_tara, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(combox_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(name_material, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(codigo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(peso_bruto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(codigo_material, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(peso_neto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(peso_bruto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, 0)
@@ -690,38 +709,32 @@ import modelo.Vehiculo;
                     .addGroup(panel_detallesLayout.createSequentialGroup()
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addGap(4, 4, 4)
+                                .addGap(10, 10, 10)
                                 .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(label_telefono)
                                     .addComponent(label_nombre_chofer)
                                     .addComponent(label_seleccion_chofer)
                                     .addComponent(label_servicio)
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5)))
-                            .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(label_costo))
-                            .addGroup(panel_detallesLayout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(label_placa)))
+                                    .addComponent(label_placa)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_detallesLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_costo)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(telefono_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(placa_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(costo_adicional, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(apellido_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(combox_servicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(combox_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(combox_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(telefono_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombre_chofer, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(placa_unidad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, 0)
                         .addGroup(panel_detallesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_detallesLayout.createSequentialGroup()
@@ -730,7 +743,7 @@ import modelo.Vehiculo;
                         .addContainerGap())))
         );
 
-        panel_secundario.add(panel_detalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1210, 160));
+        panel_secundario.add(panel_detalles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 1210, 180));
 
         panel_eliminar_filas.setBackground(new java.awt.Color(48, 56, 65));
         panel_eliminar_filas.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eliminar Fila", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -797,22 +810,29 @@ import modelo.Vehiculo;
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, true, true, true, true, true, true
+                false, false, false, false, false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tabla_venta);
+        scroll_venta.setViewportView(tabla_venta);
         if (tabla_venta.getColumnModel().getColumnCount() > 0) {
             tabla_venta.getColumnModel().getColumn(0).setResizable(false);
             tabla_venta.getColumnModel().getColumn(1).setResizable(false);
             tabla_venta.getColumnModel().getColumn(2).setResizable(false);
             tabla_venta.getColumnModel().getColumn(3).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(4).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(5).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(6).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(7).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(8).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(9).setResizable(false);
+            tabla_venta.getColumnModel().getColumn(10).setResizable(false);
         }
 
-        panel_secundario.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1310, 260));
+        panel_secundario.add(scroll_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 1310, 290));
 
         panel_importe.setBackground(new java.awt.Color(48, 56, 65));
         panel_importe.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "Importe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 0, 10)))); // NOI18N
@@ -1136,6 +1156,19 @@ import modelo.Vehiculo;
         // TODO add your handling code here:
     }//GEN-LAST:event_costo_adicionalActionPerformed
 
+    private void telefono_choferKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefono_choferKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { // Detectar Enter
+        String telefono = telefono_chofer.getText().trim();
+        ctrl_chofer controlador = new ctrl_chofer();
+        Chofer chofer = controlador.buscarChofer(telefono);
+        if (chofer != null) {
+            nombre_chofer.setText(chofer.getNombre());
+            //apellido_chofer.setText(chofer.getApellido_p());
+            placa_unidad.setText(chofer.getPlaca());
+        }
+        }
+    }//GEN-LAST:event_telefono_choferKeyPressed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1173,7 +1206,6 @@ import modelo.Vehiculo;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Txt_modulo;
-    private javax.swing.JTextField apellido_chofer;
     private javax.swing.JTextField apellido_paterno;
     private javax.swing.JLabel atras;
     private javax.swing.JTextField codigo_material;
@@ -1192,12 +1224,9 @@ import modelo.Vehiculo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
@@ -1243,6 +1272,7 @@ import modelo.Vehiculo;
     private javax.swing.JTextField peso_neto;
     private javax.swing.JTextField peso_tara;
     private javax.swing.JTextField placa_unidad;
+    private javax.swing.JScrollPane scroll_venta;
     private javax.swing.JComboBox<String> status;
     private javax.swing.JTextField stock;
     private javax.swing.JTable tabla_venta;
@@ -1365,11 +1395,7 @@ import modelo.Vehiculo;
             /*if (placa_unidad.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Ingrese la placa de la unidad.", "Mensaje", JOptionPane.WARNING_MESSAGE);
                 return;
-            }*/
-            if(apellido_chofer.getText().trim().isEmpty()){
-                JOptionPane.showMessageDialog(null,"Ingrese el apellido del chofer.", "Mensaje", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
+            }*/            
         }
         // Confirmar si se desea realizar la venta
         int confirmacion = JOptionPane.showConfirmDialog(this, "¿Desea realizar la venta?", "Confirmar Venta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -1384,7 +1410,7 @@ import modelo.Vehiculo;
         if (telefonoUsuario == null) {
             JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
             return; 
-            }
+        }
 
         // Obtener nombre del cliente desde el ComboBox 
         String nombreCliente = combox_cliente.getSelectedItem().toString();
@@ -1413,7 +1439,6 @@ import modelo.Vehiculo;
         } else {
             // Manejo de chofer externo
             String nombreChofer = capitalize(nombre_chofer.getText().trim()); //aca 
-            String apellidoChofer = capitalize(apellido_chofer.getText().trim());
             telefonoChofer = telefono_chofer.getText().trim();
             placaVehiculo = toUpperCaseString(placa_unidad.getText().trim());
 
@@ -1424,17 +1449,17 @@ import modelo.Vehiculo;
                 //nuevoVehiculo.setPlaca(toUpperCaseString(placa_unidad.getText()));
                 
                 if (!ctrlVehiculo.registrarVehiculo(nuevoVehiculo)) {
-                    JOptionPane.showMessageDialog(null, "Error al registrar el vehículo.");
+                    //JOptionPane.showMessageDialog(null, "Error al registrar el vehículo.");
                     return;
                 }
-                JOptionPane.showMessageDialog(null, "Vehículo registrado exitosamente.");
+                //JOptionPane.showMessageDialog(null, "Vehículo registrado exitosamente.");
             }
 
             // Verificar si el chofer externo ya existe
             Chofer choferExistente = ctrlChofer.buscarChoferExternoPorTelefono(telefonoChofer);
             if (choferExistente == null) {
                 // Registrar el chofer si no existe
-                Chofer choferExterno = new Chofer(telefonoChofer, nombreChofer, apellidoChofer, "Externo", placaVehiculo);
+                Chofer choferExterno = new Chofer(telefonoChofer, nombreChofer,"Externo", placaVehiculo);
                 if (!ctrlChofer.RegistrarChofer(choferExterno)) {
                     JOptionPane.showMessageDialog(null, "Error al registrar el chofer externo.");
                     return;
@@ -1520,7 +1545,6 @@ import modelo.Vehiculo;
         nombre_chofer.setText(""); // Limpiar campos de chofer
         telefono_chofer.setText("");
         placa_unidad.setText("");
-        apellido_chofer.setText("");
         combox_chofer.setSelectedIndex(0); // Restablecer selección de chofer
 
         JOptionPane.showMessageDialog(this, "Venta Registrada Exitosamente", "Venta Realizada", JOptionPane.INFORMATION_MESSAGE);
@@ -1553,7 +1577,6 @@ import modelo.Vehiculo;
         peso_tara.setBackground(new java.awt.Color(0,0,0,1));
         peso_bruto.setBackground(new java.awt.Color(0,0,0,1));
         nombre_chofer.setBackground(new java.awt.Color(0,0,0,1));
-        apellido_chofer.setBackground(new java.awt.Color(0,0,0,1));
         telefono_chofer.setBackground(new java.awt.Color(0,0,0,1));
         placa_unidad.setBackground(new java.awt.Color(0,0,0,1));
         costo_adicional.setBackground(new java.awt.Color(0,0,0,1));
@@ -1566,5 +1589,58 @@ import modelo.Vehiculo;
         this.setIconImage(icono);
         this.setLocationRelativeTo(null);
         correcto = new  ImageIcon("src/imagenes/correcto.png");
+    }
+    public void personalizar_tabla(){
+        //Personalizamos la tablas 
+        tabla_venta.setBackground(new Color(0x333337));  // Fondo de las celdas
+        tabla_venta.setForeground(new Color(000,000,000));  // Color del texto de las celdas
+        tabla_venta.setGridColor(new Color(0x333337));  // Líneas de celda más suaves
+        tabla_venta.setRowHeight(25);  // Ajustar la altura de las filas
+        tabla_venta.setFont(new Font("sansserif", Font.PLAIN, 12));//ME PARECE, ES FUENTE DEL CONTENIDO DE LA TABLA
+        // Configurar el JScrollPane sin borde
+        scroll_venta.setBorder(BorderFactory.createEmptyBorder());
+        scroll_venta.setBackground(new Color(0x333337));
+        TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Establecer los colores para celdas seleccionadas y no seleccionadas
+                if (isSelected) {
+                    label.setBackground(new Color(0, 102, 204));  // Fondo cuando está seleccionada (azul)
+                    label.setForeground(Color.WHITE);  // Texto cuando está seleccionada (blanco)
+                } else {
+                    //este es el que aplica para el fondo del tabla
+                    label.setBackground(new Color(0x333337));  // Fondo cuando no está seleccionada (blanco)
+                    label.setForeground(new Color(102,102,102));  // Texto cuando no está seleccionada (negro)
+                }
+                // Si deseas cambiar el alineamiento del texto
+                label.setHorizontalAlignment(JLabel.LEFT);  // Alinear el texto a la izquierda
+
+                label.setOpaque(true);  // Asegurarse de que el fondo se pinte correctamente
+                return label;
+            }
+        };
+        // Aplicar el renderizador personalizado a todas las columnas de la tabla
+        for (int i = 0; i < tabla_venta.getColumnCount(); i++) {
+            tabla_venta.getColumnModel().getColumn(i).setCellRenderer(cellRenderer);
+        }
+        //para encabezado de Tabla
+        TableCellRenderer headerRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                label.setBackground(new Color(120,171,168));  // Fondo verde del encabezado                
+                label.setForeground(new Color(40,40,40));  // Color del texto del encabezado
+                label.setHorizontalAlignment(JLabel.LEFT);  // Centrar el texto
+                label.setFont((new Font("sansserif", Font.BOLD, 12))); //LA FUENTE DE LA TABLA  TITULO                 
+                label.setOpaque(true);  // Asegurarse de que el color de fondo se aplique
+                return label;
+            }
+        };
+         // Aplicar el renderizador a cada columna del encabezado
+        for (int i = 0; i < tabla_venta.getColumnModel().getColumnCount(); i++) {
+            tabla_venta.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        tabla_venta.repaint();
     }
 }

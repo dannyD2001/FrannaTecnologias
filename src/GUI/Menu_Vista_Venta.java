@@ -241,7 +241,7 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/punto-de-venta.png"))); // NOI18N
-        jLabel3.setText("Ola! Realize la Venta ");
+        jLabel3.setText("Hola! Realize la Venta ");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 250, 50));
 
         usuario_act.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
@@ -646,7 +646,7 @@ public class Menu_Vista_Venta extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(50, 50, 50));
-        jLabel6.setText("Actualiza precio Material");
+        jLabel6.setText("Actualizar Precio Material");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(50, 50, 50));

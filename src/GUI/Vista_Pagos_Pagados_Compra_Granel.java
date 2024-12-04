@@ -114,7 +114,7 @@ public class Vista_Pagos_Pagados_Compra_Granel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio Compra", "Fecha Compra", "Proveedor", "Total Compra", "Metodo Pago", "Estatus", "Telefono Proveedor", "Cuenta Clave"
+                "Folio Compra", "Fecha Compra", "Proveedor", "Total Compra", "Método Pago", "Estatus", "Teléfono Proveedor", "Cuenta Clave"
             }
         ) {
             boolean[] canEdit = new boolean [] {

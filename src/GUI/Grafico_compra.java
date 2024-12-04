@@ -59,6 +59,7 @@ public class Grafico_compra extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         label_provedor = new javax.swing.JLabel();
         panel_grafico = new swing.PanelRound();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -111,9 +112,9 @@ public class Grafico_compra extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Bell MT", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(224, 224, 224));
-        jLabel2.setText("Tendecia en Compras");
+        jLabel2.setText("Tendencia en Compras");
 
-        panel_provedor.setBackground(new java.awt.Color(106, 154, 176));
+        panel_provedor.setBackground(new java.awt.Color(33, 37, 41));
         panel_provedor.setRoundBottomLeft(5);
         panel_provedor.setRoundBottomRight(5);
         panel_provedor.setRoundTopLeft(5);
@@ -122,9 +123,12 @@ public class Grafico_compra extends javax.swing.JFrame {
         label_prove.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
         label_prove.setForeground(new java.awt.Color(255, 255, 255));
         label_prove.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_prove.setText("COMPARACION");
+        label_prove.setText("COMPARACIÓN");
         label_prove.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         label_prove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_proveMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label_proveMouseEntered(evt);
             }
@@ -144,7 +148,7 @@ public class Grafico_compra extends javax.swing.JFrame {
             .addComponent(label_prove, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        panel_comparacion_compra.setBackground(new java.awt.Color(106, 154, 176));
+        panel_comparacion_compra.setBackground(new java.awt.Color(33, 37, 41));
         panel_comparacion_compra.setRoundBottomLeft(5);
         panel_comparacion_compra.setRoundBottomRight(5);
         panel_comparacion_compra.setRoundTopLeft(5);
@@ -350,6 +354,11 @@ public class Grafico_compra extends javax.swing.JFrame {
 
         jPanel1.add(panel_grafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 600, 490));
 
+        jLabel5.setFont(new java.awt.Font("Berlin Sans FB", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Tendencia Mensual");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 270, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -400,7 +409,7 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     private void label_pMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_pMouseExited
         // TODO add your handling code here:
-        panel_comparacion_compra.setBackground(new Color(0x6A9AB0));
+        panel_comparacion_compra.setBackground(new Color(0x212529));
         label_p.setForeground(Color.WHITE);
     }//GEN-LAST:event_label_pMouseExited
 
@@ -412,9 +421,17 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     private void label_proveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proveMouseExited
         // TODO add your handling code here:
-        panel_provedor.setBackground(new Color(0x6A9AB0));
+        panel_provedor.setBackground(new Color(0x212529));
         label_prove.setForeground(Color.WHITE);
     }//GEN-LAST:event_label_proveMouseExited
+
+    private void label_proveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_proveMouseClicked
+        // TODO add your handling code here:
+        Grafico_Comparativa gp = new Grafico_Comparativa();
+        gp.setVisible(true);
+        gp.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_label_proveMouseClicked
 
     /**
      * @param args the command line arguments
@@ -460,6 +477,7 @@ public class Grafico_compra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_compras;
     private javax.swing.JLabel label_material;
@@ -491,7 +509,7 @@ public class Grafico_compra extends javax.swing.JFrame {
     }
     // Crear el gráfico de barras
     JFreeChart barChart = ChartFactory.createBarChart3D(
-            "Tendencias Mensuales Total Material",   // Título del gráfico
+            "Tendencias Total Peso Material",   // Título del gráfico
             "Materiales",                         // Etiqueta del eje X
             "Total Comprado",                     // Etiqueta del eje Y
             dataset,                              // Dataset
@@ -596,7 +614,7 @@ public class Grafico_compra extends javax.swing.JFrame {
 
     // Crear el gráfico de pastel
     JFreeChart pieChart = ChartFactory.createPieChart(
-            "Tendencias Cantidad Compra",   // Título del gráfico
+            "Tendencias Compras por Material",   // Título del gráfico
             dataset,                  // Dataset
             true,                     // Mostrar leyenda
             true,                     // Usar tooltips

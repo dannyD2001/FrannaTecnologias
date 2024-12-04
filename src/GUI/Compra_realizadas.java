@@ -394,11 +394,11 @@ public class Compra_realizadas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Folio", "Fecha", "Provedor", "Total Compra", "Metódo de Pago", "Estatus", "Flete", "Costo Flete", "Atendido por"
+                "Folio", "Fecha", "Provedor", "Total Compra", "Metódo de Pago", "Estatus", "Flete", "Costo Flete", "Chofer", "Adelantos", "Atendido por"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true, true
+                false, false, false, false, false, false, true, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -407,11 +407,27 @@ public class Compra_realizadas extends javax.swing.JFrame {
         });
         scroll_compras.setViewportView(tabla_compras);
         if (tabla_compras.getColumnModel().getColumnCount() > 0) {
+            tabla_compras.getColumnModel().getColumn(0).setResizable(false);
             tabla_compras.getColumnModel().getColumn(0).setPreferredWidth(8);
+            tabla_compras.getColumnModel().getColumn(1).setResizable(false);
             tabla_compras.getColumnModel().getColumn(1).setPreferredWidth(80);
-            tabla_compras.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tabla_compras.getColumnModel().getColumn(3).setPreferredWidth(50);
-            tabla_compras.getColumnModel().getColumn(5).setPreferredWidth(10);
+            tabla_compras.getColumnModel().getColumn(2).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(2).setPreferredWidth(40);
+            tabla_compras.getColumnModel().getColumn(3).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(3).setPreferredWidth(40);
+            tabla_compras.getColumnModel().getColumn(4).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(4).setPreferredWidth(40);
+            tabla_compras.getColumnModel().getColumn(5).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(5).setPreferredWidth(30);
+            tabla_compras.getColumnModel().getColumn(6).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(6).setPreferredWidth(8);
+            tabla_compras.getColumnModel().getColumn(7).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(7).setPreferredWidth(40);
+            tabla_compras.getColumnModel().getColumn(8).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(8).setPreferredWidth(40);
+            tabla_compras.getColumnModel().getColumn(9).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(10).setResizable(false);
+            tabla_compras.getColumnModel().getColumn(10).setPreferredWidth(50);
         }
 
         panel_secundario.add(scroll_compras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 1160, 340));
@@ -648,6 +664,8 @@ public class Compra_realizadas extends javax.swing.JFrame {
                 compra.getStatus(),
                 compra.getFlete(),
                 compra.getCosto_flete(),
+                compra.getNombre_chofer(),
+                compra.getAdelanto(),
                 compra.getNombre()
             };
             model.addRow(rowData);
@@ -732,7 +750,7 @@ public class Compra_realizadas extends javax.swing.JFrame {
         List<Compra> ListarMate = ctr_com.ConsultaCompra();
         modelo  = (DefaultTableModel) tabla_compras.getModel();
         modelo.setRowCount(0);
-        Object[] object = new Object[9];
+        Object[] object = new Object[11];
         for (int i = 0; i < ListarMate.size(); i++) {
             object[0] = ListarMate.get(i).getFolio_compra();
             object[1] = ListarMate.get(i).getFecha();
@@ -742,7 +760,9 @@ public class Compra_realizadas extends javax.swing.JFrame {
             object[5] = ListarMate.get(i).getStatus();
             object[6] = ListarMate.get(i).getFlete();
             object[7] = ListarMate.get(i).getCosto_flete();
-            object[8] = ListarMate.get(i).getNombre();
+            object[8] = ListarMate.get(i).getNombre_chofer();
+            object[9] = ListarMate.get(i).getAdelanto();
+            object[10] = ListarMate.get(i).getNombre();
             modelo.addRow(object);            
         }
         tabla_compras.setModel(modelo);
@@ -753,7 +773,7 @@ public class Compra_realizadas extends javax.swing.JFrame {
         List<Compra> ListaFolio = compra.consultaFolio();
         modelo  = (DefaultTableModel) tabla_compras.getModel();
         modelo.setRowCount(0);
-        Object[] object = new  Object[9];
+        Object[] object = new  Object[11];
         for (Compra compra : ListaFolio){
             // Si folio es -1, mostrar todos los registros
         // Si no, mostrar solo los registros cuyo folio coincida con el folio buscad
@@ -766,7 +786,9 @@ public class Compra_realizadas extends javax.swing.JFrame {
             object[5] = compra.getStatus();
             object[6] = compra.getFlete();
             object[7] = compra.getCosto_flete();
-            object[8] = compra.getNombre();
+            object[8] = compra.getNombre_chofer();
+            object[9] = compra.getAdelanto();
+            object[10] = compra.getNombre();
             modelo.addRow(object);            
             }
         }
@@ -805,6 +827,8 @@ public class Compra_realizadas extends javax.swing.JFrame {
                 compra.getStatus(),
                 compra.getFlete(),
                 compra.getCosto_flete(),
+                compra.getNombre_chofer(),
+                compra.getAdelanto(),
                 compra.getNombre()
             };
             model.addRow(rowData);

@@ -89,6 +89,8 @@ public class Mostrar_Material extends javax.swing.JFrame {
             .addComponent(atras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Bell MT", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Materiales Registrados");
 
         javax.swing.GroupLayout panel_barraLayout = new javax.swing.GroupLayout(panel_barra);
@@ -98,8 +100,8 @@ public class Mostrar_Material extends javax.swing.JFrame {
             .addGroup(panel_barraLayout.createSequentialGroup()
                 .addComponent(panel_atras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(262, 262, 262)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addComponent(jLabel1)
+                .addContainerGap(312, Short.MAX_VALUE))
         );
         panel_barraLayout.setVerticalGroup(
             panel_barraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +122,7 @@ public class Mostrar_Material extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Codigo Material", "Nombre Material"
+                "Código Material", "Nombre Material"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -152,11 +154,11 @@ public class Mostrar_Material extends javax.swing.JFrame {
             panel_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_tablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addComponent(scroll_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 760, 430));
+        panel_principal.add(panel_tabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 760, 420));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
