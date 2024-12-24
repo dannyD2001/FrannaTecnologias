@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cc95195d-d676-42d4-84e2-c09232b71d1e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="53"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#7FFFD4">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFFEA">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#666666"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Refisa" uuid="82c1cc2a-0c67-4e24-83ae-bb9d30659fca">
+		<queryString language="SQL">
+			<![CDATA[SELECT DISTINCT compra.folio_compra, compra.fecha_compra, provedor.nombre, compra.total_compra, 
+compra.metodo_pago, compra.status, provedor.telefono, provedor.referencia 
+FROM compra JOIN provedor ON compra.id_provedor = provedor.id_provedor
+WHERE compra.status = 'Pendiente'
+ORDER BY compra.folio_compra DESC;]]>
+		</queryString>
+		<field name="folio_compra" class="java.lang.Integer">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fecha_compra" class="java.sql.Timestamp">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nombre" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="total_compra" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="metodo_pago" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="status" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="telefono" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="referencia" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="folio_compra">
+			<groupExpression><![CDATA[$F{folio_compra}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT compra.folio_compra, compra.fecha_compra, provedor.nombre, compra.total_compra, 
+compra.metodo_pago, compra.status, provedor.telefono, provedor.referencia 
+FROM compra JOIN provedor ON compra.id_provedor = provedor.id_provedor
+WHERE compra.status = 'Pendiente'
+ORDER BY compra.folio_compra DESC;]]>
+	</queryString>
+	<field name="folio_compra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_compra" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_compra" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="metodo_pago" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="folio_compra">
+		<groupExpression><![CDATA[$F{folio_compra}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="325" y="0" width="189" height="20" uuid="30be680c-6599-4b58-8f0e-bea75d3f4afc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Franna Tecnologías Avanzadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="20" width="386" height="20" uuid="fefbca8e-9a51-4730-b394-873e3e7eda4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calzada Emiliano Zapata , Colonia Lomas Bonitas, Tuxtla Gutiérrez, Chiapas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="40" width="116" height="20" uuid="beed184b-9ac9-40c6-b3b8-b82970fc0cf6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[contacto@franna.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="367" y="60" width="100" height="20" uuid="c98fe54f-8750-46a3-adae-6c66ecb9775a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[961-XXX-XXXX]]></text>
+			</staticText>
+			<image>
+				<reportElement x="14" y="0" width="186" height="70" uuid="3d666d53-fc42-4293-b1ef-2afab3b4f6e9"/>
+				<imageExpression><![CDATA["C:\\Users\\52961\\OneDrive\\Documentos\\Tecnologico\\9 semestre\\Proyecto Residencia\\FrannaTecnologiasAvanzadas\\src\\imagenes\\logo_grande.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="21" y="64" width="59" height="20" uuid="8f42fe90-a730-43d2-860a-f7ba1a50d0a6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Avanzadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="100" height="20" uuid="88800185-5705-4f3e-878d-fc150f4e9d74"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Franna Tecnologías]]></text>
+			</staticText>
+			<line>
+				<reportElement mode="Opaque" x="0" y="80" width="814" height="2" uuid="dc5a32e4-b1cb-4bae-bc18-93d17506370d"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="814" height="35" backcolor="#336B87" uuid="72d5bb32-5b94-461b-80e2-335fdef665fb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE LOS PAGOS PENDIENTES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="309" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="19" width="802" height="290" uuid="feff3d47-f65c-4250-ac4b-8fc5be3145b1"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Refisa" uuid="d7696819-7305-4a86-866d-bdb53744466e">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="98e457ee-c728-4b70-bf24-87c4ff45c3c5">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d20b68d3-6379-47c8-8e7a-f1f6c39f42b1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Folio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="5f017635-1934-403b-88cf-dd69319b9e77"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{folio_compra}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="106" uuid="8c995b19-960f-4c40-b2f5-2f8292279eba">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="106" height="30" uuid="9a10a91c-cb72-411c-9d40-705c6479aa12"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Fecha y Hora]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="106" height="20" uuid="c3169d8a-e4a8-415d-b676-a2872d756873"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fecha_compra}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="139" uuid="8a43ded9-72cd-46db-9032-f0609c335910">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="139" height="30" uuid="bb241e98-235a-4e5c-a092-bb769572dccb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Proveedor]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="139" height="20" uuid="ea8f5f28-1239-4614-b93a-ccd8976c3214"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="101" uuid="02158ba4-20ed-4258-9541-0461a45745b4">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="101" height="30" uuid="286bb16f-e6e5-49e0-932e-20c065f73796"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total Compra]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="101" height="20" uuid="3998581b-5440-4e4a-bd43-1f065e3fa89b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{total_compra}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="108" uuid="06121559-8f47-4b9e-b7fc-87d69f092c2a">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="107" height="30" uuid="ce4ce6e0-ae26-4b30-a58d-ac863175af02"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Metódo Pago]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="107" height="20" uuid="257df0bc-3087-4f9b-922a-209befda3d1b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{metodo_pago}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e3afa28c-afca-42ce-961d-497e19cea11b">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="490a1cac-c430-4037-a71a-c2a2acf92718"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Estatus]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="eb7adffc-c23c-483e-8aca-b2f1fb27082f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="cd970978-edde-4c03-a311-e6ce45df4b98">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="0bcd0e0d-e8a0-44f9-927e-ef977f95992d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Teléfono]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="f9c379c6-baae-479f-84fc-53b64eddb7e8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{telefono}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="5a2d21df-b652-4d73-bd7b-33b85ec25335">
+						<jr:tableHeader style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:tableFooter style="table 1_TH" height="0" rowSpan="1"/>
+						<jr:columnHeader style="table 1_CH" height="31" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="8d31cfc2-6144-4ba2-9a50-906cc186076f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Referencia]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="0" rowSpan="1"/>
+						<jr:detailCell style="table 1_TD" height="30" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="9c614019-c3d5-4ba9-acfe-2b651269b0fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="39" splitType="Stretch">
+			<textField>
+				<reportElement x="703" y="19" width="65" height="20" uuid="4a01109b-76d7-45e9-91a4-23b0c8528c02"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="768" y="19" width="34" height="20" uuid="ec8d1a9d-f821-4972-b773-7165554d658a"/>
+				<textFieldExpression><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="19" width="100" height="20" uuid="516203a6-0cd7-455b-baa7-6abab41b46aa"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="100" height="20" uuid="116a11b1-7866-4ee3-9713-511f0da8d81b"/>
+				<text><![CDATA[Fecha Consultada]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

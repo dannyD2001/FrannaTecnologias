@@ -7,16 +7,26 @@ package GUI;
 
 import Util.AppContext;
 import com.formdev.flatlaf.FlatDarkLaf;
+import conexion.conexion;
 import controlador.ctrl_compra;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -24,6 +34,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import modelo.DetalleCompra;
 import modelo.usuario;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 public class Detalles_compra_realizadas extends javax.swing.JFrame {
     DefaultTableModel modelo;
 
@@ -50,11 +67,16 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         panel_atras = new swing.PanelRound();
         atras = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        scroll_detalle = new javax.swing.JScrollPane();
-        tabla_detalles = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         nombre_usuario_actual = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        panelRound1 = new swing.PanelRound();
+        scroll_detalle = new javax.swing.JScrollPane();
+        tabla_detalles = new javax.swing.JTable();
+        panel_btnç = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        panel_btn_pdf = new swing.PanelRound();
+        label_btn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -128,26 +150,6 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
 
         panel_principal.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1000, 40));
 
-        tabla_detalles.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Folio ", "Material Granel", "Peso Bruto(kg)", "Peso Tara(kg)", "Peso Neto(kg)", "Descuento en (%)", "Precio($)", "Observación", "Subtotal"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scroll_detalle.setViewportView(tabla_detalles);
-
-        panel_principal.add(scroll_detalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1160, 380));
-
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Esto son los detalles de la Compra..");
@@ -162,6 +164,118 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/hombre (1).png"))); // NOI18N
         jLabel4.setText("Hola Buenas!");
         panel_principal.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 60, 130, 40));
+
+        panelRound1.setBackground(new java.awt.Color(51, 50, 55));
+
+        scroll_detalle.setBackground(new java.awt.Color(51, 50, 55));
+
+        tabla_detalles.setBackground(new java.awt.Color(51, 50, 55));
+        tabla_detalles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Folio ", "Material Granel", "Peso Bruto(kg)", "Peso Tara(kg)", "Peso Neto(kg)", "Descuento en (%)", "Precio($)", "Observación", "Subtotal"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scroll_detalle.setViewportView(tabla_detalles);
+        if (tabla_detalles.getColumnModel().getColumnCount() > 0) {
+            tabla_detalles.getColumnModel().getColumn(0).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(1).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(2).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(3).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(4).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(5).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(6).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(7).setResizable(false);
+            tabla_detalles.getColumnModel().getColumn(8).setResizable(false);
+        }
+
+        panel_btnç.setBackground(new java.awt.Color(0, 142, 0));
+        panel_btnç.setPreferredSize(new java.awt.Dimension(97, 25));
+
+        jLabel3.setBackground(new java.awt.Color(0, 142, 0));
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(40, 40, 40));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Pdf");
+
+        javax.swing.GroupLayout panel_btnçLayout = new javax.swing.GroupLayout(panel_btnç);
+        panel_btnç.setLayout(panel_btnçLayout);
+        panel_btnçLayout.setHorizontalGroup(
+            panel_btnçLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        panel_btnçLayout.setVerticalGroup(
+            panel_btnçLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        panel_btn_pdf.setBackground(new java.awt.Color(51, 50, 55));
+
+        label_btn.setBackground(new java.awt.Color(51, 50, 55));
+        label_btn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf_blanco.png"))); // NOI18N
+        label_btn.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        label_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        label_btn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label_btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_btnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label_btnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label_btnMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_btn_pdfLayout = new javax.swing.GroupLayout(panel_btn_pdf);
+        panel_btn_pdf.setLayout(panel_btn_pdfLayout);
+        panel_btn_pdfLayout.setHorizontalGroup(
+            panel_btn_pdfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+        );
+        panel_btn_pdfLayout.setVerticalGroup(
+            panel_btn_pdfLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(label_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scroll_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 1039, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_btnç, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel_btn_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scroll_detalle, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addComponent(panel_btnç, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(panel_btn_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        panel_principal.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1160, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -194,6 +308,35 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         panel_atras.setBackground(new Color(0x5CBD6E));
         atras.setForeground(Color.BLACK);
     }//GEN-LAST:event_atrasMouseExited
+
+    private void label_btnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_btnMouseEntered
+        // TODO add your handling code here:
+        /// Cambiar el ícono del JLabel existente (label_btn)
+        label_btn.setIcon(new ImageIcon(getClass().getResource("/imagenes/pdf_.png")));
+
+        // Cambiar el color de fondo del panel cuando el mouse entra
+        //panel_btn_pdf.setBackground(new Color(0xCF1818));
+        
+    }//GEN-LAST:event_label_btnMouseEntered
+
+    private void label_btnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_btnMouseExited
+        // TODO add your handling code here:
+        label_btn.setIcon(new ImageIcon(getClass().getResource("/imagenes/pdf_blanco.png")));        
+    }//GEN-LAST:event_label_btnMouseExited
+
+    private void label_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_btnMouseClicked
+        // TODO add your handling code here:
+         int filaSeleccionada = tabla_detalles.rowAtPoint(evt.getPoint());
+        if (filaSeleccionada != -1) {
+            // Obtener el folioCompra de la columna 0 de la fila seleccionada
+            int folioCompra = (int) tabla_detalles.getValueAt(filaSeleccionada, 0);
+            // Llamar al método para generar el reporte PDF con el folioCompra
+            generarReportePDF(folioCompra);
+        } else {
+            // Si no hay fila seleccionada, puedes mostrar un mensaje
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona una fila para generar el reporte.");
+        }
+    }//GEN-LAST:event_label_btnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -235,10 +378,15 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     private javax.swing.JLabel atras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel label_btn;
     private javax.swing.JLabel nombre_usuario_actual;
+    private swing.PanelRound panelRound1;
     private swing.PanelRound panel_atras;
+    private swing.PanelRound panel_btn_pdf;
+    private javax.swing.JPanel panel_btnç;
     private javax.swing.JPanel panel_principal;
     private javax.swing.JScrollPane scroll_detalle;
     private javax.swing.JTable tabla_detalles;
@@ -266,7 +414,7 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     
     public void Personalizar_tabla(){
     // Configuración de la tabla
-    tabla_detalles.setBackground(new Color(0x333333));  // Fondo de las celdas
+    tabla_detalles.setBackground(new Color(0x333237));  // Fondo de las celdas
     tabla_detalles.setForeground(new Color(000,000,000));  // Color del texto de las celdas
     tabla_detalles.setGridColor(new Color(255, 255, 255));  // Líneas de celda más suaves
     tabla_detalles.setRowHeight(20);  // Ajustar la altura de las filas
@@ -274,7 +422,11 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     tabla_detalles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Permitir solo una selección de fila
     tabla_detalles.setCellSelectionEnabled(false); // Desactivar selección de celdas
     tabla_detalles.setRowSelectionAllowed(true); // Habilitar la selección por fila
+    tabla_detalles.setRowHeight(25);  // Ajustar la altura de las filas
     // Crear un renderizador personalizado para las celdas del contenido Es para el contenido Tabla
+    // Configurar el JScrollPane sin borde
+    scroll_detalle.setBorder(BorderFactory.createEmptyBorder());
+    scroll_detalle.setBackground(new Color(0x333337));
     TableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -318,7 +470,7 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
     }
     //0,0,0,1                
     //scroll_ventas.setBackground(Color.WHITE);
-    scroll_detalle.setBackground(new Color(0,0,1));
+    scroll_detalle.setBackground(new Color(0x333237));
     scroll_detalle.setForeground(Color.WHITE);
     }
     public void informacion_panel(){
@@ -327,5 +479,39 @@ public class Detalles_compra_realizadas extends javax.swing.JFrame {
         this.setIconImage(icono);
         this.setLocationRelativeTo(null);
     }
+    
+    //PARA GENERAR REPORTES
+    private void generarReportePDF(int folioCompra) {
+    try {
+        // Ruta relativa del archivo Jasper
+        String rutaReporte = "src/reportes/Compras.jasper";
+
+        // Obtener la conexión a la base de datos
+        Connection con = conexion.conectar();
+
+        // Parámetros para el reporte
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("folio_compra", folioCompra); // Pasa el parámetro como Integer
+
+        // Cargar el reporte compilado
+        JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(rutaReporte);
+
+        // Llenar el reporte con datos
+        JasperPrint jp = JasperFillManager.fillReport(jr, parametros, con);
+
+        // Exportar a PDF
+        JasperExportManager.exportReportToPdfFile(jp, "reporte_compra_" + folioCompra + ".pdf");
+        // Visualizar el reporte
+          
+        JasperViewer.viewReport(jp, false);
+
+        JOptionPane.showMessageDialog(null, "PDF generado con éxito.");
+    } catch (JRException ex) {
+        
+        System.err.println("Error al generar el reporte: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }
+    //quedo listo solo revisa el diselo de compra debs incluir lo de precios y ceha que si despues de la compra puede gener el pdf para imprimir o como hacer la conexion con la impresora
     
 }

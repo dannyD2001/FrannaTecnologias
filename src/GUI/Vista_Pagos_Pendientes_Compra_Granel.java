@@ -1,9 +1,12 @@
 package GUI;
+//revisa con los datos solo puse uno hay que diseñarko y agrgear una tabla dale logica que ya funciona 
 import com.formdev.flatlaf.FlatDarkLaf;
+import conexion.conexion;
 import controlador.ctrl_compra;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -16,6 +19,13 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import modelo.Compra;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+//import net.sf.jasperreports.view.JasperViewer;
 public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
     public Vista_Pagos_Pendientes_Compra_Granel() {
         // Aplica el tema oscuro de FlatLaf
@@ -45,6 +55,9 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         panel_para_scroll = new swing.PanelRound();
         scroll_panel = new javax.swing.JScrollPane();
         tabla_pagos_pendientes = new javax.swing.JTable();
+        panel_btn = new swing.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1200, 600));
@@ -112,7 +125,7 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         );
         barra_principalLayout.setVerticalGroup(
             barra_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
             .addComponent(panel_atras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -155,7 +168,7 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        panel_principal.add(btn_pagos_realizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 520, 110, 50));
+        panel_principal.add(btn_pagos_realizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 540, 110, 50));
 
         btn_pago.setBackground(new java.awt.Color(106, 154, 176));
         btn_pago.setRoundBottomLeft(20);
@@ -184,14 +197,14 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         btn_pago.setLayout(btn_pagoLayout);
         btn_pagoLayout.setHorizontalGroup(
             btn_pagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
         );
         btn_pagoLayout.setVerticalGroup(
             btn_pagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
-        panel_principal.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 520, 110, 50));
+        panel_principal.add(btn_pago, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 540, 110, 50));
 
         panel_para_scroll.setBackground(new java.awt.Color(51, 50, 55));
         panel_para_scroll.setRoundBottomLeft(30);
@@ -237,7 +250,41 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panel_principal.add(panel_para_scroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 1140, 420));
+        panel_principal.add(panel_para_scroll, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 1140, 420));
+
+        panel_btn.setBackground(new java.awt.Color(112, 128, 144));
+        panel_btn.setRoundBottomLeft(15);
+        panel_btn.setRoundBottomRight(15);
+        panel_btn.setRoundTopLeft(15);
+        panel_btn.setRoundTopRight(15);
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf_4726010 (1).png"))); // NOI18N
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_btnLayout = new javax.swing.GroupLayout(panel_btn);
+        panel_btn.setLayout(panel_btnLayout);
+        panel_btnLayout.setHorizontalGroup(
+            panel_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
+        );
+        panel_btnLayout.setVerticalGroup(
+            panel_btnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        panel_principal.add(panel_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 60, 30, 40));
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 55));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Reporte PDF");
+        panel_principal.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 40, 90, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -355,6 +402,31 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
         btn_pagos_realizados.setBackground(new Color(0x6A9AB0));
         jLabel3.setForeground(Color.WHITE);
     }//GEN-LAST:event_jLabel3MouseExited
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        try {
+            // Ruta relativa del archivo Jasper
+            String rutaReporte = "src/reportes/Pagos.jasper";
+            
+            // Obtener la conexión a la base de datos
+            Connection con = null;
+            con = conexion.conectar();
+
+            // Cargar el reporte compilado
+            JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(rutaReporte);
+            
+            // Llenar el reporte con datos
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, con);
+
+            // Visualizar el reporte
+            JasperViewer.viewReport(jp, false);
+        } catch (JRException ex) {
+            System.err.println("Error al generar el reporte: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -398,7 +470,10 @@ public class Vista_Pagos_Pendientes_Compra_Granel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private swing.PanelRound panel_atras;
+    private swing.PanelRound panel_btn;
     private swing.PanelRound panel_para_scroll;
     private javax.swing.JPanel panel_principal;
     private javax.swing.JScrollPane scroll_panel;

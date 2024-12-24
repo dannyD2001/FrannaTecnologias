@@ -1,8 +1,4 @@
 package modelo;
-/**
- *
- * @author Danny Dominguez
- */
 public class Material {
     private int id_material;
     private String nombre_material;

@@ -1,6 +1,7 @@
 package GUI;
 import Util.AppContext;
 import com.formdev.flatlaf.FlatDarkLaf;
+import conexion.conexion;
 import controlador.ctrl_chofer;
 import controlador.ctrl_compra;
 import controlador.ctrl_material;
@@ -15,19 +16,29 @@ import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import javax.activation.DataHandler;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -35,7 +46,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -48,13 +58,18 @@ import modelo.Material;
 import modelo.Provedor;
 import modelo.Vehiculo;
 import modelo.usuario;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 public class Realizar_compra extends javax.swing.JFrame {
-    ///para iconosf
+    //PARA LOS ICONOS DE LAS ALERTAS DE AVISO 
     Icon error;
     Icon correcto;    
     Icon adve;
-    //instanciado a las clases 
-    //Recuperar usuario actual        
+    //iNSTANCIANDO LA CLASES  
+    //RECUPERACION DEL USUARIO ACTUAL        
     usuario usuarioActual = AppContext.getUsuarioActual();
     ctrl_usuario Ctrl_usu = new ctrl_usuario();
     usuario usuario  = new usuario();
@@ -63,14 +78,14 @@ public class Realizar_compra extends javax.swing.JFrame {
     Provedor provedor = new Provedor();
     ctrl_provedor Ctrl_pro = new ctrl_provedor();
     double TotalPagar = 0.00;
-    ctrl_chofer chofer = new ctrl_chofer();
-    
+    ctrl_chofer chofer = new ctrl_chofer(); 
     public Realizar_compra() {
-        // Aplica el tema oscuro de FlatLaf
+        // APLICA EL TEMA OSCURO DE FLATLAFT
         try {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e) {
         }
+        //MENCION DE LOS METODOS PARA SU EJECUCUCION
         initComponents();
         personalizar_tabla();
         personalizacion_extra();
@@ -1147,7 +1162,7 @@ public class Realizar_compra extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombre_usuarioActionPerformed
     private void pesoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pesoKeyPressed
-    
+        // TODO add your handling code here:
     }//GEN-LAST:event_pesoKeyPressed
     private void name_materialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_name_materialActionPerformed
         // TODO add your handling code here:
@@ -1247,8 +1262,7 @@ public class Realizar_compra extends javax.swing.JFrame {
     }//GEN-LAST:event_stockActionPerformed
 
     private void descuentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descuentoKeyTyped
-        // TODO add your handling code here:
-       
+        // TODO add your handling code here: 
     }//GEN-LAST:event_descuentoKeyTyped
     private boolean limpiado = false;
     private void descuentoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descuentoFocusGained
@@ -1313,17 +1327,17 @@ public class Realizar_compra extends javax.swing.JFrame {
     }//GEN-LAST:event_label_eliminarMouseExited
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Muestra un cuadro de diálogo para confirmar la compra
+        //SE LLAMA LOS METODOS PARA REALIZAR LA COMPRA
         ctrl_material material = new ctrl_material();
         RegistrarCompra();
         material.bucarMaterial(name_material);
+        Ctrl_pro.bucarProvedor(id_provedor);
         //correo_electronico();
         //es para la logica del correo
         //String correos = correo.getText();
-       /* if(!correos.isEmpty()){
+        /* if(!correos.isEmpty()){
             correo_electronico();
-        }*/
-        
+        }*/     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void peso_brutoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peso_brutoMousePressed
@@ -1366,15 +1380,7 @@ public class Realizar_compra extends javax.swing.JFrame {
     }//GEN-LAST:event_costo_adicionalActionPerformed
     //private boolean limpiado4 =false;
     private void costo_adicionalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_costo_adicionalMousePressed
-      /*  // TODO add your handling code here:
-                // Verificar si el campo ha sido limpiado antes
-       if(!limpiado4){
-           //limpiar el texto
-           if(!costo_adicional.getText().equals("")){
-               costo_adicional.setText("");
-           }
-           limpiado4 = true;
-       } */
+       // TODO add your handling code here: 
     }//GEN-LAST:event_costo_adicionalMousePressed
 
     private void costo_adicionalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_costo_adicionalKeyReleased
@@ -1813,30 +1819,8 @@ public class Realizar_compra extends javax.swing.JFrame {
 
         // Registrar la compra y los detalles
         ctrl_compra ctrlCompra = new ctrl_compra();
-        int folio_compra = ctrlCompra.registrarCompra(compra); // Obtener el folio de la compra registrada
-        //
-        // Mostrar mensaje de carga mientras se envía el correo
-        JLabel loadingLabel = new JLabel("Enviando correo...", JLabel.CENTER);
-        loadingLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/Loading.gif"))); // Asegúrate de tener un GIF en la ruta
-        JOptionPane loadingMessage = new JOptionPane(loadingLabel, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
-        JDialog dialog = loadingMessage.createDialog(this, "Procesando...");
-        dialog.setModal(false);
-        dialog.setVisible(true); // Mostrar el diálogo de carga
-        // Crear un hilo para mostrar el GIF por unos segundos antes de enviar el correo electrónico
-        new Thread(() -> {
-            try {             
-                // Ahora, cuando termine la espera, enviar el correo
-                correo_electronico();
-
-            } catch (Exception e) {
-                
-            } finally {
-                // Cerrar el diálogo de carga después de que el proceso termine
-                dialog.dispose();
-            }
-        }).start();
-        //
         
+        int folio_compra = ctrlCompra.registrarCompra(compra); // Obtener el folio de la compra registrada
         if (folio_compra != -1) { // Si se registró la compra correctamente
             for (int i = 0; i < tabla_compra.getRowCount(); i++) {
                 // Obtener datos de cada fila de la tabla de compras
@@ -1854,7 +1838,30 @@ public class Realizar_compra extends javax.swing.JFrame {
                 ctrl_compra ctrlDetalle = new ctrl_compra();
                 ctrlDetalle.registrarDetalle(detalle);
             }
-
+            //incluimos lo de pdf y correo
+            //int folioComp = folio_compra.intValue();  // Desreferenciar si es un Integer
+            byte[] pdfBytes = generarPDF(folio_compra);
+            if (pdfBytes == null || pdfBytes.length == 0) {
+                JOptionPane.showMessageDialog(null, "Error al generar el PDF. No se enviará el correo.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            // Mostrar mensaje de carga mientras se envía el correo
+            JLabel loadingLabel = new JLabel("Enviando correo...", JLabel.CENTER);
+            loadingLabel.setIcon(new ImageIcon(getClass().getResource("/imagenes/Loading.gif")));
+            JOptionPane loadingMessage = new JOptionPane(loadingLabel, JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
+            JDialog dialog = loadingMessage.createDialog(this, "Procesando...");
+            dialog.setModal(false);
+            dialog.setVisible(true);
+            // Crear un hilo para enviar el correo
+            new Thread(() -> {
+                try {
+                    correo_electronico(pdfBytes, folio_compra);  // Enviar el correo con el PDF adjunto
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error al enviar el correo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    dialog.dispose();  // Cerrar el diálogo de carga
+                }
+            }).start();         
             // Limpiar la tabla y otros campos en la interfaz
             DefaultTableModel modelo = (DefaultTableModel) tabla_compra.getModel();
             modelo.setRowCount(0); // Limpiar todas las filas de la tabla
@@ -1876,11 +1883,11 @@ public class Realizar_compra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al registrar la compra.");
         }
     } catch (Exception e) {
+        e.printStackTrace();
         JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
     }
     }
-
-    //
+    //METODO QUE NOS SRIVE PARA CONVERTIR A MAYUSCULA LA PRIMERO LETRA UTIL PARA UNOS CAMPOS
     private String capitalize(String str) {
     if (str == null || str.isEmpty()) {
         return str; // Retorna la cadena original si está vacía o es null
@@ -1983,85 +1990,7 @@ public class Realizar_compra extends javax.swing.JFrame {
             return str;//retronar cadena vacia
         }
         return str.toUpperCase();
-    }
-    //logica para lo corrreos electronicos
-    public void correo_electronico() {
-    ctrl_compra compra = new ctrl_compra();
-
-    // Configurar propiedades del servidor SMTP
-    Properties props = new Properties();
-    props.put("mail.smtp.host", "smtp.gmail.com");
-    props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.port", "587");
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.ssl.protocols", "TLSv1.2");
-
-    // Configurar la cuenta de correo y autenticación
-    String correoRemitente = "dannydominguez2701@gmail.com";
-    String passwordRemitente = "ohkd bnsk faxx whaz"; // Reemplaza con tu contraseña o App Password
-
-    String correoReceptor = correo.getText().trim(); // Toma el correo receptor desde un campo de texto y lo limpia
-
-    // Validar que el correo del destinatario no esté vacío y tenga formato válido
-    if (correoReceptor.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Por favor, ingrese un correo electrónico válido.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        // Validar si hay conexión a Internet
-        if (!hayConexionInternet()) {
-            JOptionPane.showMessageDialog(null, "No hay conexión a Internet. Verifique su conexión, No se enviara el correo al Proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Asunto y mensaje
-        List<Compra> compras = compra.ConsultaCompra();
-        Compra comprass = compras.get(0);
-        double totalCompra = comprass.getTotal_compra();
-
-        String asunto = "Compra en Refisa";
-        String mensaje = "Hola, su total de hoy fue de: $" + totalCompra + "\nGracias por visitarnos.";
-
-        // Crear la sesión de autenticación
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(correoRemitente, passwordRemitente);
-            }
-        });
-
-        // Crear el mensaje
-        MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(correoRemitente));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
-        message.setSubject(asunto);
-        message.setText(mensaje);
-
-        // Enviar el mensaje
-        Transport.send(message);
-        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente.");
-
-    } catch (AddressException ex) {
-        JOptionPane.showMessageDialog(null, "La dirección de correo electrónico del destinatario no es válida.", "Error", JOptionPane.ERROR_MESSAGE);
-    } catch (MessagingException ex) {
-        JOptionPane.showMessageDialog(null, "Error al enviar el correo. Verifique su conexión a Internet o la configuración de la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Se ha producido un error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
-    }
-    
-    // Método para validar conexión a Internet
-    private boolean hayConexionInternet() {
-        try (Socket socket = new Socket()) {
-            socket.connect(new InetSocketAddress("8.8.8.8", 53), 3000); // Conectar al DNS de Google
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    }
+    }   
     //logica para los action listerner y en general
     public void acciones(){
         // Agregar ActionListener a peso_bruto
@@ -2098,8 +2027,7 @@ public class Realizar_compra extends javax.swing.JFrame {
             }
         }
         });
-        
-        
+                
         //todo para lo de choferes externos
         chofer.bucarChofer(combox_chofer);
         chofer.bucarChoferExterno(combox_chofer_e);
@@ -2218,5 +2146,159 @@ public class Realizar_compra extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "El usuario actual es nulo");
         }
+    }
+    // Método para validar conexión a Internet
+    private boolean hayConexionInternet() {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress("8.8.8.8", 53), 3000); // Conectar al DNS de Google
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    //METODO PARA GENERA PDF
+    public byte[] generarPDF(int folioCompra) {
+    Connection con = null;
+    try {
+        // Verifica si el archivo Jasper existe
+        File jasperFile = new File("src/reportes/Compras_No_Precio.jasper");
+        if (!jasperFile.exists()) {
+            JOptionPane.showMessageDialog(null, "Archivo .jasper no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        // Parámetros para el reporte Jasper
+        Map<String, Object> parametros = new HashMap<>();
+        parametros.put("folio_compra", folioCompra);
+
+        // Conexión a la base de datos
+        con = conexion.conectar();
+        if (con == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        // Cargar el reporte compilado
+        JasperReport jr = (JasperReport) JRLoader.loadObjectFromFile(jasperFile.getPath());
+
+        // Llenar el reporte con datos
+        JasperPrint jp = JasperFillManager.fillReport(jr, parametros, con);
+
+        // Verificar si el reporte tiene datos
+        if (jp.getPages().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El reporte no tiene datos para mostrar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        // Crear un ByteArrayOutputStream para almacenar el PDF en memoria
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        JasperExportManager.exportReportToPdfStream(jp, byteArrayOutputStream);
+
+        // Convertir ByteArrayOutputStream a un arreglo de bytes
+        byte[] pdfBytes = byteArrayOutputStream.toByteArray();
+
+        // Verificar si los bytes generados son válidos
+        if (pdfBytes == null || pdfBytes.length == 0) {
+            JOptionPane.showMessageDialog(null, "El archivo PDF está vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        JOptionPane.showMessageDialog(null, "PDF generado exitosamente en memoria.");
+        return pdfBytes;  // Devolver el arreglo de bytes
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+        return null;
+    } finally {
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    }
+
+    public void correo_electronico(byte[] pdfBytes, int folioCompra) {
+    // Si pdfBytes es nulo o vacío, no continuar
+    if (pdfBytes == null || pdfBytes.length == 0) {
+        JOptionPane.showMessageDialog(null, "El archivo PDF está vacío o no se generó correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    // Configurar propiedades del servidor SMTP
+    Properties props = new Properties();
+    props.put("mail.smtp.host", "smtp.gmail.com");
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.port", "587");
+    props.put("mail.smtp.auth", "true");
+    props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+
+    // Configurar la cuenta de correo y autenticación
+    String correoRemitente = "dannydominguez2701@gmail.com";
+    String passwordRemitente = "ohkd bnsk faxx whaz"; // Reemplaza con tu contraseña o App Password
+
+    String correoReceptor = correo.getText().trim(); // Toma el correo receptor desde un campo de texto y lo limpia
+
+    // Validar que el correo del destinatario no esté vacío y tenga formato válido
+    if (correoReceptor.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese un correo electrónico válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    try {
+        // Validar si hay conexión a Internet
+        if (!hayConexionInternet()) {
+            JOptionPane.showMessageDialog(null, "No hay conexión a Internet. Verifique su conexión. No se enviará el correo al proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Asunto del correo
+        String asunto = "Compra en Refisa";
+        
+        // Crear el mensaje de texto sin el total
+        String mensaje = "Estimado Proveedor,\n\nAdjunto el reporte de la compra realizada.\n\nGracias por visitarnos.";
+
+        // Crear la sesión de autenticación
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(correoRemitente, passwordRemitente);
+            }
+        });
+
+        // Crear el mensaje
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(correoRemitente));
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(correoReceptor));
+        message.setSubject(asunto);
+
+        // Crear el contenido del mensaje
+        MimeBodyPart textoParte = new MimeBodyPart();
+        textoParte.setText(mensaje);
+        // Crear la parte del archivo adjunto usando los bytes del PDF
+        MimeBodyPart adjuntoParte = new MimeBodyPart();
+        ByteArrayDataSource dataSource = new ByteArrayDataSource(pdfBytes, "application/pdf");
+        adjuntoParte.setDataHandler(new DataHandler(dataSource));
+        adjuntoParte.setFileName("ReporteCompra_Folio_" +   String.valueOf(folioCompra)  + ".pdf");
+        // Combinar texto y adjunto
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(textoParte);
+        multipart.addBodyPart(adjuntoParte);
+        // Asignar el contenido al mensaje
+        message.setContent(multipart);
+        // Enviar el mensaje
+        Transport.send(message);
+        JOptionPane.showMessageDialog(null, "Correo enviado exitosamente con el archivo adjunto.");
+    } catch (AddressException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "La dirección de correo electrónico del destinatario no es válida.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (MessagingException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al enviar el correo. Verifique su conexión a Internet o la configuración de la cuenta.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Se ha producido un error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }
 }

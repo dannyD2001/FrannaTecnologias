@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8533dc2d-172f-48d5-a3e0-ba9a3d5185d8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="folio_compra" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT compra.folio_compra, 
+compra.fecha_compra, 
+compra.total_compra, 
+provedor.nombre AS nombre_proveedor, 
+m.nombre_material, 
+dc.peso_neto, 
+dc.descuento_porcentaje, 
+dc.subtotal
+FROM compra 
+JOIN 
+provedor ON compra.id_provedor = provedor.id_provedor
+JOIN 
+detalle_compra dc ON compra.folio_compra = dc.folio_compra
+JOIN 
+material m ON dc.id_material = m.id_material
+WHERE 
+compra.folio_compra = $P{folio_compra};]]>
+	</queryString>
+	<field name="folio_compra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_compra" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_compra" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_proveedor" class="java.lang.String"/>
+	<field name="nombre_material" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="peso_neto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descuento_porcentaje" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="folio_compra">
+		<groupExpression><![CDATA[$F{folio_compra}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="86" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="702" y="0" width="100" height="20" uuid="18f13f01-f39d-47ee-82e8-aca506228d2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="639" y="0" width="63" height="20" uuid="f504e752-7986-4e03-82df-d8bfe5f82f74"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consulta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="639" y="37" width="63" height="20" uuid="def03e40-633b-4e2a-a2f0-005e27ef8087"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="702" y="37" width="100" height="20" uuid="955f85b5-eb2a-4d3c-a632-093c4ee844ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folio_compra}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="356" y="40" width="116" height="20" uuid="e276cf09-5116-458c-834a-98211ee12c1f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[contacto@franna.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="60" width="100" height="20" uuid="091b1aba-2751-49aa-b228-84184b569874"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[961-XXX-XXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="20" width="386" height="20" uuid="b2cf78d6-6839-4f21-b782-cb1eebb1a1f1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calzada Emiliano Zapata , Colonia Lomas Bonitas, Tuxtla Gutiérrez, Chiapas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="314" y="0" width="189" height="20" uuid="29ff7fd8-c958-49cb-a51c-65d93a2888fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Franna Tecnologías Avanzadas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="814" height="35" backcolor="#336B87" uuid="9acc0095-a2a3-46b6-b432-d2289c2db18a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE COMPRAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="101" y="67" width="100" height="20" uuid="fd301b4b-1a29-448f-ac80-3179b2c7d0fb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="67" width="143" height="20" uuid="95cd6e26-3ba3-4250-aa32-fad879075cb2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha y Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="67" width="100" height="20" uuid="103e7a1a-be3b-4769-b2af-2596d66c7abe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Peso Neto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="67" width="145" height="20" uuid="300f5376-5d67-436c-9dfd-9e24e072e8d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="67" width="100" height="20" uuid="49e0ae68-0e34-4fb4-bf42-71e46603ab86"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="101" y="0" width="100" height="20" uuid="8688fbff-c04e-4579-a086-d2be44d96368"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_material}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="143" height="20" uuid="6eb71387-c53f-49a6-85e4-c15dd4bfc13e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_compra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="135" height="20" uuid="5064101d-fbaf-4418-8fae-b044460bfa42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descuento_porcentaje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="100" height="20" uuid="55e9143b-7de0-4b27-93dc-0d73ce591d91"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{peso_neto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="589" y="0" width="100" height="20" uuid="96c38b95-7c3d-4cff-9bca-68885aaaea54"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="546" y="25" width="60" height="20" uuid="4094e4c0-a69a-4b9f-a083-05a8adea285c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="606" y="25" width="83" height="20" uuid="155da616-bd74-45e0-a636-13ebde8585de"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_compra}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="682" y="34" width="80" height="20" uuid="87f3ddc0-60e7-42a6-9f2a-625e6c968ab6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="762" y="34" width="40" height="20" uuid="b635beca-d38d-4d83-80d8-bffa708ff1e5"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="1" splitType="Stretch"/>
+	</summary>
+</jasperReport>

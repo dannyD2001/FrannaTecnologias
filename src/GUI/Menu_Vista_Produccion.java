@@ -39,8 +39,13 @@ public class Menu_Vista_Produccion extends javax.swing.JFrame {
         panel_produccion = new swing.PanelRound();
         label = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        panelRound3 = new swing.PanelRound();
+        primer_panel = new swing.PanelRound();
         label_nombre_paca = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        panelRound2 = new swing.PanelRound();
+        jLabel2 = new javax.swing.JLabel();
+        panelRound3 = new swing.PanelRound();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(950, 700));
@@ -124,6 +129,7 @@ public class Menu_Vista_Produccion extends javax.swing.JFrame {
         panel_produccion.setBackground(new java.awt.Color(73, 151, 88));
 
         label.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        label.setForeground(new java.awt.Color(50, 50, 50));
         label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label.setText("Producción");
         label.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -172,37 +178,113 @@ public class Menu_Vista_Produccion extends javax.swing.JFrame {
         jLabel3.setText("Hi! Seleccione  ");
         panel_principal.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 250, 50));
 
-        panelRound3.setBackground(new java.awt.Color(170, 205, 177));
+        primer_panel.setBackground(new java.awt.Color(170, 205, 177));
+        primer_panel.setRoundBottomLeft(20);
+        primer_panel.setRoundBottomRight(20);
+        primer_panel.setRoundTopLeft(20);
+        primer_panel.setRoundTopRight(20);
+
+        label_nombre_paca.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        label_nombre_paca.setForeground(new java.awt.Color(50, 50, 50));
+        label_nombre_paca.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_nombre_paca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-compra-24.png"))); // NOI18N
+        label_nombre_paca.setText("Inventario Paca");
+        label_nombre_paca.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label_nombre_paca.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(50, 50, 50));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/baja_24.png"))); // NOI18N
+        jLabel1.setText("Baja Paca");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+
+        panelRound2.setRoundBottomLeft(20);
+        panelRound2.setRoundBottomRight(20);
+        panelRound2.setRoundTopLeft(20);
+        panelRound2.setRoundTopRight(20);
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Inventario");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
+        panelRound2.setLayout(panelRound2Layout);
+        panelRound2Layout.setHorizontalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelRound2Layout.setVerticalGroup(
+            panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        );
+
         panelRound3.setRoundBottomLeft(20);
         panelRound3.setRoundBottomRight(20);
         panelRound3.setRoundTopLeft(20);
         panelRound3.setRoundTopRight(20);
 
-        label_nombre_paca.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
-        label_nombre_paca.setForeground(new java.awt.Color(50, 50, 50));
-        label_nombre_paca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/icons8-compra-24.png"))); // NOI18N
-        label_nombre_paca.setText("Inventario Paca");
-        label_nombre_paca.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        label_nombre_paca.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 10)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Baja");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout panelRound3Layout = new javax.swing.GroupLayout(panelRound3);
         panelRound3.setLayout(panelRound3Layout);
         panelRound3Layout.setHorizontalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(label_nombre_paca, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addGap(343, 343, 343))
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRound3Layout.setVerticalGroup(
             panelRound3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRound3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(label_nombre_paca, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                .addGap(213, 213, 213))
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        panel_principal.add(panelRound3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 510, 290));
+        javax.swing.GroupLayout primer_panelLayout = new javax.swing.GroupLayout(primer_panel);
+        primer_panel.setLayout(primer_panelLayout);
+        primer_panelLayout.setHorizontalGroup(
+            primer_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(primer_panelLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(primer_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(primer_panelLayout.createSequentialGroup()
+                        .addGroup(primer_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_nombre_paca, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                        .addGap(343, 343, 343))
+                    .addGroup(primer_panelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(primer_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(primer_panelLayout.createSequentialGroup()
+                                .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(primer_panelLayout.createSequentialGroup()
+                                .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+        );
+        primer_panelLayout.setVerticalGroup(
+            primer_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(primer_panelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(label_nombre_paca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelRound3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
+        );
+
+        panel_principal.add(primer_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 510, 290));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -256,7 +338,7 @@ public class Menu_Vista_Produccion extends javax.swing.JFrame {
 
     private void labelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelMouseClicked
         // TODO add your handling code here:
-        Realizar_Produccion RP = new Realizar_Produccion();
+        Produccion_Paca RP = new Produccion_Paca();
         RP.setVisible(true);
         RP.setLocationRelativeTo(null);
         this.dispose();
@@ -301,14 +383,19 @@ public class Menu_Vista_Produccion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel atras;
     private javax.swing.JPanel barra;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label_nombre_paca;
     private swing.PanelRound panelRound1;
+    private swing.PanelRound panelRound2;
     private swing.PanelRound panelRound3;
     private swing.PanelRound panel_atras;
     private javax.swing.JPanel panel_principal;
     private swing.PanelRound panel_produccion;
+    private swing.PanelRound primer_panel;
     // End of variables declaration//GEN-END:variables
 }
